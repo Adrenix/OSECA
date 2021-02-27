@@ -17,7 +17,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.registries.ForgeRegistries;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 
@@ -78,7 +77,7 @@ public class Swings {
                 );
     }
 
-    private static int rangeError(@NotNull CommandSource source) {
+    private static int rangeError(CommandSource source) {
         source.sendErrorMessage(ITextComponent.func_244388_a(String.format("Swing speed out of range! [Range: %d ~ %d]", MIN, MAX)));
         return 0;
     }
