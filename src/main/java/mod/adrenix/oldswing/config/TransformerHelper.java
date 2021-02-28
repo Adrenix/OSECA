@@ -2,7 +2,6 @@ package mod.adrenix.oldswing.config;
 
 import com.electronwill.nightconfig.core.Config;
 import com.mojang.blaze3d.matrix.MatrixStack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -16,18 +15,10 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 
-/* Transformer Helpers - Suppressed unused since these are called with ASM */
-@SuppressWarnings("unused")
 public class TransformerHelper {
-    @SuppressWarnings("unused")
-    public static int swingSpeed() {
+    public static int swingSpeed(ClientPlayerEntity player) {
         if (FMLLoader.getDist().isDedicatedServer() || !ConfigHandler.mod_enabled)
             return ConfigHandler.NEW_SPEED;
-
-        ClientPlayerEntity player = Minecraft.getInstance().player;
-        if (player == null) {
-            return ConfigHandler.swing_speed;
-        }
 
         Item item = player.getHeldItemMainhand().getItem();
         ResourceLocation source = ForgeRegistries.ITEMS.getKey(item);
@@ -47,12 +38,10 @@ public class TransformerHelper {
         return ConfigHandler.swing_speed;
     }
 
-    @SuppressWarnings("unused")
     public static float getCooldownAnimationFloat(ClientPlayerEntity player, float adjustTicks) {
         return ConfigHandler.prevent_cooldown && ConfigHandler.mod_enabled ? 1.0F : player.getCooledAttackStrength(adjustTicks);
     }
 
-    @SuppressWarnings("unused")
     public static boolean shouldCauseReequipAnimation(@Nonnull ItemStack from, @Nonnull ItemStack to, int slot) {
         if (!ConfigHandler.prevent_reequip || !ConfigHandler.mod_enabled) {
             return ForgeHooksClient.shouldCauseReequipAnimation(from, to, slot);
@@ -67,7 +56,7 @@ public class TransformerHelper {
         return !ItemStack.areItemsEqualIgnoreDurability(from, to);
     }
 
-    @SuppressWarnings("unused")
+    @SuppressWarnings("unused") /* This method is used by ASM */
     public static void armSway(MatrixStack matrixStackIn, Quaternion quaternion) {
         if (!ConfigHandler.prevent_sway || !ConfigHandler.mod_enabled) {
             matrixStackIn.rotate(quaternion);

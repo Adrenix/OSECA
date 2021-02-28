@@ -27,5 +27,5 @@ logoFile="oldswing-logo.png" #optional
 authors="Adrenix" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-Brings back the old swinging animations before Minecraft Beta 1.8.
+Brings back the old swinging animations before Minecraft Beta 1.8
 '''

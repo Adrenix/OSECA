@@ -26,9 +26,8 @@ public class Swings {
     private static final int MAX = ConfigHandler.MAX;
 
     static {
-        for (int i = MIN; i <= MAX; i++) {
+        for (int i = MIN; i <= MAX; i++)
             VALID_SPEEDS.add(Integer.toString(i));
-        }
     }
 
     private static final SuggestionProvider<CommandSource> SPEED_SUGGESTION = (context, builder) ->
@@ -36,11 +35,11 @@ public class Swings {
 
     public static LiteralArgumentBuilder<CommandSource> register() {
         return Commands.literal("swing")
-                .then(Commands.literal("items")
+                .then(Commands.literal("else")
                         .then(Commands.argument("speed", IntegerArgumentType.integer())
                                 .suggests(SPEED_SUGGESTION)
                                 .executes(context -> changeSwingSpeed(
-                                        context.getSource(), IntegerArgumentType.getInteger(context, "speed"), "items"
+                                        context.getSource(), IntegerArgumentType.getInteger(context, "speed"), "else"
                                 ))
                         )
                 )
@@ -83,12 +82,11 @@ public class Swings {
     }
 
     private static int changeSwingSpeed(CommandSource source, int speed, String on) {
-        if (speed < MIN || speed > MAX) {
+        if (speed < MIN || speed > MAX)
             return rangeError(source);
-        }
 
         switch (on) {
-            case "items":
+            case "else":
                 ClientConfig.swing_speed.set(speed);
                 break;
             case "swords":
@@ -110,6 +108,10 @@ public class Swings {
                 ColorUtil.format("Modern Minecraft", TextFormatting.LIGHT_PURPLE),
                 ColorUtil.format("6", TextFormatting.YELLOW)
         );
+
+        if (on.equals("else")) {
+            on = "everything else";
+        }
 
         final String info = String.format("%s\n%s\nSuccessfully changed %s swing speed to: %s.",
                 oldSwing, newSwing, ColorUtil.format(on, TextFormatting.GOLD), ColorUtil.format(Integer.toString(speed), TextFormatting.AQUA));
