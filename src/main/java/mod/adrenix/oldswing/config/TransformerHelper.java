@@ -10,14 +10,13 @@ import net.minecraft.item.ToolItem;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraftforge.client.ForgeHooksClient;
-import net.minecraftforge.fml.loading.FMLLoader;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
 
 public class TransformerHelper {
     public static int swingSpeed(ClientPlayerEntity player) {
-        if (FMLLoader.getDist().isDedicatedServer() || !ConfigHandler.mod_enabled)
+        if (!ConfigHandler.mod_enabled)
             return ConfigHandler.NEW_SPEED;
 
         Item item = player.getHeldItemMainhand().getItem();

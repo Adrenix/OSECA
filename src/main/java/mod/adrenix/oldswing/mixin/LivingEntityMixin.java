@@ -31,8 +31,9 @@ public abstract class LivingEntityMixin extends Entity {
     @Overwrite
     private int getArmSwingAnimationEnd() {
         ClientPlayerEntity player = Minecraft.getInstance().player;
+
         if (player == null)
-            return 0;
+            return 6;
 
         int mod = TransformerHelper.swingSpeed(player);
 

@@ -9,6 +9,15 @@
 
 This mod brings back the old swinging animations before Minecraft Beta 1.8. This is an "eye candy" mod targeted towards nostalgic enthusiasts. As a bonus, this mod is also very configurable. All animation changes can be toggled. Moreover, you can customize the swing speeds of swords, tools, items, and everything in-between!
 
+## Version 2.0.2
+Minor update that adds a couple of new features.
+- Changed valid swing speed range to 0-16.
+  - Setting a swing speed to 0 will cancel the swinging animation altogether.
+- Added a new set swing speed command parameter "all".
+  - Using the "all" parameter will change all the swing speeds set in the config (including custom speeds).
+  - Example: `/oldswing set swing all 0` will cancel every swinging animation in the game.
+- Cleaned up the codebase a bit.  
+
 ## Version 2.0.1
 Minor update that fixes a crash and couple bugs.
 - The mod is now compatible with Optifine/Optiforge

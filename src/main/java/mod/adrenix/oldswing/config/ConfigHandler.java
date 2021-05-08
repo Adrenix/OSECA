@@ -15,7 +15,7 @@ public class ConfigHandler {
     public static final ForgeConfigSpec CLIENT_SPEC;
     public static final int OLD_SPEED = 8;
     public static final int NEW_SPEED = 6;
-    public static final int MIN = 4;
+    public static final int MIN = 0;
     public static final int MAX = 16;
 
     public static Config custom_speeds;

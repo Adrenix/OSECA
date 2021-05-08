@@ -1,5 +1,6 @@
 package mod.adrenix.oldswing.command.executors;
 
+import com.electronwill.nightconfig.core.Config;
 import com.mojang.brigadier.arguments.IntegerArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
@@ -35,6 +36,15 @@ public class Swings {
 
     public static LiteralArgumentBuilder<CommandSource> register() {
         return Commands.literal("swing")
+                .then(Commands.literal("all")
+                        .then(Commands.argument("speed", IntegerArgumentType.integer())
+                                .suggests(SPEED_SUGGESTION)
+                                .executes(context -> changeSwingSpeed(
+                                        context.getSource(), IntegerArgumentType.getInteger(context, "speed"), "all"
+                                ))
+                        )
+                )
+
                 .then(Commands.literal("else")
                         .then(Commands.argument("speed", IntegerArgumentType.integer())
                                 .suggests(SPEED_SUGGESTION)
@@ -95,6 +105,15 @@ public class Swings {
             case "tools":
                 ClientConfig.tool_speed.set(speed);
                 break;
+            case "all": {
+                ClientConfig.swing_speed.set(speed);
+                ClientConfig.sword_speed.set(speed);
+                ClientConfig.tool_speed.set(speed);
+
+                for (Config.Entry entry : ConfigHandler.custom_speeds.entrySet()) {
+                    CustomSwing.add(entry.getKey(), speed);
+                }
+            }
         }
 
         ConfigHandler.bake();
@@ -109,12 +128,17 @@ public class Swings {
                 ColorUtil.format("6", TextFormatting.YELLOW)
         );
 
+        String plural = "speed";
+
         if (on.equals("else")) {
             on = "everything else";
+        } else if (on.equals("all")) {
+            on = "all config";
+            plural = "speeds";
         }
 
-        final String info = String.format("%s\n%s\nSuccessfully changed %s swing speed to: %s.",
-                oldSwing, newSwing, ColorUtil.format(on, TextFormatting.GOLD), ColorUtil.format(Integer.toString(speed), TextFormatting.AQUA));
+        final String info = String.format("%s\n%s\nSuccessfully changed %s swing %s to: %s.",
+                oldSwing, newSwing, ColorUtil.format(on, TextFormatting.GOLD), plural, ColorUtil.format(Integer.toString(speed), TextFormatting.AQUA));
         source.sendFeedback(ITextComponent.func_244388_a(info), true);
 
         return 1;
