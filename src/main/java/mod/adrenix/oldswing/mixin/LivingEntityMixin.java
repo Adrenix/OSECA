@@ -29,7 +29,7 @@ public abstract class LivingEntityMixin extends Entity {
      * @reason Allows for the manipulation of the speed during swinging animation.
      */
     @Overwrite
-    private int getArmSwingAnimationEnd() {
+    public int getArmSwingAnimationEnd() {
         ClientPlayerEntity player = Minecraft.getInstance().player;
 
         if (player == null)

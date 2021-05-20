@@ -1,11 +1,10 @@
 package mod.adrenix.oldswing.config;
 
+import com.electronwill.nightconfig.core.CommentedConfig;
 import com.electronwill.nightconfig.core.Config;
 import net.minecraftforge.common.ForgeConfigSpec;
 
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class ClientConfig {
     /* Mod State */
@@ -19,6 +18,7 @@ public class ClientConfig {
 
     /* Swing Speeds */
     public static ForgeConfigSpec.IntValue swing_speed;
+    public static ForgeConfigSpec.IntValue block_speed;
     public static ForgeConfigSpec.IntValue sword_speed;
     public static ForgeConfigSpec.IntValue tool_speed;
     public static ForgeConfigSpec.ConfigValue<Config> custom;
@@ -58,6 +58,10 @@ public class ClientConfig {
                 .comment(" Use this option to assign a swing speed to anything that isn't a sword or tool.")
                 .defineInRange("item_speed", ConfigHandler.OLD_SPEED, ConfigHandler.MIN, ConfigHandler.MAX);
 
+        block_speed = builder
+                .comment(" Give a custom swing speed when placing blocks.")
+                .defineInRange("block_speed", ConfigHandler.OLD_SPEED, ConfigHandler.MIN, ConfigHandler.MAX);
+
         sword_speed = builder
                 .comment(" Give a custom swing speed for swords.")
                 .defineInRange("sword_speed", ConfigHandler.OLD_SPEED, ConfigHandler.MIN, ConfigHandler.MAX);
@@ -69,16 +73,18 @@ public class ClientConfig {
 
         custom = builder
                 .comment(" Add a custom swing speed for any item in the game.")
-                .defineInList("items", Config.inMemory(), Collections.emptyList());
+                .define("custom", CommentedConfig.inMemoryConcurrent().createSubConfig());
 
         /* Command References */
         ANIMATIONS.put("reequipAnimation", prevent_reequip);
         ANIMATIONS.put("cooldownAnimation", prevent_cooldown);
         ANIMATIONS.put("armSway", prevent_sway);
 
+        // NOTE: Adding a new entry here requires updating the "change all" method.
         SPEEDS.put("tools", tool_speed);
         SPEEDS.put("swords", sword_speed);
-        SPEEDS.put("everything else", swing_speed);
+        SPEEDS.put("items", swing_speed);
+        SPEEDS.put("blocks", block_speed);
     }
 
     public static void loadCustomItems() {

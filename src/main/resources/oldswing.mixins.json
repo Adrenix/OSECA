@@ -3,6 +3,8 @@
   "package": "mod.adrenix.oldswing.mixin",
   "compatibilityLevel": "JAVA_8",
   "refmap": "oldswing.refmap.json",
+  "minVersion": "0.7.10",
+  "target": "@env(DEFAULT)",
   "client": [
     "LivingEntityMixin",
     "FirstPersonRendererMixin"

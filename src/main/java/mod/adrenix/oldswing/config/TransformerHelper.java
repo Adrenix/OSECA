@@ -3,10 +3,7 @@ package mod.adrenix.oldswing.config;
 import com.electronwill.nightconfig.core.Config;
 import com.mojang.blaze3d.matrix.MatrixStack;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.SwordItem;
-import net.minecraft.item.ToolItem;
+import net.minecraft.item.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.vector.Quaternion;
 import net.minecraftforge.client.ForgeHooksClient;
@@ -23,8 +20,9 @@ public class TransformerHelper {
         ResourceLocation source = ForgeRegistries.ITEMS.getKey(item);
 
         for (Config.Entry entry : ConfigHandler.custom_speeds.entrySet()) {
-            if (source != null && source.toString().equals(entry.getKey())) {
-                return entry.getValue();
+            int mod = CustomSwing.get(source, entry);
+            if (mod != -1) {
+                return mod;
             }
         }
 
@@ -32,6 +30,8 @@ public class TransformerHelper {
             return ConfigHandler.sword_speed;
         } else if (item instanceof ToolItem) {
             return ConfigHandler.tool_speed;
+        } else if (item instanceof BlockItem) {
+            return ConfigHandler.block_speed;
         }
 
         return ConfigHandler.swing_speed;

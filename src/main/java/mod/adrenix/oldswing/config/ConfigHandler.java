@@ -20,6 +20,7 @@ public class ConfigHandler {
 
     public static Config custom_speeds;
     public static int swing_speed = OLD_SPEED;
+    public static int block_speed = OLD_SPEED;
     public static int sword_speed = OLD_SPEED;
     public static int tool_speed = OLD_SPEED;
     public static boolean prevent_cooldown = true;
@@ -43,6 +44,7 @@ public class ConfigHandler {
     public static void bake() {
         custom_speeds = ClientConfig.custom.get();
         swing_speed = ClientConfig.swing_speed.get();
+        block_speed = ClientConfig.block_speed.get();
         sword_speed = ClientConfig.sword_speed.get();
         tool_speed = ClientConfig.tool_speed.get();
         prevent_cooldown = ClientConfig.prevent_cooldown.get();

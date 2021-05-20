@@ -11,20 +11,21 @@ import net.minecraft.util.text.ITextComponent;
 public class State {
     public static LiteralArgumentBuilder<CommandSource> register() {
         return Commands.literal("mod")
-                .then(Commands.literal("enable")
-                        .executes(context -> modState(context.getSource(), true))
-                )
+            .then(Commands.literal("on")
+                .executes(context -> modState(context.getSource(), true))
+            )
 
-                .then(Commands.literal("disable")
-                        .executes(context -> modState(context.getSource(), false))
-                );
+            .then(Commands.literal("off")
+                .executes(context -> modState(context.getSource(), false))
+            )
+        ;
     }
 
     private static int modState(CommandSource source, boolean flag) {
         ClientConfig.mod_enabled.set(flag);
         ConfigHandler.bake();
 
-        final String out = String.format("OldSwing enabled: %s",
+        final String out = String.format("Old swing mod is %s.",
                 ColorUtil.value(String.valueOf(flag)));
         source.sendFeedback(ITextComponent.func_244388_a(out), true);
 

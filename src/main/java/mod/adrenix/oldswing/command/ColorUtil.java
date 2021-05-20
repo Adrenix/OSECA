@@ -5,9 +5,9 @@ import net.minecraft.util.text.TextFormatting;
 public class ColorUtil {
     public static String value(String value) {
         if (value.equals("true"))
-            return format("true", TextFormatting.GREEN);
+            return format("on", TextFormatting.GREEN);
         else if (value.equals("false"))
-            return format("false", TextFormatting.RED);
+            return format("off", TextFormatting.RED);
         return format(value, TextFormatting.YELLOW);
     }
 

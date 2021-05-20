@@ -15,16 +15,17 @@ public class CommandRegistry {
         final LiteralArgumentBuilder<CommandSource> builder = Commands.literal(OldSwingMod.MOD_ID);
 
         builder
-                .then(
-                        Commands.literal("set")
-                                .then(Swings.register())
-                                .then(Animations.register())
-                                .then(State.register())
-                )
-                .then(
-                        Commands.literal("get")
-                                .then(Paths.register())
-                );
+            .then(
+                Commands.literal("set")
+                    .then(Swings.register())
+                    .then(Animations.register())
+                    .then(State.register())
+            )
+            .then(
+                Commands.literal("get")
+                    .then(Paths.register())
+            )
+        ;
 
         dispatcher.register(builder);
     }

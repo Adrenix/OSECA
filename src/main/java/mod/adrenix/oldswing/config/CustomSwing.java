@@ -1,14 +1,21 @@
 package mod.adrenix.oldswing.config;
 
+import com.electronwill.nightconfig.core.Config;
 import mod.adrenix.oldswing.OldSwingMod;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.ForgeRegistries;
 
 public class CustomSwing {
     public static void add(String item, int speed) {
+        // For some reason quotations are auto-removed from config entries when the game loads.
+        // This is a hot-fix to make item names valid config entries without quotations to prevent custom swing resets.
+        item = item.replace('-', ':');
+
         if (ForgeRegistries.ITEMS.containsKey(ResourceLocation.tryCreate(item))) {
             try {
                 if (speed >= ConfigHandler.MIN && speed <= ConfigHandler.MAX) {
+                    item = item.replace(':', '-');
+
                     if (ClientConfig.custom.get().contains(item)) {
                         ClientConfig.custom.get().set(item, speed);
                         ClientConfig.custom.set(ClientConfig.custom.get());
@@ -34,5 +41,29 @@ public class CustomSwing {
         } else {
             OldSwingMod.LOGGER.warn(item + " will not receive a custom speed since it was not found in the forge item registry.");
         }
+    }
+
+    public static boolean remove(String item) {
+        item = item.replace(':', '-');
+
+        if (ClientConfig.custom.get().contains(item)) {
+            ClientConfig.custom.get().remove(item);
+            ClientConfig.custom.set(ClientConfig.custom.get());
+            return true;
+        }
+
+        return false;
+    }
+
+    public static int get(ResourceLocation source, Config.Entry entry) {
+        if (source != null && source.toString().replace(':', '-').equals(entry.getKey())) {
+            return entry.getValue();
+        }
+
+        return -1;
+    }
+
+    public static String key(Config.Entry entry) {
+        return entry.getKey().replace('-', ':');
     }
 }
