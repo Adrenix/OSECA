@@ -13,7 +13,8 @@ This mod brings back the old swinging animations before Minecraft Beta 1.8. This
 This is a feature update that adds two new features and fixes a crash with other mods.
 ```diff
 - IMPORTANT -
-! This update changes the way custom swings are saved, so backup your config if you have customized swing speeds.
+! This update changes the way custom swings are saved.
+! Backup your config if you have customized swing speeds.
 ```
 - Added a new "block" swing speed animation which lets you change how fast the placement animation is.
 - Added the ability to set/get the swing speed of the item your character is currently holding.
