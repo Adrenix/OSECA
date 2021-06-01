@@ -9,6 +9,17 @@
 
 This mod brings back the old swinging animations before Minecraft Beta 1.8. This is an "eye candy" mod targeted towards nostalgic enthusiasts. As a bonus, this mod is also very configurable. All animation changes can be toggled. Moreover, you can customize the swing speeds of swords, tools, items, and everything in-between!
 
+## Version 2.1.0
+This is a feature update that adds two new features and fixes a crash with other mods.
+```diff
+- IMPORTANT -
+! This update changes the way custom swings are saved, so backup your config if you have customized swing speeds.
+```
+- Added a new "block" swing speed animation which lets you change how fast the placement animation is.
+- Added the ability to set/get the swing speed of the item your character is currently holding.
+- Fixed a crash with the whisperwoods mod.
+- Redid numerous aspects of the command system.
+
 ## Version 2.0.2
 Minor update that adds a couple of new features.
 - Changed valid swing speed range to 0-16.
