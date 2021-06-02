@@ -11,6 +11,7 @@ import mod.adrenix.oldswing.config.ConfigHandler;
 import mod.adrenix.oldswing.config.CustomSwing;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.ISuggestionProvider;
@@ -44,7 +45,7 @@ public class Swings {
             String[] suggestions = new String[ConfigHandler.custom_speeds.size()];
 
             if (ConfigHandler.custom_speeds.size() == 0) {
-                suggestions = new String[] { "you have no custom swing speeds" };
+                suggestions = new String[] { I18n.get("oldswing.cmd.swings.no_custom") };
             }
 
             int index = 0;
@@ -140,7 +141,7 @@ public class Swings {
     }
 
     private static int rangeError(CommandSource source) {
-        source.sendErrorMessage(ITextComponent.func_244388_a(String.format("Swing speed is out of range [Range: %d ~ %d]", MIN, MAX)));
+        source.sendFailure(ITextComponent.nullToEmpty(I18n.get("oldswing.cmd.swings.out_of_range", MIN, MAX)));
         return 0;
     }
 
@@ -149,7 +150,7 @@ public class Swings {
             return 1;
         }
 
-        source.sendErrorMessage(ITextComponent.func_244388_a("The mod must be enabled to change swing speeds."));
+        source.sendFailure(ITextComponent.nullToEmpty(I18n.get("oldswing.cmd.mod_enabled_swings")));
         return 0;
     }
 
@@ -190,17 +191,16 @@ public class Swings {
             ClientPlayerEntity entity = Minecraft.getInstance().player;
 
             if (entity != null) {
-                ResourceLocation resource = ForgeRegistries.ITEMS.getKey(entity.getHeldItemMainhand().getItem());
+                Item holding = CustomSwing.addFromHand(entity, speed);
 
-                if (resource == null) {
-                    source.sendErrorMessage(ITextComponent.func_244388_a("You must be holding something to set a custom speed."));
+                if (holding == null) {
+                    source.sendFailure(ITextComponent.nullToEmpty(I18n.get("oldswing.cmd.swings.holding")));
                     return 0;
                 }
 
-                CustomSwing.add(resource.toString(), speed);
-                on = entity.getHeldItemMainhand().getItem().getName().getString();
+                on = holding.toString();
             } else {
-                source.sendErrorMessage(ITextComponent.func_244388_a("Calling source is not a client player entity."));
+                source.sendFailure(ITextComponent.nullToEmpty(I18n.get("oldswing.cmd.not_player")));
                 return 0;
             }
         } else if (on.equals(SWING_KEYS[5])) {
@@ -212,25 +212,26 @@ public class Swings {
         ConfigHandler.bake();
 
         final String oldSwing = String.format("%s: %s",
-                ColorUtil.format("Alpha/Beta Minecraft", TextFormatting.LIGHT_PURPLE),
-                ColorUtil.format("8", TextFormatting.YELLOW)
+                ColorUtil.format(I18n.get("oldswing.config.range_alpha"), TextFormatting.LIGHT_PURPLE),
+                ColorUtil.format(String.valueOf(ConfigHandler.OLD_SPEED), TextFormatting.YELLOW)
         );
 
         final String newSwing = String.format("%s: %s",
-                ColorUtil.format("Modern Minecraft", TextFormatting.LIGHT_PURPLE),
-                ColorUtil.format("6", TextFormatting.YELLOW)
+                ColorUtil.format(I18n.get("oldswing.config.range_modern"), TextFormatting.LIGHT_PURPLE),
+                ColorUtil.format(String.valueOf(ConfigHandler.NEW_SPEED), TextFormatting.YELLOW)
         );
 
-        String plural = "speed";
+        String plural = I18n.get("oldswing.speed");
 
         if (on.equals(SWING_KEYS[0])) {
-            on = "all config";
-            plural = "speeds";
+            on = I18n.get("oldswing.all_config");
+            plural = I18n.get("oldswing.speeds");
         }
 
-        final String info = String.format("%s\n%s\nChanged %s swing %s to %s.",
-                oldSwing, newSwing, ColorUtil.format(on, TextFormatting.GOLD), plural, ColorUtil.format(Integer.toString(speed), TextFormatting.AQUA));
-        source.sendFeedback(ITextComponent.func_244388_a(info), true);
+        final String speeds = String.format("%s\n%s", oldSwing, newSwing);
+        final String info = speeds + I18n.get("oldswing.cmd.swings.changed",
+                ColorUtil.format(on, TextFormatting.GOLD), plural, ColorUtil.format(Integer.toString(speed), TextFormatting.AQUA));
+        source.sendSuccess(ITextComponent.nullToEmpty(info), true);
 
         return 1;
     }
@@ -244,7 +245,7 @@ public class Swings {
         ResourceLocation resource = ForgeRegistries.ITEMS.getKey(item);
 
         if (resource == null) {
-            source.sendErrorMessage(ITextComponent.func_244388_a("Item [" + itemIn + "] does not exist in the forge item registry."));
+            source.sendFailure(ITextComponent.nullToEmpty(I18n.get("oldswing.cmd.swings.nonexistent", itemIn)));
             return 0;
         } else if (speed < MIN || speed > MAX) {
             return rangeError(source);
@@ -253,10 +254,10 @@ public class Swings {
         CustomSwing.add(resource.toString(), speed);
         ConfigHandler.bake();
 
-        final String out = String.format("Changed swing speed of %s to %s.",
-                ColorUtil.format(item.getName().getString(), TextFormatting.GREEN),
+        final String out = I18n.get("oldswing.cmd.swings.custom_change",
+                ColorUtil.format(item.getRegistryName() != null ? item.getRegistryName().toString() : I18n.get("oldswing.unknown"), TextFormatting.GREEN),
                 ColorUtil.format(String.valueOf(speed), TextFormatting.YELLOW));
-        source.sendFeedback(ITextComponent.func_244388_a(out), true);
+        source.sendSuccess(ITextComponent.nullToEmpty(out), true);
 
         return 1;
     }
@@ -271,14 +272,14 @@ public class Swings {
         if (CustomSwing.remove(item)) {
             ConfigHandler.bake();
 
-            out = String.format("Removed %s from custom swing list.", ColorUtil.format(item, TextFormatting.GOLD));
-            source.sendFeedback(ITextComponent.func_244388_a(out), true);
+            out = I18n.get("oldswing.cmd.swings.custom_remove", ColorUtil.format(item, TextFormatting.GOLD));
+            source.sendSuccess(ITextComponent.nullToEmpty(out), true);
 
             return 1;
         }
 
-        out = String.format("%s does not exist in custom swing list.", item);
-        source.sendErrorMessage(ITextComponent.func_244388_a(out));
+        out = I18n.get("oldswing.cmd.swings.custom_nonexistent", item);
+        source.sendFailure(ITextComponent.nullToEmpty(out));
 
         return 0;
     }

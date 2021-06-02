@@ -4,6 +4,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import mod.adrenix.oldswing.command.ColorUtil;
 import mod.adrenix.oldswing.config.ClientConfig;
 import mod.adrenix.oldswing.config.ConfigHandler;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.util.text.ITextComponent;
@@ -25,9 +26,10 @@ public class State {
         ClientConfig.mod_enabled.set(flag);
         ConfigHandler.bake();
 
-        final String out = String.format("Old swing mod is %s.",
-                ColorUtil.value(String.valueOf(flag)));
-        source.sendFeedback(ITextComponent.func_244388_a(out), true);
+        final String state = I18n.get(flag ? "oldswing.on" : "oldswing.off");
+        final String out = I18n.get("oldswing.cmd.state.status",
+                ColorUtil.value(state));
+        source.sendSuccess(ITextComponent.nullToEmpty(out), true);
 
         return 1;
     }

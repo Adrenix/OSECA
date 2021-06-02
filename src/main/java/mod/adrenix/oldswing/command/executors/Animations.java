@@ -5,6 +5,7 @@ import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import mod.adrenix.oldswing.config.ClientConfig;
 import mod.adrenix.oldswing.config.ConfigHandler;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.command.ISuggestionProvider;
@@ -21,7 +22,7 @@ public class Animations {
                 .then(Commands.argument("flag", BoolArgumentType.bool())
                     .suggests(FLAG_SUGGESTION)
                     .executes(context -> toggleReequipAnimation(
-                            context.getSource(), BoolArgumentType.getBool(context, "flag")
+                        context.getSource(), BoolArgumentType.getBool(context, "flag")
                     ))
                 )
             )
@@ -30,7 +31,7 @@ public class Animations {
                 .then(Commands.argument("flag", BoolArgumentType.bool())
                     .suggests(FLAG_SUGGESTION)
                     .executes(context -> toggleCooldown(
-                            context.getSource(), BoolArgumentType.getBool(context, "flag")
+                        context.getSource(), BoolArgumentType.getBool(context, "flag")
                     ))
                 )
             )
@@ -39,7 +40,7 @@ public class Animations {
                 .then(Commands.argument("flag", BoolArgumentType.bool())
                     .suggests(FLAG_SUGGESTION)
                     .executes(context -> toggleSwayAnimation(
-                            context.getSource(), BoolArgumentType.getBool(context, "flag")
+                        context.getSource(), BoolArgumentType.getBool(context, "flag")
                     ))
                 )
             )
@@ -48,34 +49,33 @@ public class Animations {
 
     private static int toggleAnimation(CommandSource source, boolean flag, ForgeConfigSpec.BooleanValue config, String on, String off) {
         if (!ConfigHandler.mod_enabled) {
-            source.sendErrorMessage(ITextComponent.func_244388_a("The must be enabled to change animation states."));
+            source.sendFailure(ITextComponent.nullToEmpty(I18n.get("oldswing.cmd.mod_enabled_animation")));
             return 0;
         }
 
-        config.set(flag);
-        ConfigHandler.bake();
+        ConfigHandler.toggle(config, flag);
 
         final String state = flag ? on : off;
-        source.sendFeedback(ITextComponent.func_244388_a(state), true);
+        source.sendSuccess(ITextComponent.nullToEmpty(state), true);
 
         return 1;
     }
 
     private static int toggleCooldown(CommandSource source, boolean flag) {
-        String on = "The cooldown animation that plays after a swing or change in slot will now be prevented. This will not modify combat.";
-        String off = "A cooldown animation will now play after every swing or change in slot. This will not modify combat.";
+        String on = I18n.get("oldswing.cmd.cooldown.on");
+        String off = I18n.get("oldswing.cmd.cooldown.off");
         return toggleAnimation(source, flag, ClientConfig.prevent_cooldown, on, off);
     }
 
     private static int toggleReequipAnimation(CommandSource source, boolean flag) {
-        String on = "Reequip animation will no longer play when an item's durability changes.";
-        String off = "Reequip animation will now play when an item's durability changes.";
+        String on = I18n.get("oldswing.cmd.reequip.on");
+        String off = I18n.get("oldswing.cmd.reequip.off");
         return toggleAnimation(source, flag, ClientConfig.prevent_reequip, on, off);
     }
 
     private static int toggleSwayAnimation(CommandSource source, boolean flag) {
-        String on = "The subtle arm sway animation that happens when you look around will now be prevented.";
-        String off = "You will now see a subtle arm sway animation occur as you look around.";
+        String on = I18n.get("oldswing.cmd.sway.on");
+        String off = I18n.get("oldswing.cmd.sway.off");
         return toggleAnimation(source, flag, ClientConfig.prevent_sway, on, off);
     }
 }

@@ -27,5 +27,5 @@ logoFile="oldswing-logo.png" #optional
 authors="Adrenix" #optional
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-Brings back the old swinging animations before Minecraft Beta 1.8
+Brings back the old swinging animations before Minecraft Beta 1.8. All animation changes can be toggled. Moreover, you can change the swing speed of everything. While this mod is intended for nostalgic entusiasts, it is also useful for those who are photosensitive.
 '''
