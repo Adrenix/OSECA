@@ -3,10 +3,13 @@ package mod.adrenix.oldswing;
 import mod.adrenix.oldswing.command.CommandRegistry;
 import mod.adrenix.oldswing.config.ClientConfig;
 import mod.adrenix.oldswing.config.ConfigHandler;
+import mod.adrenix.oldswing.config.gui.screen.ConfigScreen;
+import mod.adrenix.oldswing.config.gui.ConfigKey;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ExtensionPoint;
 import net.minecraftforge.fml.ModLoadingContext;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.config.ModConfig;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
@@ -29,6 +32,7 @@ public class OldSwingMod {
             return;
 
         ModLoadingContext.get().registerConfig(ModConfig.Type.CLIENT, ConfigHandler.CLIENT_SPEC);
+        ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.CONFIGGUIFACTORY, () -> (mc, screen) -> new ConfigScreen(screen));
         FMLJavaModLoadingContext.get().getModEventBus().addListener(this::configSetup);
 
         MinecraftForge.EVENT_BUS.register(this);
@@ -36,10 +40,11 @@ public class OldSwingMod {
 
     public void configSetup(final FMLClientSetupEvent event) {
         ClientConfig.loadCustomItems();
+        ClientRegistry.registerKeyBinding(ConfigKey.OPEN_GUI);
     }
 
     @SubscribeEvent
     public void serverStarting(FMLServerStartingEvent event) {
-        CommandRegistry.register(event.getServer().getCommandManager().getDispatcher());
+        CommandRegistry.register(event.getServer().getCommands().getDispatcher());
     }
 }

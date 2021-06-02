@@ -3,10 +3,7 @@ package mod.adrenix.oldswing.command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import mod.adrenix.oldswing.OldSwingMod;
-import mod.adrenix.oldswing.command.executors.Animations;
-import mod.adrenix.oldswing.command.executors.Paths;
-import mod.adrenix.oldswing.command.executors.State;
-import mod.adrenix.oldswing.command.executors.Swings;
+import mod.adrenix.oldswing.command.executors.*;
 import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 
@@ -24,6 +21,9 @@ public class CommandRegistry {
             .then(
                 Commands.literal("get")
                     .then(Paths.register())
+            )
+            .then(
+                Config.register()
             )
         ;
 

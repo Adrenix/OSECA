@@ -1,6 +1,6 @@
 package mod.adrenix.oldswing.mixin;
 
-import mod.adrenix.oldswing.config.TransformerHelper;
+import mod.adrenix.oldswing.config.MixinHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.Entity;
@@ -21,27 +21,27 @@ public abstract class LivingEntityMixin extends Entity {
         super(entityTypeIn, worldIn);
     }
 
-    @Shadow public abstract boolean isPotionActive(Effect potionIn);
-    @Shadow public abstract EffectInstance getActivePotionEffect(Effect potionIn);
+    @Shadow public abstract boolean hasEffect(Effect potionIn);
+    @Shadow public abstract EffectInstance getEffect(Effect potionIn);
 
     /**
      * @author Adrenix
      * @reason Allows for the manipulation of the speed during swinging animation.
      */
     @Overwrite
-    public int getArmSwingAnimationEnd() {
+    public int getCurrentSwingDuration() {
         ClientPlayerEntity player = Minecraft.getInstance().player;
 
         if (player == null)
             return 6;
 
-        int mod = TransformerHelper.swingSpeed(player);
+        int mod = MixinHelper.swingSpeed(player);
 
-        if (EffectUtils.hasMiningSpeedup(player)) {
-            return mod - (1 + EffectUtils.getMiningSpeedup(player));
+        if (EffectUtils.hasDigSpeed(player)) {
+            return mod - (1 + EffectUtils.getDigSpeedAmplification(player));
         } else {
-            return this.isPotionActive(Effects.MINING_FATIGUE) ?
-                    mod + (1 + this.getActivePotionEffect(Effects.MINING_FATIGUE).getAmplifier()) * 2 :
+            return this.hasEffect(Effects.DIG_SLOWDOWN) ?
+                    mod + (1 + this.getEffect(Effects.DIG_SLOWDOWN).getAmplifier()) * 2 :
                     mod;
         }
     }

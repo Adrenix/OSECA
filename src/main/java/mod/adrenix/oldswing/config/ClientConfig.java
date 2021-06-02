@@ -21,6 +21,8 @@ public class ClientConfig {
     public static ForgeConfigSpec.IntValue block_speed;
     public static ForgeConfigSpec.IntValue sword_speed;
     public static ForgeConfigSpec.IntValue tool_speed;
+    public static ForgeConfigSpec.IntValue global_speed;
+    public static ForgeConfigSpec.BooleanValue global_speed_enabled;
     public static ForgeConfigSpec.ConfigValue<Config> custom;
     public static final Map<String, ForgeConfigSpec.IntValue> SPEEDS = new HashMap<>();
 
@@ -46,7 +48,6 @@ public class ClientConfig {
                 .comment(" Enabling this option will prevent the subtle arm sway when looking in different directions.")
                 .define("animation.prevent_sway", true);
 
-
         /* Swing Speeds */
         builder.comment(
                 " The higher the swing number is the slower the swinging animation will be.",
@@ -55,7 +56,7 @@ public class ClientConfig {
         builder.push("swings");
 
         swing_speed = builder
-                .comment(" Use this option to assign a swing speed to anything that isn't a sword or tool.")
+                .comment(" Use this option to assign a swing speed to anything that isn't a block, tool, or sword.")
                 .defineInRange("item_speed", ConfigHandler.OLD_SPEED, ConfigHandler.MIN, ConfigHandler.MAX);
 
         block_speed = builder
@@ -71,8 +72,23 @@ public class ClientConfig {
                          " Like shovels, pickaxes, and axes.")
                 .defineInRange("tool_speed", ConfigHandler.OLD_SPEED, ConfigHandler.MIN, ConfigHandler.MAX);
 
+        global_speed = builder
+                .comment(" Give a global swing speed that is applied to everything regardless of configured values.",
+                         " This can be toggled using the 'global_speed_enabled' setting.")
+                .defineInRange( "global_speed", ConfigHandler.OLD_SPEED, ConfigHandler.MIN, ConfigHandler.MAX);
+
+        global_speed_enabled = builder
+                .comment(" Enabling this option will override all swing speeds with the value set in the 'global_speed' setting.")
+                .define("global_speed_enabled", false);
+
         custom = builder
-                .comment(" Add a custom swing speed for any item in the game.")
+                .comment(" Add a custom swing speed for any item in the game.",
+                         " It is recommended to add items in-game through the config GUI or the command system.",
+                         " If you want to manually add items, then reference the following example:",
+                         " ",
+                         " [swings.custom]",
+                         "     minecraft-diamond_pickaxe = 10",
+                         "     minecraft-iron_shovel = 8")
                 .define("custom", CommentedConfig.inMemoryConcurrent().createSubConfig());
 
         /* Command References */
@@ -89,11 +105,5 @@ public class ClientConfig {
 
     public static void loadCustomItems() {
         custom.get().entrySet().forEach(entry -> custom.get().add(entry.getKey(), entry.getValue()));
-
-        // Ensure user has a couple of examples that shows how to add custom swing speeds.
-        if (custom.get().size() == 0) {
-            CustomSwing.add("minecraft:wooden_sword", ConfigHandler.OLD_SPEED);
-            CustomSwing.add("minecraft:wooden_axe", ConfigHandler.OLD_SPEED);
-        }
     }
 }
