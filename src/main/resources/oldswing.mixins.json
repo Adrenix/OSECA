@@ -1,0 +1,10 @@
+{
+  "required": true,
+  "compatibilityLevel": "JAVA_8",
+  "package": "mod.adrenix.oldswing.mixin",
+  "minVersion": "0.7.10",
+  "mixins": [
+    "EntityLivingBaseMixin",
+    "ItemRendererMixin"
+  ]
+}
