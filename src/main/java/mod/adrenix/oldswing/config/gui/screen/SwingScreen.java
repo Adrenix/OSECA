@@ -16,12 +16,15 @@ import net.minecraft.util.text.TextFormatting;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SwingScreen extends ConfigScreen {
-    public SwingScreen(Screen parentScreen) {
+public class SwingScreen extends ConfigScreen
+{
+    public SwingScreen(Screen parentScreen)
+    {
         super(I18n.get("oldswing.config.cat_swing_speed"), parentScreen);
     }
 
-    public static List<ITextComponent> rangeTip() {
+    public static List<ITextComponent> rangeTip()
+    {
         List<ITextComponent> tip = new ArrayList<>();
 
         String alpha = I18n.get("oldswing.config.range_alpha");
@@ -33,7 +36,8 @@ public class SwingScreen extends ConfigScreen {
         return tip;
     }
 
-    private Button addRangeTip(int row) {
+    private Button addRangeTip(int row)
+    {
         return new Button(
                 this.width / 2 - 176,
                 getRowSeparation(row),
@@ -45,16 +49,16 @@ public class SwingScreen extends ConfigScreen {
         );
     }
 
-    public static String getRangeColor(int speed) {
-        if (speed <= ConfigHandler.NEW_SPEED) {
+    public static String getRangeColor(int speed)
+    {
+        if (speed <= ConfigHandler.NEW_SPEED)
             return TextFormatting.GOLD.toString() + speed;
-        }
-
         return TextFormatting.GREEN.toString() + speed;
     }
 
     @Override
-    protected void init() {
+    protected void init()
+    {
         String itemTitle = I18n.get("oldswing.config.item_swing_speed");
         String itemDesc = I18n.get("oldswing.config.item_swing_description");
         String blockTitle = I18n.get("oldswing.config.block_swing_speed");
@@ -132,7 +136,8 @@ public class SwingScreen extends ConfigScreen {
         this.optionsRowList.addBig(new BooleanButton(
                 I18n.get("oldswing.config.global_speed"),
                 unused -> ConfigHandler.global_speed_enabled,
-                (unused, value) -> {
+                (unused, value) ->
+                {
                     ConfigHandler.sendSliderSetters();
                     ConfigHandler.toggle(ClientConfig.global_speed_enabled, value);
                 }
@@ -144,14 +149,16 @@ public class SwingScreen extends ConfigScreen {
         this.addButton(this.getDoneButton());
     }
 
-    private void reset(Button unused) {
+    private void reset(Button unused)
+    {
         ConfigHandler.sendSliderSetters();
         ConfigHandler.storeCategoricalSwingSpeeds();
         ConfigHandler.resetCategoricalSwingSpeeds();
         Minecraft.getInstance().setScreen(Minecraft.getInstance().screen);
     }
 
-    private void undo(Button unused) {
+    private void undo(Button unused)
+    {
         ConfigHandler.undoCategoricalSwingReset();
         Minecraft.getInstance().setScreen(Minecraft.getInstance().screen);
     }

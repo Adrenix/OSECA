@@ -10,27 +10,32 @@ import net.minecraft.command.Commands;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 
-public class Config {
-    public static LiteralArgumentBuilder<CommandSource> register() {
-        return Commands.literal("config")
-            .executes(context -> openConfig(context.getSource()))
-        ;
+public class Config
+{
+    public static LiteralArgumentBuilder<CommandSource> register()
+    {
+        return Commands.literal("config").executes(context -> openConfig(context.getSource()));
     }
 
-    private static int openConfig(CommandSource source) {
+    private static int openConfig(CommandSource source)
+    {
         KeyBinding openConfigKey = null;
         Minecraft.getInstance().setScreen(new ConfigScreen(Minecraft.getInstance().screen));
 
-        for (KeyBinding binding : Minecraft.getInstance().options.keyMappings) {
-            if (binding.getCategory().equals("oldswing.title")) {
-                if (binding.getName().equals("oldswing.key.open_config")) {
+        for (KeyBinding binding : Minecraft.getInstance().options.keyMappings)
+        {
+            if (binding.getCategory().equals("oldswing.title"))
+            {
+                if (binding.getName().equals("oldswing.key.open_config"))
+                {
                     openConfigKey = binding;
                     break;
                 }
             }
         }
 
-        if (openConfigKey != null) {
+        if (openConfigKey != null)
+        {
             String key = TextFormatting.YELLOW + openConfigKey.getKey().getDisplayName().getString() + TextFormatting.RESET;
             String out = I18n.get("oldswing.chat.open_config", key);
             source.sendSuccess(ITextComponent.nullToEmpty(out), true);

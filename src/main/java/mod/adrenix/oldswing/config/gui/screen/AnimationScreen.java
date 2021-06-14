@@ -9,13 +9,16 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.resources.I18n;
 
-public class AnimationScreen extends ConfigScreen {
-    public AnimationScreen(Screen parentScreen) {
+public class AnimationScreen extends ConfigScreen
+{
+    public AnimationScreen(Screen parentScreen)
+    {
         super(I18n.get("oldswing.config.animation_settings"), parentScreen);
     }
 
     @Override
-    protected void init() {
+    protected void init()
+    {
         this.optionsRowList = this.getRowList();
 
         this.addButton(addTooltip(I18n.get("oldswing.config.cooldown_description"), 1));
@@ -44,13 +47,15 @@ public class AnimationScreen extends ConfigScreen {
         this.addButton(this.getDoneButton());
     }
 
-    private void reset(Button unused) {
+    private void reset(Button unused)
+    {
         ConfigHandler.storeAnimationValues();
         ConfigHandler.resetAnimationValues();
         Minecraft.getInstance().setScreen(Minecraft.getInstance().screen);
     }
 
-    private void undo(Button unused) {
+    private void undo(Button unused)
+    {
         ConfigHandler.undoAnimationReset();
         Minecraft.getInstance().setScreen(Minecraft.getInstance().screen);
     }

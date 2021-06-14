@@ -1,3 +1,8 @@
+## Version 2.2.1
+This is a small update that should significantly increase compatibility with other mods.
+- Changed the core codebase to utilize injections which should significantly increase mod compatibility.
+- Modified reequip animation logic to help with mod compatibility.
+
 ## Version 2.2.0
 This is a major feature update with a focus on configuration menus. The mod now comes with a graphical user interface that allows changing mod configurations without commands. The default key to access this menu is 'o' and can be opened in multiplayer. This key can be changed in the control settings menu.
 - Added a configuration menu.
@@ -47,3 +52,16 @@ Old swing has been updated to 1.16! Hooray!
 - Since Forge does not have an in-game config GUI yet, you can change these values with the `/oldswing` command.
     - You can also use the config file. After you save your changes, the game will automatically update without a restart.
 - More old-school animations have been implemented.
+
+### Version 1.1.1
+This is a small update that should significantly increase compatibility with other mods.
+- Changed the core codebase to utilize injections which should significantly increase mod compatibility.
+- Modified reequip animation logic to help with mod compatibility.
+
+### Version 1.1.0
+This update backports some features from 2.0 to 1.0.
+- Added arm sway animation prevention.
+- Added sword, block, and tool swing speed categories.
+- Added global swing speed.
+- Changed swing speed range to 0-16.
+- Updated configuration menu.

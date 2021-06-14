@@ -11,14 +11,17 @@ import javax.annotation.Nonnull;
 import java.util.function.BiConsumer;
 import java.util.function.Predicate;
 
-public class BooleanButton extends BooleanOption {
-    public BooleanButton(String title, Predicate<GameSettings> predicate, BiConsumer<GameSettings, Boolean> consumer) {
+public class BooleanButton extends BooleanOption
+{
+    public BooleanButton(String title, Predicate<GameSettings> predicate, BiConsumer<GameSettings, Boolean> consumer)
+    {
         super(title, null, predicate, consumer);
     }
 
     @Override
     @Nonnull
-    public ITextComponent getMessage(@Nonnull GameSettings settings) {
+    public ITextComponent getMessage(@Nonnull GameSettings settings)
+    {
         boolean flag = this.get(settings);
         String title = this.getCaption().getString() + ": ";
         TranslationTextComponent state = new TranslationTextComponent(flag ? "options.on.composed" : "options.off.composed");

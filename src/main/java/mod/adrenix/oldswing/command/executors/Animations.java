@@ -12,7 +12,8 @@ import net.minecraft.command.ISuggestionProvider;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraftforge.common.ForgeConfigSpec;
 
-public class Animations {
+public class Animations
+{
     private static final SuggestionProvider<CommandSource> FLAG_SUGGESTION = (context, builder) ->
             ISuggestionProvider.suggest(new String[]{"true", "false"}, builder);
 
@@ -47,8 +48,10 @@ public class Animations {
         ;
     }
 
-    private static int toggleAnimation(CommandSource source, boolean flag, ForgeConfigSpec.BooleanValue config, String on, String off) {
-        if (!ConfigHandler.mod_enabled) {
+    private static int toggleAnimation(CommandSource source, boolean flag, ForgeConfigSpec.BooleanValue config, String on, String off)
+    {
+        if (!ConfigHandler.mod_enabled)
+        {
             source.sendFailure(ITextComponent.nullToEmpty(I18n.get("oldswing.cmd.mod_enabled_animation")));
             return 0;
         }
@@ -61,19 +64,22 @@ public class Animations {
         return 1;
     }
 
-    private static int toggleCooldown(CommandSource source, boolean flag) {
+    private static int toggleCooldown(CommandSource source, boolean flag)
+    {
         String on = I18n.get("oldswing.cmd.cooldown.on");
         String off = I18n.get("oldswing.cmd.cooldown.off");
         return toggleAnimation(source, flag, ClientConfig.prevent_cooldown, on, off);
     }
 
-    private static int toggleReequipAnimation(CommandSource source, boolean flag) {
+    private static int toggleReequipAnimation(CommandSource source, boolean flag)
+    {
         String on = I18n.get("oldswing.cmd.reequip.on");
         String off = I18n.get("oldswing.cmd.reequip.off");
         return toggleAnimation(source, flag, ClientConfig.prevent_reequip, on, off);
     }
 
-    private static int toggleSwayAnimation(CommandSource source, boolean flag) {
+    private static int toggleSwayAnimation(CommandSource source, boolean flag)
+    {
         String on = I18n.get("oldswing.cmd.sway.on");
         String off = I18n.get("oldswing.cmd.sway.off");
         return toggleAnimation(source, flag, ClientConfig.prevent_sway, on, off);

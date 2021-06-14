@@ -29,7 +29,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
-public class CustomScreen extends ConfigScreen {
+public class CustomScreen extends ConfigScreen
+{
     protected int TOP_ROW_Y = 23;
     protected ItemSuggestionHelper itemSuggestions;
     protected Button addItemButton;
@@ -47,7 +48,8 @@ public class CustomScreen extends ConfigScreen {
     private final int checkW = 20;
     private final int checkH = 20;
 
-    public CustomScreen(Screen parentScreen) {
+    public CustomScreen(Screen parentScreen)
+    {
         super(I18n.get("oldswing.config.custom_swing_speed"), parentScreen);
 
         this.toggleTools = new CheckboxButton(checkX, TOP_ROW_Y + 27, checkW, checkH, new StringTextComponent(I18n.get("oldswing.tool")), this.toolsToggleState);
@@ -56,22 +58,26 @@ public class CustomScreen extends ConfigScreen {
         this.toggleReset = new CheckboxButton(checkX, TOP_ROW_Y - 1, checkW, checkH, new StringTextComponent(I18n.get("oldswing.config.reset")), this.resetToggleState, false);
     }
 
-    public boolean suggestionsAreClosed() {
+    public boolean suggestionsAreClosed()
+    {
         if (this.itemSuggestions == null)
             return true;
         return !this.itemSuggestions.isSuggesting();
     }
 
-    public ItemRenderer getItemRenderer() {
+    public ItemRenderer getItemRenderer()
+    {
         return this.itemRenderer;
     }
 
     @Nullable
-    public Button getAddItemButton() {
+    public Button getAddItemButton()
+    {
         return this.addItemButton;
     }
 
-    public CustomRowList getCustomRowList() {
+    public CustomRowList getCustomRowList()
+    {
         return new CustomRowList(
                 this, this.width, this.height,
                 OPTIONS_LIST_TOP_HEIGHT + 22,
@@ -80,7 +86,8 @@ public class CustomScreen extends ConfigScreen {
         );
     }
 
-    public TextFieldWidget getSearchBox() {
+    public TextFieldWidget getSearchBox()
+    {
         return new TextFieldWidget(
                 this.font,
                 this.width / 2 - 112,
@@ -92,37 +99,41 @@ public class CustomScreen extends ConfigScreen {
         );
     }
 
-    private void openCustomToast(String itemName) {
+    private void openCustomToast(String itemName)
+    {
         ITextComponent message = new StringTextComponent(TextFormatting.WHITE + I18n.get("oldswing.config.toast_add_item"));
         ITextComponent item = new StringTextComponent(TextFormatting.GREEN + itemName);
         this.getMinecraft().getToasts().addToast(new SystemToast(SystemToast.Type.TUTORIAL_HINT, message, item));
     }
 
-    private void refresh() {
+    private void refresh()
+    {
         this.itemSuggestions.resetInputField();
         this.getMinecraft().setScreen(this.getMinecraft().screen);
         this.searchBox.setFocus(false);
         this.resetButton.active = this.toggleReset.selected();
     }
 
-    private void addCustomItem(@Nullable Item item) {
-        if (item != null) {
+    private void addCustomItem(@Nullable Item item)
+    {
+        if (item != null)
+        {
             CustomSwing.add(Objects.requireNonNull(item.getRegistryName()).toString(), ConfigHandler.OLD_SPEED);
             ConfigHandler.bake();
 
             Config.Entry entry = CustomSwing.getConfigEntry(item);
             CustomRowList.added = entry;
 
-            if (entry != null) {
+            if (entry != null)
                 openCustomToast(CustomSwing.getRegistryName(CustomSwing.key(entry)));
-            }
         }
 
         this.refresh();
         CustomRowList.deleted.clear();
     }
 
-    public Button getLightningButton() {
+    public Button getLightningButton()
+    {
         StringTextComponent tip = new StringTextComponent(TextFormatting.YELLOW + I18n.get("oldswing.config.auto_add_item"));
         return new Button(
                 this.width / 2 - 134,
@@ -130,7 +141,8 @@ public class CustomScreen extends ConfigScreen {
                 20,
                 20,
                 new StringTextComponent(TextFormatting.YELLOW + (TextFormatting.BOLD + "\u26a1")),
-                (unused) -> {
+                (unused) ->
+                {
                     if (this.getMinecraft().player != null)
                         this.addCustomItem(CustomSwing.addFromHand(this.getMinecraft().player, ConfigHandler.OLD_SPEED));
                 },
@@ -138,7 +150,8 @@ public class CustomScreen extends ConfigScreen {
         );
     }
 
-    public Button getAddButton() {
+    public Button getAddButton()
+    {
         StringTextComponent tip = new StringTextComponent(TextFormatting.GREEN + I18n.get("oldswing.config.add_item"));
         return new Button(
                 this.width / 2 + 116,
@@ -151,13 +164,15 @@ public class CustomScreen extends ConfigScreen {
         );
     }
 
-    private void resetCustomList() {
+    private void resetCustomList()
+    {
         ClientConfig.custom.get().clear();
         this.toggleReset.onPress();
         this.getMinecraft().setScreen(this.getMinecraft().screen);
     }
 
-    public Button getResetButton() {
+    public Button getResetButton()
+    {
         StringTextComponent topTip = new StringTextComponent(TextFormatting.RED + I18n.get("oldswing.config.clear_custom_list"));
         StringTextComponent bottomTip = new StringTextComponent(I18n.get("oldswing.config.clear_custom_list_undone", TextFormatting.DARK_RED, TextFormatting.UNDERLINE, TextFormatting.DARK_RED));
         List<ITextComponent> tip = Lists.newArrayList(topTip, bottomTip);
@@ -174,28 +189,36 @@ public class CustomScreen extends ConfigScreen {
     }
 
     @Override
-    public void tick() {
+    public void tick()
+    {
         this.searchBox.tick();
 
-        if (this.toolsToggleState != this.toggleTools.selected()) {
+        if (this.toolsToggleState != this.toggleTools.selected())
+        {
             this.toolsToggleState = this.toggleTools.selected();
             this.refresh();
-        } else if (this.blocksToggleState != this.toggleBlocks.selected()) {
+        }
+        else if (this.blocksToggleState != this.toggleBlocks.selected())
+        {
             this.blocksToggleState = this.toggleBlocks.selected();
             this.refresh();
-        } else if (this.itemsToggleState != this.toggleItems.selected()) {
+        }
+        else if (this.itemsToggleState != this.toggleItems.selected())
+        {
             this.itemsToggleState = this.toggleItems.selected();
             this.refresh();
         }
 
-        if (this.resetToggleState != this.toggleReset.selected()) {
+        if (this.resetToggleState != this.toggleReset.selected())
+        {
             this.resetToggleState = this.toggleReset.selected();
             this.resetButton.active = this.toggleReset.selected();
         }
     }
 
     @Override
-    public void resize(@Nonnull Minecraft mc, int x, int y) {
+    public void resize(@Nonnull Minecraft mc, int x, int y)
+    {
         String s = this.searchBox.getValue();
         this.init(mc, x, y);
         this.searchBox.setValue(s);
@@ -203,39 +226,46 @@ public class CustomScreen extends ConfigScreen {
         this.resetButton.active = this.toggleReset.selected();
     }
 
-    private void onEdited(String unused) {
+    private void onEdited(String unused)
+    {
         this.itemSuggestions.updateItemSuggestions();
     }
 
     @Override
-    public boolean keyPressed(int key, int i2, int i3) {
-        if (this.itemSuggestions.keyPressed(key)) {
+    public boolean keyPressed(int key, int i2, int i3)
+    {
+        if (this.itemSuggestions.keyPressed(key))
             return true;
-        } else if (key == 257 && this.addItemButton.active) {
+        else if (key == 257 && this.addItemButton.active)
+        {
             this.addCustomItem(this.itemSuggestions.getItem());
             return true;
-        } else if (super.keyPressed(key, i2, i3)) {
-            return true;
-        } else {
-            return key == 257 || key == 335;
         }
+        else if (super.keyPressed(key, i2, i3))
+            return true;
+        else
+            return key == 257 || key == 335;
     }
 
     @Override
-    public boolean mouseScrolled(double x, double y, double f) {
+    public boolean mouseScrolled(double x, double y, double f)
+    {
         return this.itemSuggestions.mouseScrolled(f) || super.mouseScrolled(x, y, f);
     }
 
     @Override
-    public boolean mouseClicked(double x, double y, int i) {
+    public boolean mouseClicked(double x, double y, int i)
+    {
         return this.itemSuggestions.mouseClicked(x, y) || super.mouseClicked(x, y, i);
     }
 
-    private String getEntryId(Config.Entry entry) {
+    private String getEntryId(Config.Entry entry)
+    {
         return entry.getKey().replaceFirst(".+-", "");
     }
 
-    private List<Config.Entry> sortCustomItems() {
+    private List<Config.Entry> sortCustomItems()
+    {
         List<Config.Entry> sorted = Lists.newArrayList();
         List<Config.Entry> tools = Lists.newArrayList();
         List<Config.Entry> blocks = Lists.newArrayList();
@@ -243,23 +273,23 @@ public class CustomScreen extends ConfigScreen {
         List<Config.Entry> uncategorized = Lists.newArrayList();
         Config.Entry added = null;
 
-        for (Config.Entry entry : ConfigHandler.custom_speeds.entrySet()) {
+        for (Config.Entry entry : ConfigHandler.custom_speeds.entrySet())
+        {
             ItemStack stack = CustomSwing.getItemStackFromKey(CustomSwing.key(entry));
 
-            if (entry.equals(CustomRowList.added)) {
+            if (entry.equals(CustomRowList.added))
                 added = entry;
-            } else if (stack == null) {
+            else if (stack == null)
                 unknown.add(entry);
-            } else if (stack.getItem() instanceof ToolItem || stack.getItem() instanceof SwordItem) {
+            else if (stack.getItem() instanceof ToolItem || stack.getItem() instanceof SwordItem)
                 if (this.toggleTools.selected())
                     tools.add(entry);
-            } else if (stack.getItem() instanceof BlockItem) {
+            else if (stack.getItem() instanceof BlockItem)
                 if (this.toggleBlocks.selected())
                     blocks.add(entry);
-            } else {
+            else
                 if (this.toggleItems.selected())
                     uncategorized.add(entry);
-            }
         }
 
         sorted.addAll(tools);
@@ -275,7 +305,8 @@ public class CustomScreen extends ConfigScreen {
     }
 
     @Override
-    protected void init() {
+    protected void init()
+    {
         this.addButton(this.toggleTools);
         this.addButton(this.toggleBlocks);
         this.addButton(this.toggleItems);
@@ -307,12 +338,14 @@ public class CustomScreen extends ConfigScreen {
     }
 
     @Nullable
-    private Item getResetBlock() {
+    private Item getResetBlock()
+    {
         return ForgeRegistries.ITEMS.getValue(ResourceLocation.tryParse("minecraft:tnt"));
     }
 
     @Override
-    public void render(@Nonnull MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(@Nonnull MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks)
+    {
         this.autoFillButton.active = this.getMinecraft().level != null;
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         this.itemSuggestions.render(matrixStack, mouseX, mouseY);
@@ -323,11 +356,11 @@ public class CustomScreen extends ConfigScreen {
     }
 
     @Override
-    public void onClose() {
-        if (!CustomRowList.deleted.isEmpty()) {
+    public void onClose()
+    {
+        if (!CustomRowList.deleted.isEmpty())
             for (Config.Entry entry : CustomRowList.deleted)
                 CustomSwing.remove(entry.getKey());
-        }
 
         CustomRowList.deleted.clear();
         CustomRowList.added = null;

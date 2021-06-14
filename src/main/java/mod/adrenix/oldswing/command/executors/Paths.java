@@ -22,12 +22,14 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.Map;
 
-public class Paths {
+public class Paths
+{
     private static final String[] PATH_KEYS = { "animations", "categories", "items", "holding" };
     private static final SuggestionProvider<CommandSource> CONFIG_SUGGESTION = (context, builder) ->
             ISuggestionProvider.suggest(PATH_KEYS, builder);
 
-    public static RequiredArgumentBuilder<CommandSource, String> register() {
+    public static RequiredArgumentBuilder<CommandSource, String> register()
+    {
          return Commands.argument("path", StringArgumentType.string())
             .suggests(CONFIG_SUGGESTION)
             .executes(context -> getConfigurationStates(
@@ -36,15 +38,19 @@ public class Paths {
          ;
     }
 
-    private static int getConfigurationStates(CommandSource source, String path) {
-        if (!ConfigHandler.mod_enabled) {
+    private static int getConfigurationStates(CommandSource source, String path)
+    {
+        if (!ConfigHandler.mod_enabled)
+        {
             source.sendFailure(ITextComponent.nullToEmpty(I18n.get("oldswing.cmd.mod_enabled_paths")));
             return 0;
         }
 
-        if (path.equals(PATH_KEYS[0])) {
+        if (path.equals(PATH_KEYS[0]))
+        {
             // Modded animations
-            for (Map.Entry<String, ForgeConfigSpec.ConfigValue<?>> entry : ClientConfig.ANIMATIONS.entrySet()) {
+            for (Map.Entry<String, ForgeConfigSpec.ConfigValue<?>> entry : ClientConfig.ANIMATIONS.entrySet())
+            {
                 ForgeConfigSpec.ConfigValue<?> value = entry.getValue();
 
                 final String out = I18n.get("oldswing.cmd.paths.config",
@@ -53,9 +59,12 @@ public class Paths {
             }
 
             return 1;
-        } else if (path.equals(PATH_KEYS[1])) {
+        }
+        else if (path.equals(PATH_KEYS[1]))
+        {
             // Categorical swinging speeds
-            for (Map.Entry<String, ForgeConfigSpec.IntValue> entry : ClientConfig.SPEEDS.entrySet()) {
+            for (Map.Entry<String, ForgeConfigSpec.IntValue> entry : ClientConfig.SPEEDS.entrySet())
+            {
                 ForgeConfigSpec.IntValue value = entry.getValue();
 
                 final String out = I18n.get("oldswing.cmd.paths.category",
@@ -65,12 +74,16 @@ public class Paths {
             }
 
             return 1;
-        } else if (path.equals(PATH_KEYS[2])) {
+        }
+        else if (path.equals(PATH_KEYS[2]))
+        {
             // Individual defined swing speeds
             int counter = 0;
 
-            for (Config.Entry entry : ConfigHandler.custom_speeds.entrySet()) {
-                if (counter == 9) {
+            for (Config.Entry entry : ConfigHandler.custom_speeds.entrySet())
+            {
+                if (counter == 9)
+                {
                     source.sendSuccess(ITextComponent.nullToEmpty(
                             ColorUtil.format(I18n.get("oldswing.cmd.paths.remaining"), TextFormatting.ITALIC)), true);
                     break;
@@ -84,34 +97,39 @@ public class Paths {
                 counter++;
             }
 
-            if (counter == 0) {
+            if (counter == 0)
+            {
                 source.sendFailure(ITextComponent.nullToEmpty(I18n.get("oldswing.cmd.paths.no_custom")));
                 return 0;
             }
 
             return 1;
-        } else if (path.equals(PATH_KEYS[3])) {
+        }
+        else if (path.equals(PATH_KEYS[3]))
+        {
             // Checks swinging speed of item being held
             ClientPlayerEntity entity = Minecraft.getInstance().player;
 
-            if (entity != null) {
+            if (entity != null)
+            {
                 Item item = entity.getMainHandItem().getItem();
                 String name = item.getRegistryName() != null ? item.getName(item.getDefaultInstance()).getString() : I18n.get("oldswing.unknown");
-                int speed = MixinHelper.swingSpeed(entity);
+                int speed = MixinHelper.getSwingSpeed(entity);
 
                 final String out = I18n.get("oldswing.cmd.paths.holding",
                         ColorUtil.format(name, TextFormatting.LIGHT_PURPLE),
                         ColorUtil.format(String.valueOf(speed), TextFormatting.YELLOW));
                 source.sendSuccess(ITextComponent.nullToEmpty(out), true);
                 return 1;
-            } else {
+            }
+            else
+            {
                 source.sendFailure(ITextComponent.nullToEmpty(I18n.get("oldswing.cmd.not_player")));
                 return 0;
             }
         }
 
         source.sendFailure(ITextComponent.nullToEmpty(I18n.get("oldswing.cmd.paths.unknown")));
-
         return 0;
     }
 }

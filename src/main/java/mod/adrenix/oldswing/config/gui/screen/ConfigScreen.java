@@ -23,7 +23,8 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Optional;
 
-public class ConfigScreen extends Screen {
+public class ConfigScreen extends Screen
+{
     protected static final int OPTIONS_LIST_TOP_HEIGHT = 24;
     protected static final int OPTIONS_LIST_BOTTOM_OFFSET = 32;
     protected static final int OPTIONS_LIST_ITEM_HEIGHT = 25;
@@ -40,21 +41,25 @@ public class ConfigScreen extends Screen {
     protected CustomRowList customRowList;
     protected TextFieldWidget searchBox;
 
-    public ConfigScreen(Screen parentScreen) {
+    public ConfigScreen(Screen parentScreen)
+    {
         super(ITextComponent.nullToEmpty(I18n.get("oldswing.config.settings")));
         this.parentScreen = parentScreen;
     }
 
-    public ConfigScreen(String title, Screen parentScreen) {
+    public ConfigScreen(String title, Screen parentScreen)
+    {
         super(ITextComponent.nullToEmpty(title));
         this.parentScreen = parentScreen;
     }
 
-    public int getRowSeparation(int row) {
+    public int getRowSeparation(int row)
+    {
         return row == 1 ? 28 : (28 * row) - (3 * (row - 1));
     }
 
-    public Button addTooltip(String tooltip, int row) {
+    public Button addTooltip(String tooltip, int row)
+    {
         return new Button(
                 this.width / 2 + TOOLTIP_START_X,
                 getRowSeparation(row),
@@ -66,7 +71,8 @@ public class ConfigScreen extends Screen {
         );
     }
 
-    public Button addLinedTooltip(int row, String... lines) {
+    public Button addLinedTooltip(int row, String... lines)
+    {
         return new Button(
                 this.width / 2 + TOOLTIP_START_X,
                 getRowSeparation(row),
@@ -74,7 +80,8 @@ public class ConfigScreen extends Screen {
                 20,
                 new StringTextComponent("?"),
                 (unused) -> {},
-                (button, matrixStack, mouseX, mouseY) -> {
+                (button, matrixStack, mouseX, mouseY) ->
+                {
                     List<ITextComponent> tips = Lists.newArrayList();
                     for (String line : lines)
                         tips.add(new StringTextComponent(line));
@@ -83,7 +90,8 @@ public class ConfigScreen extends Screen {
         );
     }
 
-    protected OptionsRowList getRowList() {
+    protected OptionsRowList getRowList()
+    {
         return new OptionsRowList(
                 this.getMinecraft(), this.width, this.height,
                 OPTIONS_LIST_TOP_HEIGHT,
@@ -92,7 +100,8 @@ public class ConfigScreen extends Screen {
         );
     }
 
-    protected Button getDoneButton() {
+    protected Button getDoneButton()
+    {
         return new Button(
                 (this.width - BUTTON_WIDTH) / 2,
                 this.height - DONE_BUTTON_TOP_OFFSET,
@@ -102,7 +111,8 @@ public class ConfigScreen extends Screen {
         );
     }
 
-    private StringTextComponent getModState() {
+    private StringTextComponent getModState()
+    {
         boolean flag = ConfigHandler.mod_enabled;
         String title = I18n.get("oldswing.mod") + ": ";
         String state = new TranslationTextComponent(flag ? "options.on.composed" : "options.off.composed").getString().replaceAll("\\s?:\\s", "");
@@ -110,14 +120,16 @@ public class ConfigScreen extends Screen {
     }
 
     @Override
-    protected void init() {
+    protected void init()
+    {
         this.addButton(new Button(
                 this.width / 2 - 102, // StartX position
                 this.height / 4 + 24 + -16, // StartY position
                 BUTTON_SMALL_WIDTH, // Width of button
                 BUTTON_HEIGHT, // Height of button
                 getModState(), // Text for button
-                (unused) -> { // On click
+                (unused) -> // On click
+                {
                     ConfigHandler.toggle(ClientConfig.mod_enabled, !ConfigHandler.mod_enabled);
                     this.getMinecraft().setScreen(this);
                 }
@@ -156,7 +168,8 @@ public class ConfigScreen extends Screen {
                 BUTTON_LARGE_WIDTH,
                 BUTTON_HEIGHT,
                 new TranslationTextComponent("gui.done"),
-                (unused) -> {
+                (unused) ->
+                {
                     this.save();
                     this.onClose();
                 }
@@ -164,55 +177,58 @@ public class ConfigScreen extends Screen {
     }
 
     @Nullable
-    public static List<IReorderingProcessor> tooltipAt(@Nullable OptionsRowList list, int mouseX, int mouseY) {
-        if (list == null) {
+    public static List<IReorderingProcessor> tooltipAt(@Nullable OptionsRowList list, int mouseX, int mouseY)
+    {
+        if (list == null)
             return null;
-        }
 
         Optional<Widget> optional = list.getMouseOver(mouseX, mouseY);
 
-        if (optional.isPresent() && optional.get() instanceof IBidiTooltip) {
+        if (optional.isPresent() && optional.get() instanceof IBidiTooltip)
+        {
             Optional<List<IReorderingProcessor>> tooltip = ((IBidiTooltip) optional.get()).getTooltip();
             return tooltip.orElse(null);
-        } else {
-            return null;
         }
+        else
+            return null;
     }
 
     @Override
-    public void render(@Nonnull MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks) {
+    public void render(@Nonnull MatrixStack matrixStack, int mouseX, int mouseY, float partialTicks)
+    {
         int height = TITLE_HEIGHT;
         this.renderBackground(matrixStack);
 
-        if (this.optionsRowList != null || this.customRowList != null) {
+        if (this.optionsRowList != null || this.customRowList != null)
+        {
             if (this.optionsRowList != null)
                 this.optionsRowList.render(matrixStack, mouseX, mouseY, partialTicks);
             if (this.customRowList != null)
                 this.customRowList.render(matrixStack, mouseX, mouseY, partialTicks);
-        } else {
+        }
+        else
             height = 40;
-        }
 
-        if (this.searchBox != null) {
+        if (this.searchBox != null)
             this.searchBox.render(matrixStack, mouseX, mouseY, partialTicks);
-        }
 
         drawCenteredString(matrixStack, this.font, this.title.getString(), this.width / 2, height, 0xFFFFFF);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
 
         List<IReorderingProcessor> list = tooltipAt(this.optionsRowList, mouseX, mouseY);
-        if (list != null) {
+        if (list != null)
             this.renderTooltip(matrixStack, list, mouseX, mouseY);
-        }
     }
 
-    private void save() {
+    private void save()
+    {
         ConfigHandler.sendSliderSetters();
         ConfigHandler.bake();
     }
 
     @Override
-    public void onClose() {
+    public void onClose()
+    {
         this.getMinecraft().setScreen(parentScreen);
     }
 }

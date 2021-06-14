@@ -25,6 +25,11 @@ This is a major feature update with a focus on configuration menus. The mod now 
 
 To see this new major feature update in action, please see the new demo video.
 
+### Version 2.2.1
+This is a small update that should significantly increase compatibility with other mods.
+- Changed the core codebase to utilize injections which should significantly increase mod compatibility.
+- Modified reequip animation logic to help with mod compatibility.
+
 #### Changelogs
 To see the changes made in previous versions, please see the changelog file.
 
@@ -43,7 +48,7 @@ These commands come equipped with auto-completion.
 - `/oldswing config` Used to open the configuration menu.
 
 ## Demo Video
-Watch the following video to see what this mod changes. https://www.youtube.com/watch?v=nbUPpU4r49o
+Watch the following video to see what this mod changes. https://www.youtube.com/watch?v=IlqIMxxKFnw
 [![YouTube Thumbnail](https://cdn.discordapp.com/attachments/800426030996389929/812830411969265684/yt_thumbdesign.png)](https://www.youtube.com/watch?v=IlqIMxxKFnw "Old Swing Mod Ver. 2.2 (Demo)")
 
 ## Compatibility
