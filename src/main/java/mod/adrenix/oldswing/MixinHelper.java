@@ -1,6 +1,7 @@
 package mod.adrenix.oldswing;
 
 import mod.adrenix.oldswing.config.ConfigHandler;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.item.*;
 import net.minecraft.util.EnumHand;
@@ -40,18 +41,16 @@ public class MixinHelper
         return !ConfigHandler.mod_enabled || !ConfigHandler.animations.prevent_arm_sway;
     }
 
-    private static int slotMainHand = 0;
     public static boolean shouldCauseReequipAnimation(@Nonnull ItemStack from, @Nonnull ItemStack to, int slot)
     {
-        if (!ConfigHandler.animations.prevent_reequip || !ConfigHandler.mod_enabled)
-            return ForgeHooksClient.shouldCauseReequipAnimation(from, to, slot);
+        boolean forgeReequipState = ForgeHooksClient.shouldCauseReequipAnimation(from, to, slot);
+        if (!ConfigHandler.mod_enabled || !ConfigHandler.animations.prevent_reequip)
+            return forgeReequipState;
 
-        if (slot != -1 && slot != slotMainHand)
-        {
-            slotMainHand = slot;
-            return true;
-        }
+        AbstractClientPlayer player = Minecraft.getMinecraft().player;
+        if (player != null && player.isSwingInProgress)
+            return false;
 
-        return !ItemStack.areItemsEqualIgnoreDurability(from, to);
+        return forgeReequipState;
     }
 }
