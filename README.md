@@ -48,7 +48,7 @@ These commands come equipped with auto-completion.
 - `/oldswing config` Used to open the configuration menu.
 
 ## Demo Video
-Watch the following video to see what this mod changes. https://www.youtube.com/watch?v=nbUPpU4r49o
+Watch the following video to see what this mod changes. https://www.youtube.com/watch?v=IlqIMxxKFnw
 [![YouTube Thumbnail](https://cdn.discordapp.com/attachments/800426030996389929/812830411969265684/yt_thumbdesign.png)](https://www.youtube.com/watch?v=IlqIMxxKFnw "Old Swing Mod Ver. 2.2 (Demo)")
 
 ## Compatibility
