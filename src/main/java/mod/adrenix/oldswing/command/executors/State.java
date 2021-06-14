@@ -9,8 +9,10 @@ import net.minecraft.command.CommandSource;
 import net.minecraft.command.Commands;
 import net.minecraft.util.text.ITextComponent;
 
-public class State {
-    public static LiteralArgumentBuilder<CommandSource> register() {
+public class State
+{
+    public static LiteralArgumentBuilder<CommandSource> register()
+    {
         return Commands.literal("mod")
             .then(Commands.literal("on")
                 .executes(context -> modState(context.getSource(), true))
@@ -22,7 +24,8 @@ public class State {
         ;
     }
 
-    private static int modState(CommandSource source, boolean flag) {
+    private static int modState(CommandSource source, boolean flag)
+    {
         ClientConfig.mod_enabled.set(flag);
         ConfigHandler.bake();
 

@@ -1,7 +1,7 @@
 package mod.adrenix.oldswing.config;
 
 import com.electronwill.nightconfig.core.Config;
-import mod.adrenix.oldswing.OldSwingMod;
+import mod.adrenix.oldswing.OldSwing;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -12,8 +12,9 @@ import org.apache.commons.lang3.tuple.Pair;
 import java.util.HashMap;
 import java.util.Map;
 
-@Mod.EventBusSubscriber(modid = OldSwingMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-public class ConfigHandler {
+@Mod.EventBusSubscriber(modid = OldSwing.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+public class ConfigHandler
+{
     public static final ClientConfig CLIENT;
     public static final ForgeConfigSpec CLIENT_SPEC;
     public static final int OLD_SPEED = 8;
@@ -37,20 +38,22 @@ public class ConfigHandler {
     private static Map<String, Boolean> animationStateMap;
     private static boolean undoGlobalState = false;
 
-    static {
+    static
+    {
         final Pair<ClientConfig, ForgeConfigSpec> pair = new ForgeConfigSpec.Builder().configure(ClientConfig::new);
         CLIENT_SPEC = pair.getRight();
         CLIENT = pair.getLeft();
     }
 
     @SubscribeEvent
-    public static void onModConfigEvent(final ModConfig.ModConfigEvent configEvent) {
-        if (configEvent.getConfig().getSpec() == ConfigHandler.CLIENT_SPEC) {
+    public static void onModConfigEvent(final ModConfig.ModConfigEvent configEvent)
+    {
+        if (configEvent.getConfig().getSpec() == ConfigHandler.CLIENT_SPEC)
             bake();
-        }
     }
 
-    public static void bake() {
+    public static void bake()
+    {
         custom_speeds = ClientConfig.custom.get();
         swing_speed = ClientConfig.swing_speed.get();
         block_speed = ClientConfig.block_speed.get();
@@ -64,12 +67,14 @@ public class ConfigHandler {
         mod_enabled = ClientConfig.mod_enabled.get();
     }
 
-    public static void toggle(ForgeConfigSpec.BooleanValue config, boolean state) {
+    public static void toggle(ForgeConfigSpec.BooleanValue config, boolean state)
+    {
         config.set(state);
         bake();
     }
 
-    public static void storeCategoricalSwingSpeeds() {
+    public static void storeCategoricalSwingSpeeds()
+    {
         categoricalSwingMap = new HashMap<>();
         categoricalSwingMap.put("swing_speed", ClientConfig.swing_speed.get());
         categoricalSwingMap.put("block_speed", ClientConfig.block_speed.get());
@@ -79,14 +84,16 @@ public class ConfigHandler {
         undoGlobalState = ClientConfig.global_speed_enabled.get();
     }
 
-    public static void storeAnimationValues() {
+    public static void storeAnimationValues()
+    {
         animationStateMap = new HashMap<>();
         animationStateMap.put("prevent_cooldown", ClientConfig.prevent_cooldown.get());
         animationStateMap.put("prevent_reequip", ClientConfig.prevent_reequip.get());
         animationStateMap.put("prevent_sway", ClientConfig.prevent_sway.get());
     }
 
-    public static void resetCategoricalSwingSpeeds() {
+    public static void resetCategoricalSwingSpeeds()
+    {
         ClientConfig.swing_speed.set(ConfigHandler.OLD_SPEED);
         ClientConfig.block_speed.set(ConfigHandler.OLD_SPEED);
         ClientConfig.sword_speed.set(ConfigHandler.OLD_SPEED);
@@ -95,14 +102,16 @@ public class ConfigHandler {
         toggle(ClientConfig.global_speed_enabled, false);
     }
 
-    public static void resetAnimationValues() {
+    public static void resetAnimationValues()
+    {
         ClientConfig.prevent_cooldown.set(true);
         ClientConfig.prevent_reequip.set(true);
         ClientConfig.prevent_sway.set(true);
         bake();
     }
 
-    public static void undoCategoricalSwingReset() {
+    public static void undoCategoricalSwingReset()
+    {
         if (categoricalSwingMap == null || categoricalSwingMap.size() == 0) return;
         ClientConfig.global_speed_enabled.set(undoGlobalState);
         ClientConfig.swing_speed.set(categoricalSwingMap.get("swing_speed"));
@@ -114,7 +123,8 @@ public class ConfigHandler {
         bake();
     }
 
-    public static void undoAnimationReset() {
+    public static void undoAnimationReset()
+    {
         if (animationStateMap == null || animationStateMap.size() == 0) return;
         ClientConfig.prevent_cooldown.set(animationStateMap.get("prevent_cooldown"));
         ClientConfig.prevent_reequip.set(animationStateMap.get("prevent_reequip"));
@@ -123,7 +133,8 @@ public class ConfigHandler {
         bake();
     }
 
-    public static void sendSliderSetters() {
+    public static void sendSliderSetters()
+    {
         ClientConfig.swing_speed.set(swing_speed);
         ClientConfig.block_speed.set(block_speed);
         ClientConfig.sword_speed.set(sword_speed);

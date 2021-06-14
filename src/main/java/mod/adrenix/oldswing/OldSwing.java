@@ -21,12 +21,14 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(OldSwingMod.MOD_ID)
-public class OldSwingMod {
+@Mod(OldSwing.MOD_ID)
+public class OldSwing
+{
     public static final String MOD_ID = "oldswing";
     public static final Logger LOGGER = LogManager.getLogger();
 
-    public OldSwingMod() {
+    public OldSwing()
+    {
         ModLoadingContext.get().registerExtensionPoint(ExtensionPoint.DISPLAYTEST, () -> Pair.of(() -> FMLNetworkConstants.IGNORESERVERONLY, (a, b) -> true));
         if (FMLLoader.getDist().isDedicatedServer())
             return;
@@ -38,13 +40,15 @@ public class OldSwingMod {
         MinecraftForge.EVENT_BUS.register(this);
     }
 
-    public void configSetup(final FMLClientSetupEvent event) {
+    public void configSetup(final FMLClientSetupEvent event)
+    {
         ClientConfig.loadCustomItems();
         ClientRegistry.registerKeyBinding(ConfigKey.OPEN_GUI);
     }
 
     @SubscribeEvent
-    public void serverStarting(FMLServerStartingEvent event) {
+    public void serverStarting(FMLServerStartingEvent event)
+    {
         CommandRegistry.register(event.getServer().getCommands().getDispatcher());
     }
 }

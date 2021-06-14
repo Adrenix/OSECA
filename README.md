@@ -25,6 +25,11 @@ This is a major feature update with a focus on configuration menus. The mod now 
 
 To see this new major feature update in action, please see the new demo video.
 
+### Version 2.2.1
+This is a small update that should significantly increase compatibility with other mods.
+- Changed the core codebase to utilize injections which should significantly increase mod compatibility.
+- Modified reequip animation logic to help with mod compatibility.
+
 #### Changelogs
 To see the changes made in previous versions, please see the changelog file.
 

@@ -6,7 +6,8 @@ import net.minecraftforge.common.ForgeConfigSpec;
 
 import java.util.*;
 
-public class ClientConfig {
+public class ClientConfig
+{
     /* Mod State */
     public static ForgeConfigSpec.BooleanValue mod_enabled;
 
@@ -26,7 +27,8 @@ public class ClientConfig {
     public static ForgeConfigSpec.ConfigValue<Config> custom;
     public static final Map<String, ForgeConfigSpec.IntValue> SPEEDS = new HashMap<>();
 
-    public ClientConfig(ForgeConfigSpec.Builder builder) {
+    public ClientConfig(ForgeConfigSpec.Builder builder)
+    {
         /* Mod State */
         mod_enabled = builder
                 .comment(" Use this option to enable or disable the mod.")
@@ -103,7 +105,8 @@ public class ClientConfig {
         SPEEDS.put("blocks", block_speed);
     }
 
-    public static void loadCustomItems() {
+    public static void loadCustomItems()
+    {
         custom.get().entrySet().forEach(entry -> custom.get().add(entry.getKey(), entry.getValue()));
     }
 }

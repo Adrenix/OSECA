@@ -25,12 +25,14 @@ import net.minecraftforge.registries.ForgeRegistries;
 
 import java.util.ArrayList;
 
-public class Swings {
+public class Swings
+{
     private static final ArrayList<String> VALID_SPEEDS = new ArrayList<>();
     private static final int MIN = ConfigHandler.MIN;
     private static final int MAX = ConfigHandler.MAX;
 
-    static {
+    static
+    {
         for (int i = MIN; i <= MAX; i++)
             VALID_SPEEDS.add(Integer.toString(i));
     }
@@ -40,16 +42,18 @@ public class Swings {
 
     private static final String[] SWING_KEYS = { "all", "items", "swords", "tools", "holding", "blocks", "custom" };
 
-    private static SuggestionProvider<CommandSource> removeSuggestion() {
+    private static SuggestionProvider<CommandSource> removeSuggestion()
+    {
         return ((context, builder) -> {
             String[] suggestions = new String[ConfigHandler.custom_speeds.size()];
 
-            if (ConfigHandler.custom_speeds.size() == 0) {
+            if (ConfigHandler.custom_speeds.size() == 0)
                 suggestions = new String[] { I18n.get("oldswing.cmd.swings.no_custom") };
-            }
 
             int index = 0;
-            for (Config.Entry entry : ConfigHandler.custom_speeds.entrySet()) {
+
+            for (Config.Entry entry : ConfigHandler.custom_speeds.entrySet())
+            {
                 suggestions[index] = String.format("\"%s\"", entry.getKey());
                 index++;
             }
@@ -58,7 +62,8 @@ public class Swings {
         });
     }
 
-    public static LiteralArgumentBuilder<CommandSource> register() {
+    public static LiteralArgumentBuilder<CommandSource> register()
+    {
         return Commands.literal("swing")
             .then(Commands.literal(SWING_KEYS[0])
                 .then(Commands.argument("speed", IntegerArgumentType.integer())
@@ -140,29 +145,31 @@ public class Swings {
         ;
     }
 
-    private static int rangeError(CommandSource source) {
+    private static int rangeError(CommandSource source)
+    {
         source.sendFailure(ITextComponent.nullToEmpty(I18n.get("oldswing.cmd.swings.out_of_range", MIN, MAX)));
         return 0;
     }
 
-    private static int modStateError(CommandSource source) {
-        if (ConfigHandler.mod_enabled) {
+    private static int modStateError(CommandSource source)
+    {
+        if (ConfigHandler.mod_enabled)
             return 1;
-        }
 
         source.sendFailure(ITextComponent.nullToEmpty(I18n.get("oldswing.cmd.mod_enabled_swings")));
         return 0;
     }
 
-    private static int changeSwingSpeed(CommandSource source, int speed, String on) {
-        if (modStateError(source) == 0) {
+    private static int changeSwingSpeed(CommandSource source, int speed, String on)
+    {
+        if (modStateError(source) == 0)
             return 0;
-        }
 
         if (speed < MIN || speed > MAX)
             return rangeError(source);
 
-        if (on.equals(SWING_KEYS[0])) {
+        if (on.equals(SWING_KEYS[0]))
+        {
             // Change all item speeds in config
 
             ClientConfig.swing_speed.set(speed);
@@ -170,44 +177,45 @@ public class Swings {
             ClientConfig.tool_speed.set(speed);
             ClientConfig.block_speed.set(speed);
 
-            for (Config.Entry entry : ConfigHandler.custom_speeds.entrySet()) {
+            for (Config.Entry entry : ConfigHandler.custom_speeds.entrySet())
                 CustomSwing.add(entry.getKey(), speed);
-            }
-        } else if (on.equals(SWING_KEYS[1])) {
+        }
+        else if (on.equals(SWING_KEYS[1]))
             // Change swing speeds of items that are not swords or tools
-
             ClientConfig.swing_speed.set(speed);
-        } else if (on.equals(SWING_KEYS[2])) {
+        else if (on.equals(SWING_KEYS[2]))
             // Change swing speed of swords
-
             ClientConfig.sword_speed.set(speed);
-        } else if (on.equals(SWING_KEYS[3])) {
+        else if (on.equals(SWING_KEYS[3]))
             // Change swing speed of tools
-
             ClientConfig.tool_speed.set(speed);
-        } else if (on.equals(SWING_KEYS[4])) {
+        else if (on.equals(SWING_KEYS[4]))
+        {
             // Set swing speed of currently held item
 
             ClientPlayerEntity entity = Minecraft.getInstance().player;
 
-            if (entity != null) {
+            if (entity != null)
+            {
                 Item holding = CustomSwing.addFromHand(entity, speed);
 
-                if (holding == null) {
+                if (holding == null)
+                {
                     source.sendFailure(ITextComponent.nullToEmpty(I18n.get("oldswing.cmd.swings.holding")));
                     return 0;
                 }
 
                 on = holding.toString();
-            } else {
+            }
+            else
+            {
                 source.sendFailure(ITextComponent.nullToEmpty(I18n.get("oldswing.cmd.not_player")));
                 return 0;
             }
-        } else if (on.equals(SWING_KEYS[5])) {
-            // Set swing speed when placing blocks
-
-            ClientConfig.block_speed.set(speed);
         }
+        else if (on.equals(SWING_KEYS[5]))
+            // Set swing speed when placing blocks
+            ClientConfig.block_speed.set(speed);
 
         ConfigHandler.bake();
 
@@ -223,7 +231,8 @@ public class Swings {
 
         String plural = I18n.get("oldswing.speed");
 
-        if (on.equals(SWING_KEYS[0])) {
+        if (on.equals(SWING_KEYS[0]))
+        {
             on = I18n.get("oldswing.all_config");
             plural = I18n.get("oldswing.speeds");
         }
@@ -236,20 +245,21 @@ public class Swings {
         return 1;
     }
 
-    private static int addCustomSwing(CommandSource source, ItemInput itemIn, int speed) {
-        if (modStateError(source) == 0) {
+    private static int addCustomSwing(CommandSource source, ItemInput itemIn, int speed)
+    {
+        if (modStateError(source) == 0)
             return 0;
-        }
 
         Item item = itemIn.getItem();
         ResourceLocation resource = ForgeRegistries.ITEMS.getKey(item);
 
-        if (resource == null) {
+        if (resource == null)
+        {
             source.sendFailure(ITextComponent.nullToEmpty(I18n.get("oldswing.cmd.swings.nonexistent", itemIn)));
             return 0;
-        } else if (speed < MIN || speed > MAX) {
-            return rangeError(source);
         }
+        else if (speed < MIN || speed > MAX)
+            return rangeError(source);
 
         CustomSwing.add(resource.toString(), speed);
         ConfigHandler.bake();
@@ -262,14 +272,15 @@ public class Swings {
         return 1;
     }
 
-    private static int removeCustomSwing(CommandSource source, String item) {
-        if (modStateError(source) == 0) {
+    private static int removeCustomSwing(CommandSource source, String item)
+    {
+        if (modStateError(source) == 0)
             return 0;
-        }
 
         String out;
 
-        if (CustomSwing.remove(item)) {
+        if (CustomSwing.remove(item))
+        {
             ConfigHandler.bake();
 
             out = I18n.get("oldswing.cmd.swings.custom_remove", ColorUtil.format(item, TextFormatting.GOLD));
