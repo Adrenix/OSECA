@@ -9,26 +9,8 @@
 
 This mod brings back the old swinging animations before Minecraft Beta 1.8. While this mod is an "eye candy" mod targeted towards nostalgic enthusiasts, it is also useful for those who are photosensitive since the mod is very configurable. For example, you can turn off the swinging animation entirely. Additionally, all the animations this mod changes can be toggled. Moreover, you can customize the swing speeds of swords, tools, items, and everything in-between!
 
-## Version 2.2.0
-This is a major feature update with a focus on configuration menus. The mod now comes with a graphical user interface that allows changing mod configurations without commands. This menu can be opened in multiplayer. The default key to access this menu is 'o'. This key can be changed in the control settings menu.
-- Added a configuration menu.
-  - This can be accessed via the mods menu, the 'o' key, or `/oldswing config`
-  - The config menu key can be used in multiplayer.
-- Added a mod state toggle button.
-- Added an animations sub-menu.
-- Added a categorical swings sub-menu.
-- Added a custom swing sub-menu.
-- Added tooltips to all configuration buttons.
-- All sub-menus can be reset to their default state.
-- Language support is now in development.
-- Increased compatibility with other mods.
-
-To see this new major feature update in action, please see the new demo video.
-
-### Version 2.2.1
-This is a small update that should significantly increase compatibility with other mods.
-- Changed the core codebase to utilize injections which should significantly increase mod compatibility.
-- Modified reequip animation logic to help with mod compatibility.
+## Fabric Version 1.0.0
+Starting with Minecraft 1.17, this mod will support Fabric. The Forge branch will continue once a 1.17 build is ready. There are no new features in this version, other than the mod being capable of running on 1.17.
 
 #### Changelogs
 To see the changes made in previous versions, please see the changelog file.
