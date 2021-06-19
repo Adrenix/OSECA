@@ -1,6 +1,8 @@
-package mod.adrenix.oldswing.config;
+package mod.adrenix.oldswing;
 
 import com.electronwill.nightconfig.core.Config;
+import mod.adrenix.oldswing.config.ConfigHandler;
+import mod.adrenix.oldswing.config.CustomSwing;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.item.*;
@@ -12,7 +14,7 @@ import javax.annotation.Nonnull;
 
 public class MixinHelper
 {
-    private static int getSpeedFromItem(Item item)
+    public static int getSpeedFromItem(Item item)
     {
         ResourceLocation source = ForgeRegistries.ITEMS.getKey(item);
 
@@ -50,6 +52,11 @@ public class MixinHelper
     public static boolean shouldArmSway()
     {
         return !ConfigHandler.mod_enabled || !ConfigHandler.prevent_sway;
+    }
+
+    public static boolean shouldSweepAttack()
+    {
+        return !ConfigHandler.mod_enabled || !ConfigHandler.prevent_sweep;
     }
 
     public static boolean shouldCauseReequipAnimation(@Nonnull ItemStack from, @Nonnull ItemStack to, int slot)

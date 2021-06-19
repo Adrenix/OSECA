@@ -31,6 +31,7 @@ public class ConfigHandler
     public static boolean global_speed_enabled = false;
     public static boolean prevent_cooldown = true;
     public static boolean prevent_reequip = true;
+    public static boolean prevent_sweep = true;
     public static boolean prevent_sway = true;
     public static boolean mod_enabled = true;
 
@@ -63,6 +64,7 @@ public class ConfigHandler
         global_speed_enabled = ClientConfig.global_speed_enabled.get();
         prevent_cooldown = ClientConfig.prevent_cooldown.get();
         prevent_reequip = ClientConfig.prevent_reequip.get();
+        prevent_sweep = ClientConfig.prevent_sweep.get();
         prevent_sway = ClientConfig.prevent_sway.get();
         mod_enabled = ClientConfig.mod_enabled.get();
     }
@@ -89,6 +91,7 @@ public class ConfigHandler
         animationStateMap = new HashMap<>();
         animationStateMap.put("prevent_cooldown", ClientConfig.prevent_cooldown.get());
         animationStateMap.put("prevent_reequip", ClientConfig.prevent_reequip.get());
+        animationStateMap.put("prevent_sweep", ClientConfig.prevent_sweep.get());
         animationStateMap.put("prevent_sway", ClientConfig.prevent_sway.get());
     }
 
@@ -106,6 +109,7 @@ public class ConfigHandler
     {
         ClientConfig.prevent_cooldown.set(true);
         ClientConfig.prevent_reequip.set(true);
+        ClientConfig.prevent_sweep.set(true);
         ClientConfig.prevent_sway.set(true);
         bake();
     }
@@ -128,6 +132,7 @@ public class ConfigHandler
         if (animationStateMap == null || animationStateMap.size() == 0) return;
         ClientConfig.prevent_cooldown.set(animationStateMap.get("prevent_cooldown"));
         ClientConfig.prevent_reequip.set(animationStateMap.get("prevent_reequip"));
+        ClientConfig.prevent_sweep.set(animationStateMap.get("prevent_sweep"));
         ClientConfig.prevent_sway.set(animationStateMap.get("prevent_sway"));
         animationStateMap = new HashMap<>();
         bake();
