@@ -14,6 +14,7 @@ public class ClientConfig
     /* Animation Options */
     public static ForgeConfigSpec.BooleanValue prevent_cooldown;
     public static ForgeConfigSpec.BooleanValue prevent_reequip;
+    public static ForgeConfigSpec.BooleanValue prevent_sweep;
     public static ForgeConfigSpec.BooleanValue prevent_sway;
     public static final Map<String, ForgeConfigSpec.ConfigValue<?>> ANIMATIONS = new HashMap<>();
 
@@ -45,6 +46,10 @@ public class ClientConfig
                          " The purpose of this is to prevent the animation from playing after every block break.",
                          " Disable this option if you are experiencing issues with other mods.")
                 .define("animation.prevent_reequip", true);
+
+        prevent_sweep = builder
+                .comment(" Enabling this option will prevent the sweep particles from spawning when attacking an entity.")
+                .define("animation.prevent_sweep", true);
 
         prevent_sway = builder
                 .comment(" Enabling this option will prevent the subtle arm sway when looking in different directions.")
@@ -96,6 +101,7 @@ public class ClientConfig
         /* Command References */
         ANIMATIONS.put("reequipAnimation", prevent_reequip);
         ANIMATIONS.put("cooldownAnimation", prevent_cooldown);
+        ANIMATIONS.put("sweepParticles", prevent_sweep);
         ANIMATIONS.put("armSway", prevent_sway);
 
         // NOTE: Adding a new entry here requires updating the "change all" method.

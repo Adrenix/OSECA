@@ -1,6 +1,6 @@
 package mod.adrenix.oldswing.mixin;
 
-import mod.adrenix.oldswing.config.MixinHelper;
+import mod.adrenix.oldswing.MixinHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.entity.LivingEntity;

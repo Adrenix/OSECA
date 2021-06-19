@@ -8,7 +8,7 @@ import mod.adrenix.oldswing.command.ColorUtil;
 import mod.adrenix.oldswing.config.ClientConfig;
 import mod.adrenix.oldswing.config.ConfigHandler;
 import mod.adrenix.oldswing.config.CustomSwing;
-import mod.adrenix.oldswing.config.MixinHelper;
+import mod.adrenix.oldswing.MixinHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.resources.I18n;

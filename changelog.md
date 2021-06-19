@@ -1,3 +1,9 @@
+## Version 2.2.2
+This is a small feature update that adds a new animation option and fixes a crash when a mod conflict occurs.
+- Added a sweep particle animation option that will prevent the sweep particles from showing when attacking an entity with a sword.
+- Updated the injection methods so that the mod will no longer crash the game when it conflicts with another mod.
+> Note: This means if there is a mod conflict, then the mod may not work as expected.
+
 ## Version 2.2.1
 This is a small update that should significantly increase compatibility with other mods.
 - Changed the core codebase to utilize injections which should significantly increase mod compatibility.
@@ -52,6 +58,15 @@ Old swing has been updated to 1.16! Hooray!
 - Since Forge does not have an in-game config GUI yet, you can change these values with the `/oldswing` command.
     - You can also use the config file. After you save your changes, the game will automatically update without a restart.
 - More old-school animations have been implemented.
+
+### Version 1.1.2
+This update fixes a crash that occurs when the game starts and adds a new animation feature.
+- Fixed a crash that occurs when the game starts.
+- Updated the injection methods so that the mod will no longer crash the game when it conflicts with another mod.
+> Note: If there is a mod conflict, then the mod may not work as expected.
+- Added a sweep particle animation option that will prevent the sweep particles from showing when attacking an entity with a sword.
+
+This will be the last feature update for MC 1.12.x. Any critical errors, crashes, or bugs will be fixed if discovered later.
 
 ### Version 1.1.1
 This is a small update that should significantly increase compatibility with other mods.

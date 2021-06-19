@@ -35,7 +35,14 @@ public class AnimationScreen extends ConfigScreen
                 (unused, value) -> ConfigHandler.toggle(ClientConfig.prevent_reequip, !value)
         ));
 
-        this.addButton(addTooltip(I18n.get("oldswing.config.arm_sway_description"), 3));
+        this.addButton(addTooltip(I18n.get("oldswing.config.sweep_particles_description"), 3));
+        this.optionsRowList.addBig(new BooleanButton(
+                I18n.get("oldswing.config.sweep_particles"),
+                unused -> !ConfigHandler.prevent_sweep,
+                (unused, value) -> ConfigHandler.toggle(ClientConfig.prevent_sweep, !value)
+        ));
+
+        this.addButton(addTooltip(I18n.get("oldswing.config.arm_sway_description"), 4));
         this.optionsRowList.addBig(new BooleanButton(
                 I18n.get("oldswing.config.arm_sway"),
                 unused -> !ConfigHandler.prevent_sway,

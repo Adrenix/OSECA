@@ -45,6 +45,15 @@ public class Animations
                     ))
                 )
             )
+
+            .then(Commands.literal("disableSweepParticles")
+                .then(Commands.argument("flag", BoolArgumentType.bool())
+                    .suggests(FLAG_SUGGESTION)
+                    .executes(context -> toggleSweepParticles(
+                        context.getSource(), BoolArgumentType.getBool(context, "flag")
+                    ))
+                )
+            )
         ;
     }
 
@@ -83,5 +92,12 @@ public class Animations
         String on = I18n.get("oldswing.cmd.sway.on");
         String off = I18n.get("oldswing.cmd.sway.off");
         return toggleAnimation(source, flag, ClientConfig.prevent_sway, on, off);
+    }
+
+    private static int toggleSweepParticles(CommandSource source, boolean flag)
+    {
+        String on = I18n.get("oldswing.cmd.sweep.on");
+        String off = I18n.get("oldswing.cmd.sweep.off");
+        return toggleAnimation(source, flag, ClientConfig.prevent_sweep, on, off);
     }
 }
