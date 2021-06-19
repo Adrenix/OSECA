@@ -3,11 +3,13 @@ package mod.adrenix.oldswing.mixin;
 import mod.adrenix.oldswing.MixinHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.ItemRenderer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.MathHelper;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Overwrite;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -65,11 +67,20 @@ public abstract class ItemRendererMixin
         callback.cancel();
     }
 
-    @Inject(method = "rotateArm", at = @At(value = "HEAD"), cancellable = true)
-    protected void onRotateArm(float adjust, CallbackInfo callback)
+    /**
+     * @author Adrenix
+     * @reason Injection with annotation-processor 0.8.3 doesn't work. Injector thinks descriptor is ()V when it should be (F)V. Overwrite is last resort.
+     */
+    @Overwrite
+    public void rotateArm(float multiplier)
     {
-        if (MixinHelper.shouldArmSway())
+        if (!MixinHelper.shouldArmSway())
             return;
-        callback.cancel();
+
+        EntityPlayerSP player = this.mc.player;
+        float pitchDiff = player.prevRenderArmPitch + (player.renderArmPitch - player.prevRenderArmPitch) * multiplier;
+        float yawDiff = player.prevRenderArmYaw + (player.renderArmYaw - player.prevRenderArmYaw) * multiplier;
+        GlStateManager.rotate((player.rotationPitch - pitchDiff) * 0.1F, 1.0F, 0.0F, 0.0F);
+        GlStateManager.rotate((player.rotationYaw - yawDiff) * 0.1F, 0.0F, 1.0F, 0.0F);
     }
 }

@@ -41,6 +41,11 @@ public class MixinHelper
         return !ConfigHandler.mod_enabled || !ConfigHandler.animations.prevent_arm_sway;
     }
 
+    public static boolean shouldSweepAttack()
+    {
+        return !ConfigHandler.mod_enabled || !ConfigHandler.animations.prevent_sweep_particles;
+    }
+
     public static boolean shouldCauseReequipAnimation(@Nonnull ItemStack from, @Nonnull ItemStack to, int slot)
     {
         boolean forgeReequipState = ForgeHooksClient.shouldCauseReequipAnimation(from, to, slot);

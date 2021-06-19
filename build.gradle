@@ -1,16 +1,15 @@
 buildscript {
     repositories {
+        jcenter()
         maven { url = 'https://files.minecraftforge.net/maven' }
         maven { url = 'https://repo.spongepowered.org/maven' }
-        jcenter()
-        mavenCentral()
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
     }
 }
-        
+
 apply plugin: 'net.minecraftforge.gradle'
 apply plugin: 'maven-publish'
 apply plugin: 'org.spongepowered.mixin'
@@ -20,6 +19,11 @@ group = mod_group
 archivesBaseName = mod_archive
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
+
+mixin {
+    add sourceSets.main, mod_mixin_refmap
+    defaultObfuscationEnv "searge"
+}
 
 minecraft {
     mappings channel: mappings_channel, version: mappings_version
@@ -75,8 +79,8 @@ processResources {
 jar {
     from {
         configurations.compile
-                .filter { "mixin-0.8.3-SNAPSHOT.jar" == it.name }
-                .collect { it.isDirectory() ? it : zipTree(it) }
+            .filter { "mixin-0.8.3-SNAPSHOT.jar" == it.name }
+            .collect { it.isDirectory() ? it : zipTree(it) }
     } {
         exclude "LICENSE.txt", "META-INF/MANIFSET.MF", "META-INF/maven/**", "META-INF/*.RSA", "META-INF/*.SF"
     }
@@ -86,12 +90,12 @@ jar {
             "FMLCorePlugin": mod_core,
             "FMLCorePluginContainsFMLMod": "true",
             "ForceLoadAsMod": "true",
-            "Specification-Title": "oldswing",
-            "Specification-Vendor": "adrenix",
+            "Specification-Title": mod_id,
+            "Specification-Vendor": mod_author,
             "Specification-Version": "1",
-            "Implementation-Title": "Old Swing",
-            "Implementation-Version": "1.1.0",
-            "Implementation-Vendor" :"adrenix",
+            "Implementation-Title": mod_name,
+            "Implementation-Version": mod_version,
+            "Implementation-Vendor" : mod_author,
             "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
             "MixinConfigs": mod_mixin,
             "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ")

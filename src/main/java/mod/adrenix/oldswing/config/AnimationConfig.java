@@ -16,4 +16,8 @@ public class AnimationConfig
     @Name("Prevent Cooldown Animation")
     @Comment("Prevent the animation that plays when changing between tools.")
     public boolean prevent_cooldown = true;
+
+    @Name("Prevent Sweep Particles")
+    @Comment("Prevent the sweep particles that spawn when attacking an entity.")
+    public boolean prevent_sweep_particles = true;
 }
