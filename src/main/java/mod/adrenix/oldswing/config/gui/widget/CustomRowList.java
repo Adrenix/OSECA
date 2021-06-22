@@ -182,7 +182,7 @@ public class CustomRowList extends AbstractOptionList<CustomRowList.Row>
             return new CustomRowList.Row(ImmutableList.of(rangeTipButton, imageTipButton, valueSlider, remove, undo));
         }
 
-        public void render(@Nonnull MatrixStack matrix, int x, int y, int unused2, int unused3, int unused4, int xPos, int yPos, boolean unused5, float partialTicks)
+        public void render(@Nonnull MatrixStack matrix, int x, int y, int unused2, int unused3, int unused4, int mouseX, int mouseY, boolean unused5, float partialTicks)
         {
             for (Widget child : this.children)
             {
@@ -213,7 +213,7 @@ public class CustomRowList extends AbstractOptionList<CustomRowList.Row>
                             child.setMessage(getUndoButtonTitle(child.active ? TextFormatting.RED : TextFormatting.GRAY));
                     }
 
-                    child.render(matrix, xPos, yPos, partialTicks);
+                    child.render(matrix, mouseX, mouseY, partialTicks);
                 }
             }
         }

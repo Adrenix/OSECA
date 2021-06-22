@@ -168,11 +168,7 @@ public class ConfigScreen extends Screen
                 BUTTON_LARGE_WIDTH,
                 BUTTON_HEIGHT,
                 new TranslationTextComponent("gui.done"),
-                (unused) ->
-                {
-                    this.save();
-                    this.onClose();
-                }
+                (unused) -> this.onClose()
         ));
     }
 
@@ -229,6 +225,7 @@ public class ConfigScreen extends Screen
     @Override
     public void onClose()
     {
+        this.save();
         this.getMinecraft().setScreen(parentScreen);
     }
 }

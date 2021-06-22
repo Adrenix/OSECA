@@ -119,7 +119,6 @@ public class CustomScreen extends ConfigScreen
         if (item != null)
         {
             CustomSwing.add(Objects.requireNonNull(item.getRegistryName()).toString(), ConfigHandler.OLD_SPEED);
-            ConfigHandler.bake();
 
             Config.Entry entry = CustomSwing.getConfigEntry(item);
             CustomRowList.added = entry;
@@ -270,7 +269,7 @@ public class CustomScreen extends ConfigScreen
         List<Config.Entry> tools = Lists.newArrayList();
         List<Config.Entry> blocks = Lists.newArrayList();
         List<Config.Entry> unknown = Lists.newArrayList();
-        List<Config.Entry> uncategorized = Lists.newArrayList();
+        List<Config.Entry> items = Lists.newArrayList();
         Config.Entry added = null;
 
         for (Config.Entry entry : ConfigHandler.custom_speeds.entrySet())
@@ -282,19 +281,25 @@ public class CustomScreen extends ConfigScreen
             else if (stack == null)
                 unknown.add(entry);
             else if (stack.getItem() instanceof ToolItem || stack.getItem() instanceof SwordItem)
+            {
                 if (this.toggleTools.selected())
                     tools.add(entry);
+            }
             else if (stack.getItem() instanceof BlockItem)
+            {
                 if (this.toggleBlocks.selected())
                     blocks.add(entry);
+            }
             else
+            {
                 if (this.toggleItems.selected())
-                    uncategorized.add(entry);
+                    items.add(entry);
+            }
         }
 
         sorted.addAll(tools);
         sorted.addAll(blocks);
-        sorted.addAll(uncategorized);
+        sorted.addAll(items);
         sorted.addAll(unknown);
         sorted.sort(Comparator.comparing(this::getEntryId));
 
