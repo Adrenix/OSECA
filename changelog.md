@@ -1,3 +1,9 @@
+## Version 2.2.3
+Bug-fix update.
+- Fixed a bug that would prevent the config from being saved if using the Esc key to exit the configuration menu.
+- Fixed a bug that would cause some items in the customized swing list from showing.
+- Fixed a bug that would prevent a customized swing speed from being saved after it was added.
+
 ## Version 2.2.2
 This is a small feature update that adds a new animation option and fixes a crash when a mod conflict occurs.
 - Added a sweep particle animation option that will prevent the sweep particles from showing when attacking an entity with a sword.

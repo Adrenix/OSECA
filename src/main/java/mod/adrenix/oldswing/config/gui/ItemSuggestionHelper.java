@@ -308,19 +308,20 @@ public class ItemSuggestionHelper
 
             boolean isHovering = false;
 
-            for (int l = 0; l < i; l++)
+            for (int line = 0; line < i; line++)
             {
-                Suggestion suggestion = this.suggestionList.get(l + this.offset);
-                AbstractGui.fill(matrix, this.rectangle.getX(), this.rectangle.getY() + 12 * l, this.rectangle.getX() + this.rectangle.getWidth(), this.rectangle.getY() + 12 * l + 12, ItemSuggestionHelper.this.fillColor);
-                if (x > this.rectangle.getX() && x < this.rectangle.getX() + this.rectangle.getWidth() && y > this.rectangle.getY() + 12 * l && y < this.rectangle.getY() + 12 * l + 12)
+                Suggestion suggestion = this.suggestionList.get(line + this.offset);
+                AbstractGui.fill(matrix, this.rectangle.getX(), this.rectangle.getY() + 12 * line, this.rectangle.getX() + this.rectangle.getWidth(), this.rectangle.getY() + 12 * line + 12, ItemSuggestionHelper.this.fillColor);
+
+                if (x > this.rectangle.getX() && x < this.rectangle.getX() + this.rectangle.getWidth() && y > this.rectangle.getY() + 12 * line && y < this.rectangle.getY() + 12 * line + 12)
                 {
                     if (isMouseChanged)
-                        this.select(l + this.offset);
+                        this.select(line + this.offset);
 
                     isHovering = true;
                 }
 
-                ItemSuggestionHelper.this.font.drawShadow(matrix, suggestion.getText(), (float) (this.rectangle.getX() + 1), (float) (this.rectangle.getY() + 2 + 12 * l), l + this.offset == this.current ? -256 : -5592406);
+                ItemSuggestionHelper.this.font.drawShadow(matrix, suggestion.getText(), (float) (this.rectangle.getX() + 1), (float) (this.rectangle.getY() + 2 + 12 * line), line + this.offset == this.current ? -256 : -5592406);
             }
 
             if (isHovering)
