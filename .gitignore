@@ -1,10 +1,8 @@
-# eclipse
-bin
-*.launch
-.settings
-.metadata
-.classpath
-.project
+# gradle
+.gradle/
+build/
+out/
+classes/
 
 # idea
 out
@@ -12,3 +10,6 @@ out
 *.iws
 *.iml
 .idea
+
+# fabric
+run/

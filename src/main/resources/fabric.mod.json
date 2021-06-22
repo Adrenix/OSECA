@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "id": "oldswing",
+  "version": "${version}",
+
+  "name": "Old Swing",
+  "description": "Brings back the old swinging animation before Minecraft Beta 1.8!",
+  "authors": [
+    "Adrenix"
+  ],
+
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/old-swing",
+    "sources": "https://github.com/Adrenix/OldSwing",
+    "issues": "https://github.com/Adrenix/OldSwing/issues"
+  },
+
+  "license": "See Source License",
+  "icon": "assets/oldswing/logo.png",
+
+  "environment": "client",
+  "entrypoints": {
+    "main": ["mod.adrenix.oldswing.OldSwing"],
+    "client": ["mod.adrenix.oldswing.OldSwingClient"],
+    "modmenu": ["mod.adrenix.oldswing.config.gui.ModMenuIntegration"]
+  },
+
+  "mixins": ["oldswing.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.11.3",
+    "fabric-key-binding-api-v1": "*",
+    "fabric": "*",
+    "minecraft": "1.17.x",
+    "java": ">=16"
+  },
+
+  "suggests": {
+    "another-mod": "*"
+  },
+
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.gg/jWdfVh3"
+      }
+    }
+  }
+}
