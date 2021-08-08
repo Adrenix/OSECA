@@ -39,7 +39,7 @@ public class SettingsScreen extends Screen
     {
         this.addRenderableWidget(new Button(
             this.width / 2 - 102,
-            this.height / 4 + 24 + -16,
+            this.height / 4 + 24 - 16,
             BUTTON_SMALL_WIDTH,
             BUTTON_HEIGHT,
             new TranslatableComponent("text.autoconfig.oldswing.title"),
@@ -48,7 +48,7 @@ public class SettingsScreen extends Screen
 
         this.addRenderableWidget(new Button(
             this.width / 2 + 4,
-            this.height / 4 + 24 + -16,
+            this.height / 4 + 24 - 16,
             BUTTON_SMALL_WIDTH,
             BUTTON_HEIGHT,
             new TranslatableComponent("gui.oldswing.settings.customize"),
@@ -57,7 +57,7 @@ public class SettingsScreen extends Screen
 
         this.addRenderableWidget(new Button(
             this.width / 2 - 102,
-            this.height / 4 + 48 + -16,
+            this.height / 4 + 48 - 16,
             BUTTON_LARGE_WIDTH,
             BUTTON_HEIGHT,
             new TranslatableComponent("gui.done"),

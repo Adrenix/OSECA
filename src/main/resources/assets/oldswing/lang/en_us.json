@@ -38,7 +38,7 @@
   "text.autoconfig.oldswing.option.swings.sword": "Sword Swing Speed",
   "text.autoconfig.oldswing.option.swings.item.@Tooltip": "The swing speed of items that are not blocks, swords, or tools.",
   "text.autoconfig.oldswing.option.swings.item": "Item Swing Speed",
-  "text.autoconfig.oldswing.option.swings.global.@PrefixText": "§bWhen enabled below, this value will override all swing speeds configured above and in the customization list.",
+  "text.autoconfig.oldswing.option.swings.global.@PrefixText": "§bWhen global speed is enabled below, this value will override all swing speeds configured above and in the customization list.",
   "text.autoconfig.oldswing.option.swings.global": "Global Swing Speed",
   "text.autoconfig.oldswing.option.swings.shouldGlobalizeSwings.@PrefixText": "§bThis will enable the global swing speed configured above.\n§eIf you are photosensitive, it is recommended to set the speed above to 0.",
   "text.autoconfig.oldswing.option.swings.shouldGlobalizeSwings": "Global Speed"

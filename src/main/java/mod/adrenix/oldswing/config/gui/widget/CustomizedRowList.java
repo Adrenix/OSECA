@@ -246,6 +246,7 @@ public class CustomizedRowList extends ContainerObjectSelectionList<CustomizedRo
                     Item item = CustomizedSwings.getItem(((ItemButton) widget).entry);
                     int startX = widget.x + 2;
                     int startY = widget.y + 1;
+
                     if (item instanceof BlockItem)
                         startY = widget.y + 2;
 

@@ -1,6 +1,12 @@
 # Fabric
 Starting with Minecraft 1.17, this mod will support Fabric. The Forge branch will continue once a 1.17 build is ready.
 
+## Version 3.0.1
+Minor update that ensures the mod works for 1.17.1.
+- Updated to support the latest Fabric version for 1.17.1.
+- Updated to the latest versions of cloth-config and modmenu.
+- Added a cancel confirmation screen to prevent accidental exits after making changes in the config menus.
+
 ## Version 3.0.0
 Old Swing has been rewritten for Minecraft 1.17. Hooray! This is my first time making a Fabric mod, so please report issues if you come across them!
 - Redid the mod's configuration menu.

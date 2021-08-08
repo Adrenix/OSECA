@@ -119,11 +119,13 @@ public abstract class CustomizedSwings
     {
         String localized = getItem(entry).getDefaultInstance().getHoverName().getString();
         Item item = getItem(entry);
+
         if (getItemKey(item).equals("minecraft:air"))
             if (isValidEntry(item, entry))
                 return new TranslatableComponent("gui.oldswing.customize.hand").getString();
             else
                 return new TranslatableComponent("gui.oldswing.customize.unknown").getString();
+
         return localized;
     }
 

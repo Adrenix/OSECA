@@ -2,6 +2,7 @@ package mod.adrenix.oldswing.config.gui.screen;
 
 import com.google.common.collect.Lists;
 import com.mojang.blaze3d.vertex.PoseStack;
+import it.unimi.dsi.fastutil.booleans.BooleanConsumer;
 import me.shedaniel.autoconfig.AutoConfig;
 import mod.adrenix.oldswing.OldSwing;
 import mod.adrenix.oldswing.config.ClientConfig;
@@ -15,6 +16,7 @@ import net.minecraft.client.gui.components.*;
 import net.minecraft.client.gui.components.events.GuiEventListener;
 import net.minecraft.client.gui.components.toasts.SystemToast;
 import net.minecraft.client.gui.narration.NarratableEntry;
+import net.minecraft.client.gui.screens.ConfirmScreen;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.renderer.entity.ItemRenderer;
 import net.minecraft.network.chat.Component;
@@ -42,6 +44,7 @@ public class CustomizeScreen extends SettingsScreen
     private EditBox searchBox;
     private ItemSuggestionHelper itemSuggestions;
     private CustomizedRowList customizedRowList;
+    private final Screen parent;
     private final Map<String, Integer> undo;
     private final List<Widget> renderables = Lists.newArrayList();
     private final int SEARCH_BOX_W = 226;
@@ -54,6 +57,7 @@ public class CustomizeScreen extends SettingsScreen
     {
         super(parent, new TranslatableComponent("gui.oldswing.settings.customize"));
 
+        this.parent = parent;
         this.undo = Map.copyOf(OldSwing.config.custom);
         this.toolsCheckbox = new ToggleCheckbox(this, 2, TOP_ROW_Y + 27, CHECKBOX_W, CHECKBOX_H, new TranslatableComponent("gui.oldswing.customize.tool"), true);
         this.blocksCheckbox = new ToggleCheckbox(this, 2, TOP_ROW_Y + 52, CHECKBOX_W, CHECKBOX_H, new TranslatableComponent("gui.oldswing.customize.block"), true);
@@ -195,7 +199,7 @@ public class CustomizeScreen extends SettingsScreen
         }
         else if (key == 256 && this.shouldCloseOnEsc())
         {
-            this.onClose(true);
+            this.onCancel();
             return true;
         }
         else if (super.keyPressed(key, x, y))
@@ -289,6 +293,23 @@ public class CustomizeScreen extends SettingsScreen
         this.itemRenderer.renderGuiItem(new ItemStack(Items.TNT), this.resetButton.x + 2, this.resetButton.y + 2);
     }
 
+    /* Cancelling Consumer */
+
+    private class CancelConsumer implements BooleanConsumer
+    {
+        @Override
+        public void accept(boolean understood)
+        {
+            if (understood)
+            {
+                CustomizeScreen.this.onClose(true);
+                CustomizeScreen.this.minecraft.setScreen(CustomizeScreen.this.parent);
+            }
+            else
+                CustomizeScreen.this.minecraft.setScreen(CustomizeScreen.this);
+        }
+    }
+
     /* On-click Providers */
 
     private void onEdited(String ignored)
@@ -307,6 +328,25 @@ public class CustomizeScreen extends SettingsScreen
             this.addCustomizedSwing(this.minecraft.player.getMainHandItem().getItem());
     }
 
+    private void onCancel()
+    {
+        if (!this.isSavable())
+        {
+            this.onClose(true);
+            return;
+        }
+
+        this.minecraft.setScreen(
+            new ConfirmScreen(
+                new CancelConsumer(),
+                new TranslatableComponent("text.cloth-config.quit_config"),
+                new TranslatableComponent("text.cloth-config.quit_config_sure"),
+                new TranslatableComponent("text.cloth-config.quit_discard"),
+                new TranslatableComponent("gui.cancel")
+            )
+        );
+    }
+
     private void onClose(boolean isCancelled)
     {
         if (!isCancelled)
@@ -317,7 +357,7 @@ public class CustomizeScreen extends SettingsScreen
         else
         {
             OldSwing.config.custom.clear();
-            this.undo.forEach((key, value) -> OldSwing.config.custom.put(key, value));
+            OldSwing.config.custom.putAll(this.undo);
         }
 
         CustomizedRowList.deleted.clear();
@@ -421,7 +461,7 @@ public class CustomizeScreen extends SettingsScreen
                 this.getSmallWidth(),
                 BUTTON_HEIGHT,
                 new TranslatableComponent("gui.cancel"),
-                (button) -> CustomizeScreen.this.onClose(true)
+                (button) -> CustomizeScreen.this.onCancel()
             );
         }
 

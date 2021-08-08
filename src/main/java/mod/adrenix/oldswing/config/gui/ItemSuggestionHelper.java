@@ -417,10 +417,13 @@ public class ItemSuggestionHelper
             Suggestion suggestion = this.suggestionList.get(this.current);
             ItemSuggestionHelper.this.keepSuggestions = true;
             ItemSuggestionHelper.this.input.setValue(suggestion.apply(this.originalContents));
+
             int startX = suggestion.getRange().getStart() + suggestion.getText().length();
             ItemSuggestionHelper.this.input.setCursorPosition(startX);
             ItemSuggestionHelper.this.input.setHighlightPos(startX);
+
             this.select(this.current);
+
             ItemSuggestionHelper.this.keepSuggestions = false;
             this.tabCycles = true;
         }
