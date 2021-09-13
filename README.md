@@ -9,28 +9,36 @@
 
 This mod brings back the old swinging animations before Minecraft Beta 1.8. While this mod is an "eye candy" mod targeted towards nostalgic enthusiasts, it is also useful for those who are photosensitive since the mod is very configurable. For example, you can turn off the swinging animation entirely. Additionally, all the animations this mod changes can be toggled. Moreover, you can customize the swing speeds of swords, tools, items, and everything in-between!
 
-## Version 2.2.2
-This is a small feature update that adds a new animation option.
-- Added a sweep particle animation option that will prevent the sweep particles from showing when attacking an entity with a sword.
-- Updated the injection methods so that the mod will no longer crash the game when it conflicts with another mod.
-> Note: If there is a mod conflict, then the mod may not work as expected.
+## What Changes?
+- The arm sway animation has been disabled. (Configurable)
+- The cooldown animation that plays after every swing or change in slot has been disabled. (Configurable)
+- The reequip animation no longer plays when an item damage value changes. (Configurable)
+- The swinging animation has been slowed down. (Configurable)
 
-#### Changelogs
-To see the changes made in previous versions, please see the changelog file.
+The goal of this mod is to provide a swinging animation that has not been seen since Minecraft Beta 1.7. The result of these animation changes provide a smoother swinging experience which is easier on the eyes. Additionally, you can configure the swing speeds of categorical items or individual items.
+
+If you are photosensitive, then this mod is the perfect solution for you. Since all swinging speeds are configurable, you can disable the swing speed animation entirely if that is what you need.
 
 ### Note
-None of these animation modifications impacts block breaking speed or combat. Moreover, these changes are only visible to the client. Meaning only you can see the changes in animation. Potion effects that impacted the animation before still do.
+None of the animation modifications will change block breaking speed or combat. These changes are only visible to the client. Meaning only you can see the changes made by this mod. Potion effects that impacted the animation before still do.
+
+#### Changelogs
+To see the changes made across all versions, please see the [changelog](https://github.com/Adrenix/OldSwing/blob/master/changelog.md) file.
 
 ## Configuration
 As an added feature, you can configure how fast - or slow - the swing speed animation is for any item in the game. That means if you prefer your sword swinging speeds to be fast and tool swinging speeds to be slow, you can do that. Even the placing speed animation for blocks can be changed if needed. Additionally, if motion sickness is of concern for you - or for an audience - I recommend setting the animation speed to 10 or higher. This will result in a slower and smoother swinging animation.
 
-You can modify all configuration options in-game with the `/oldswing` command or using the configuration menu. The configuration menu can be opened using the "O" key, through Forge's mod menu, or by using the `/oldswing config` command. Additionally, you can edit these configuration options within the config file. After you save the file, the new changes will automatically be applied in-game without a restart. Nifty!
+You can modify all configuration options in-game by opening the configuration menu. This is done by pressing the "O" key. If you are using a version made for Minecraft 1.12, then you can make changes by using the `/oldswing` command.
 
-## Commands
+If you are using Forge build, then you can also open the configuration menu through Forge's mod menu. If you are using a Fabric build and want to access the configuration menu via a mod menu, then you need to have the Fabric [Mod Menu](https://www.curseforge.com/minecraft/mc-mods/modmenu) mod installed.
+
+As a last resort, you can always still edit configuration options through the config file. If you are using Forge, then once you save the file the changes will automatically be applied in-game without a restart. Nifty! If you are using Fabric, then you it is possible you may need to restart the game to apply any changes.
+
+## Commands (1.12-1.16)
 These commands come equipped with auto-completion.
 - `/oldswing set` Used to change a config value.
 - `/oldswing get` Used to get current values saved in the config.
-- `/oldswing config` Used to open the configuration menu.
+- `/oldswing config` (1.16 only) Used to open the configuration menu.
 
 ## Demo Video
 Watch the following video to see what this mod changes. https://www.youtube.com/watch?v=IlqIMxxKFnw
@@ -50,16 +58,11 @@ Sure!
 ### Is this mod server safe?
 Yes. This mod only changes visual animations and is client-side only.
 
-### Is this mod coming to 1.17?
-Yes.
-
-### Will there be a Fabric port?
-Starting with MC 1.17.x there will be a Fabric version of this mod.
-
 ### Will there be a Fabric port to 1.16?
+To be determined.
 
 ### I ran into an issue running this mod.
-Please submit an issue.
+Please submit an [issue](https://github.com/Adrenix/OldSwing/issues).
 
 ### The mod loaded, but some features are not working.
 This means there is a mod conflict. A possible solution is to make sure the Old Swing loads last (or first) and see if that fixes the issue.
