@@ -1,3 +1,6 @@
+Unless otherwise stated, this license applies to all directories, files, and assets across all branches.
+
+============================
 Minecraft Mod Public License
 ============================
 
