@@ -1,3 +1,9 @@
+# Development Branches
+- [1.17 Fabric](https://github.com/Adrenix/OldSwing/tree/Fabric-1.17)
+- [1.17 Forge](https://github.com/Adrenix/OldSwing/tree/Forge-1.17)
+- [1.16 Forge](https://github.com/Adrenix/OldSwing/tree/1.16.5)
+- [1.12 Forge](https://github.com/Adrenix/OldSwing/tree/1.12.2)
+
 # OldSwing Mod
 [
 ![CurseForge Downloads](http://cf.way2muchnoise.eu/old-swing.svg)
