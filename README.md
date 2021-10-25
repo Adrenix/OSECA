@@ -4,6 +4,9 @@
 - [1.16 Forge](https://github.com/Adrenix/OldSwing/tree/1.16.5)
 - [1.12 Forge](https://github.com/Adrenix/OldSwing/tree/1.12.2)
 
+#### Changelogs
+To see the changes made across all versions, please see the [changelog](https://github.com/Adrenix/OldSwing/blob/master/changelog.md) file.
+
 # OldSwing Mod
 [
 ![CurseForge Downloads](http://cf.way2muchnoise.eu/old-swing.svg)
@@ -13,32 +16,41 @@
 ![Discord](https://img.shields.io/discord/452988045252100107?label=Discord)
 ](https://discordapp.com/invite/jWdfVh3)
 
-This mod brings back the old swinging animations before Minecraft Beta 1.8. While this mod is an "eye candy" mod targeted towards nostalgic enthusiasts, it is also useful for those who are photosensitive since the mod is very configurable. For example, you can turn off the swinging animation entirely. Additionally, all the animations this mod changes can be toggled. Moreover, you can customize the swing speeds of swords, tools, items, and everything in-between!
+This mod brings back the old swinging animations, some old eye candy, and some old animations throughout various previous versions of Minecraft. All changes can be toggled and swing speeds are heavily customizable. This mod is intended for nostalgic enthusiasts and those who are photosensitive. You can customize the swing speeds of swords, tools, items, and everything in-between!
 
 ## What Changes?
-- The arm sway animation has been disabled. (Configurable)
-- The cooldown animation that plays after every swing or change in slot has been disabled. (Configurable)
-- The reequip animation no longer plays when an item damage value changes. (Configurable)
-- The swinging animation has been slowed down. (Configurable)
+Every change this mod makes to the game is configurable.
 
-The goal of this mod is to provide a swinging animation that has not been seen since Minecraft Beta 1.7. The result of these animation changes provide a smoother swinging experience which is easier on the eyes. Additionally, you can configure the swing speeds of categorical items or individual items.
+- The arm sway animation has been disabled.
+- The vertical arm bobbing has been brought back.
+- The cooldown animation that plays after every swing or change in slot has been disabled.
+- The reequip animation no longer plays when an item damage value changes.
+- The swinging animation has been slowed down.
+- The swinging animation speed can be changed by item category, by individual item, or by potion effects that impact swing speeds.
+- The sweep particles when using a sword has been disabled.
+- The old durability bar (damage bar) colors has been brought back.
+- The old sneaking animation has been brought back.
+- The old item holding positions and swinging rotations have been brought back.
+- The old floating 2D items have been brought back. *Item entities are simulated to be 2D to maintain mod compatibility. **This feature is still in development!
 
-If you are photosensitive, then this mod is the perfect solution for you. Since all swinging speeds are configurable, you can disable the swing speed animation entirely if that is what you need.
+More old school eye candy animations and visuals are also in-development.
 
 ### Note
-None of the animation modifications will change block breaking speed or combat. These changes are only visible to the client. Meaning only you can see the changes made by this mod. Potion effects that impacted the animation before still do.
+None of these animation modifications impacts block breaking speed or combat. Moreover, these changes are only visible to the client. Meaning only you can see the changes in animation and is server safe.
 
-#### Changelogs
-To see the changes made across all versions, please see the [changelog](https://github.com/Adrenix/OldSwing/blob/master/changelog.md) file.
+## Photosensitivity
+If you are photosensitive, then this mod may be helpful. All swing speeds are configurable, which means you can disable the swing speed animation entirely if that is what you need. Additional changes will also be made by the mod when it detects photosensitivity mode is enabled. More information on how to enable this mode is discussed in the configuration section below.
+
+The changes made to the item holding and swinging rotation animations have not been seen since Minecraft Beta 1.7. The result of these animation changes provide a smoother swinging experience which is easier on the eyes.
 
 ## Configuration
-As an added feature, you can configure how fast - or slow - the swing speed animation is for any item in the game. That means if you prefer your sword swinging speeds to be fast and tool swinging speeds to be slow, you can do that. Even the placing speed animation for blocks can be changed if needed. Additionally, if motion sickness is of concern for you - or for an audience - I recommend setting the animation speed to 10 or higher. This will result in a slower and smoother swinging animation.
+Everything that this mod changes is configurable. That means if you prefer sword swinging speeds to be fast and tool swinging speeds to be slow, you can do that. Want to turn off the swing animation when placing blocks? You can do that. Want to turn off the vertical bobbing and arm sway? You can do that. If motion sickness is of concern for you - or for an audience - I recommend setting the animation speed to 10 or higher and disabling vertical bobbing and arm sway (or turn off view bobbing in the vanilla Minecraft settings). This will result in a slower and smoother swinging animation.
 
-You can modify all configuration options in-game by opening the configuration menu. This is done by pressing the "O" key. If you are using a version made for Minecraft 1.12, then you can make changes by using the `/oldswing` command.
+You can open the configuration menu by pressing the O (for Old swing) key in-game. The configuration menu can also be accessed through Forge's mod menu. If you are using Fabric, Old Swing does provide support for the mod menu API.
 
-If you are using Forge build, then you can also open the configuration menu through Forge's mod menu. If you are using a Fabric build and want to access the configuration menu via a mod menu, then you need to have the Fabric [Mod Menu](https://www.curseforge.com/minecraft/mc-mods/modmenu) mod installed.
+If you are photosensitive, open the configuration menu and click on the General Settings button. Click on the plus (+) icon to expand the Swings settings section. At the bottom of this section, change the Global Swing Speed slider to 0. This will disable the swinging animation entirely for everything. The mod will also make additional changes to other animations to help better your experience.
 
-As a last resort, you can always still edit configuration options through the config file. If you are using Forge, then once you save the file the changes will automatically be applied in-game without a restart. Nifty! If you are using Fabric, then you it is possible you may need to restart the game to apply any changes.
+In versions before 3.0.0, you can modify configuration options in-game with the /oldswing command or by using the configuration menu. Additionally, you can edit these configuration options within the config file. After you save the file, the new changes will automatically be applied in-game without a restart. The auto-reload feature is not be available in version 3.0.0 or later since the config reloads automatically if you use the in-game configuration menu.
 
 ## Commands (1.12-1.16)
 These commands come equipped with auto-completion.
