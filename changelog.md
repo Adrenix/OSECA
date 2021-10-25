@@ -1,3 +1,16 @@
+## 1.17.1 (Forge) - Version 3.1.0
+The eye candy update!
+- Old floating 2D items (simulated and currently still a work in progress)
+- Old durability bar colors 
+- Old item holding positions
+- Old swinging rotations
+- Old sneaking animation
+- Old vertical bobbing
+- Improvements to photosensitivity capabilities when swing speeds are set to 0
+- Added haste swing override speed
+- Added mining fatigue override speed
+- Improved configuration layout
+
 ## 1.17.1 (Forge) - Version 3.0.0
 Old Swing has been rewritten for Minecraft 1.17. Hooray!
 - Redid the mod's configuration menu.
