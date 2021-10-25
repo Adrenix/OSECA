@@ -1,11 +1,13 @@
+
 package mod.adrenix.oldswing.config.gui.screen;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import com.mojang.blaze3d.vertex.PoseStack;
 import it.unimi.dsi.fastutil.booleans.BooleanConsumer;
 import me.shedaniel.autoconfig.AutoConfig;
-import mod.adrenix.oldswing.OldSwing;
 import mod.adrenix.oldswing.config.ClientConfig;
+import mod.adrenix.oldswing.config.ConfigRegistry;
 import mod.adrenix.oldswing.config.CustomizedSwings;
 import mod.adrenix.oldswing.config.gui.ItemSuggestionHelper;
 import mod.adrenix.oldswing.config.gui.widget.CustomizedRowList;
@@ -31,9 +33,18 @@ import java.util.Map;
 
 public class CustomizeScreen extends SettingsScreen
 {
-    private static final int TOP_HEIGHT = 24;
-    private static final int BOTTOM_OFFSET = 32;
-    private static final int ITEM_HEIGHT = 25;
+    // Widget Constants
+    protected static final int TOP_HEIGHT = 24;
+    protected static final int BOTTOM_OFFSET = 32;
+    protected static final int ITEM_HEIGHT = 25;
+    protected static final int SEARCH_BOX_W = 226;
+    protected static final int SEARCH_BOX_H = 18;
+    protected static final int CHECKBOX_W = 20;
+    protected static final int CHECKBOX_H = 20;
+    protected static final int TOP_ROW_Y = 23;
+
+    // Customize Fields
+    private static final ClientConfig config = ConfigRegistry.cache;
     private final Checkbox toolsCheckbox;
     private final Checkbox blocksCheckbox;
     private final Checkbox itemsCheckbox;
@@ -47,22 +58,21 @@ public class CustomizeScreen extends SettingsScreen
     private final Screen parent;
     private final Map<String, Integer> undo;
     private final List<Widget> renderables = Lists.newArrayList();
-    private final int SEARCH_BOX_W = 226;
-    private final int SEARCH_BOX_H = 18;
-    private final int CHECKBOX_W = 20;
-    private final int CHECKBOX_H = 20;
-    private final int TOP_ROW_Y = 23;
 
+
+    // Constructor
     public CustomizeScreen(Screen parent)
     {
         super(parent, new TranslatableComponent("gui.oldswing.settings.customize"));
 
         this.parent = parent;
-        this.undo = Map.copyOf(OldSwing.config.custom);
-        this.toolsCheckbox = new ToggleCheckbox(this, 2, TOP_ROW_Y + 27, CHECKBOX_W, CHECKBOX_H, new TranslatableComponent("gui.oldswing.customize.tool"), true);
-        this.blocksCheckbox = new ToggleCheckbox(this, 2, TOP_ROW_Y + 52, CHECKBOX_W, CHECKBOX_H, new TranslatableComponent("gui.oldswing.customize.block"), true);
-        this.itemsCheckbox = new ToggleCheckbox(this, 2, TOP_ROW_Y + 77, CHECKBOX_W, CHECKBOX_H, new TranslatableComponent("gui.oldswing.customize.item"), true);
-        this.resetCheckbox = new ToggleCheckbox(this, 2, TOP_ROW_Y - 1, CHECKBOX_W, CHECKBOX_H, new TranslatableComponent("gui.oldswing.customize.reset"), false);
+        this.undo = Maps.newHashMap(config.custom);
+
+        int x = 2, y = TOP_ROW_Y, w = CHECKBOX_W, h = CHECKBOX_H;
+        this.toolsCheckbox = new ToggleCheckbox(this, x, y + 27, w, h, new TranslatableComponent("gui.oldswing.customize.tool"), true);
+        this.blocksCheckbox = new ToggleCheckbox(this, x, y + 52, w, h, new TranslatableComponent("gui.oldswing.customize.block"), true);
+        this.itemsCheckbox = new ToggleCheckbox(this, x, y + 77, w, h, new TranslatableComponent("gui.oldswing.customize.item"), true);
+        this.resetCheckbox = new ToggleCheckbox(this, x, y - 1, w, h, new TranslatableComponent("gui.oldswing.customize.reset"), false);
     }
 
     /* Getters */
@@ -89,6 +99,11 @@ public class CustomizeScreen extends SettingsScreen
         if (this.itemSuggestions == null)
             return true;
         return !this.itemSuggestions.isSuggesting();
+    }
+
+    public void setSuggestionFocus(boolean state)
+    {
+        this.searchBox.setFocus(state);
     }
 
     private void addCustomizedSwing(Item item)
@@ -123,7 +138,7 @@ public class CustomizeScreen extends SettingsScreen
 
     private void resetCustomizedList()
     {
-        OldSwing.config.custom.clear();
+        config.custom.clear();
         CustomizedRowList.added = null;
 
         this.resetCheckbox.onPress();
@@ -145,12 +160,12 @@ public class CustomizeScreen extends SettingsScreen
 
     private boolean isSavable()
     {
-        if (this.undo.size() != OldSwing.config.custom.size())
+        if (this.undo.size() != config.custom.size())
             return true;
         else if (CustomizedRowList.deleted.size() > 0)
             return true;
 
-        for (Map.Entry<String, Integer> entry : OldSwing.config.custom.entrySet())
+        for (Map.Entry<String, Integer> entry : config.custom.entrySet())
             if (this.undo.get(entry.getKey()).intValue() != entry.getValue().intValue())
                 return true;
 
@@ -352,12 +367,12 @@ public class CustomizeScreen extends SettingsScreen
         if (!isCancelled)
         {
             for (Map.Entry<String, Integer> entry : CustomizedRowList.deleted)
-                OldSwing.config.custom.remove(entry.getKey());
+                config.custom.remove(entry.getKey());
         }
         else
         {
-            OldSwing.config.custom.clear();
-            OldSwing.config.custom.putAll(this.undo);
+            config.custom.clear();
+            config.custom.putAll(this.undo);
         }
 
         CustomizedRowList.deleted.clear();
@@ -378,7 +393,7 @@ public class CustomizeScreen extends SettingsScreen
                 CustomizeScreen.this.height,
                 TOP_HEIGHT + 22,
                 CustomizeScreen.this.height - BOTTOM_OFFSET,
-                    ITEM_HEIGHT
+                ITEM_HEIGHT
             );
         }
 
@@ -387,9 +402,9 @@ public class CustomizeScreen extends SettingsScreen
             return new EditBox(
                 CustomizeScreen.this.font,
                 CustomizeScreen.this.width / 2 - 112,
-                CustomizeScreen.this.TOP_ROW_Y,
-                CustomizeScreen.this.SEARCH_BOX_W,
-                CustomizeScreen.this.SEARCH_BOX_H,
+                TOP_ROW_Y,
+                SEARCH_BOX_W,
+                SEARCH_BOX_H,
                 CustomizeScreen.this.searchBox,
                 TextComponent.EMPTY
             );
@@ -400,9 +415,9 @@ public class CustomizeScreen extends SettingsScreen
             Component tooltip = new TranslatableComponent("gui.oldswing.customize.add.@Tooltip").withStyle(ChatFormatting.GREEN);
             return new Button(
                 CustomizeScreen.this.width / 2 + 116,
-                CustomizeScreen.this.TOP_ROW_Y - 1,
-                CustomizeScreen.this.CHECKBOX_W,
-                CustomizeScreen.this.CHECKBOX_H,
+                TOP_ROW_Y - 1,
+                CHECKBOX_W,
+                CHECKBOX_H,
                 new TextComponent("+").withStyle(ChatFormatting.GREEN),
                 (button) -> CustomizeScreen.this.onAddCustomizedSwing(),
                 (button, stack, mouseX, mouseY) -> CustomizeScreen.this.renderTooltip(stack, tooltip, mouseX, mouseY)
@@ -414,9 +429,9 @@ public class CustomizeScreen extends SettingsScreen
             Component tooltip = new TranslatableComponent("gui.oldswing.customize.autofill.@Tooltip").withStyle(ChatFormatting.YELLOW);
             return new Button(
                 CustomizeScreen.this.width / 2 - 134,
-                CustomizeScreen.this.TOP_ROW_Y - 1,
-                CustomizeScreen.this.CHECKBOX_W,
-                CustomizeScreen.this.CHECKBOX_H,
+                TOP_ROW_Y - 1,
+                CHECKBOX_W,
+                CHECKBOX_H,
                 new TextComponent("\u26a1").withStyle(ChatFormatting.YELLOW).withStyle(ChatFormatting.BOLD),
                 (button) -> CustomizeScreen.this.onAutofill(),
                 (button, stack, mouseX, mouseY) -> CustomizeScreen.this.renderTooltip(stack, tooltip, mouseX, mouseY)
@@ -427,14 +442,14 @@ public class CustomizeScreen extends SettingsScreen
         {
             List<Component> tooltip = Lists.newArrayList(
                 new TranslatableComponent("gui.oldswing.customize.reset.@Tooltip[0]").withStyle(ChatFormatting.RED),
-                new TranslatableComponent("gui.oldswing.customize.reset.@Tooltip[1]").withStyle(ChatFormatting.DARK_RED)
+                new TranslatableComponent("gui.oldswing.customize.reset.@Tooltip[1]").withStyle(ChatFormatting.WHITE)
             );
 
             return new Button(
                 CustomizeScreen.this.autofillButton.x - 21,
-                CustomizeScreen.this.TOP_ROW_Y - 1,
-                CustomizeScreen.this.CHECKBOX_W,
-                CustomizeScreen.this.CHECKBOX_H,
+                TOP_ROW_Y - 1,
+                CHECKBOX_W,
+                CHECKBOX_H,
                 TextComponent.EMPTY,
                 (button) -> CustomizeScreen.this.resetCustomizedList(),
                 (button, stack, mouseX, mouseY) -> CustomizeScreen.this.renderComponentTooltip(stack, tooltip, mouseX, mouseY)

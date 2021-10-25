@@ -16,26 +16,27 @@ import java.util.*;
 
 public abstract class CustomizedSwings
 {
-    /* Check Validity of Customized Items */
+    private static final ClientConfig config = ConfigRegistry.cache;
 
+    /* Check Validity of Customized Items */
     public static void validateCustomizedSwings()
     {
         boolean isCleaned = false;
 
-        if (OldSwing.config.custom == null)
+        if (config.custom == null)
         {
-            OldSwing.config.custom = Maps.newHashMap();
+            config.custom = Maps.newHashMap();
             isCleaned = true;
         }
 
-        for (Map.Entry<String, Integer> entry : OldSwing.config.custom.entrySet())
+        for (Map.Entry<String, Integer> entry : config.custom.entrySet())
         {
             if (entry.getValue() < ClientConfig.MIN || entry.getValue() > ClientConfig.MAX)
             {
-                OldSwing.log(entry.getKey() + " has invalid swing speed: " + entry.getValue());
-                OldSwing.log(entry.getKey() + " has been updated to speed: " + OldSwing.OLD_SPEED);
+                OldSwing.LOGGER.warn(entry.getKey() + " has invalid swing speed: " + entry.getValue());
+                OldSwing.LOGGER.info(entry.getKey() + " has been updated to speed: " + DefaultConfig.OLD_SPEED);
 
-                entry.setValue(OldSwing.OLD_SPEED);
+                entry.setValue(DefaultConfig.OLD_SPEED);
                 isCleaned = true;
             }
         }
@@ -45,10 +46,9 @@ public abstract class CustomizedSwings
     }
 
     /* Sort Customized Items */
-
     public static List<Map.Entry<String, Integer>> getSortedItems(boolean addTools, boolean addBlocks, boolean addItems)
     {
-        List<Map.Entry<String, Integer>> entries = new ArrayList<>(OldSwing.config.custom.entrySet());
+        List<Map.Entry<String, Integer>> entries = new ArrayList<>(config.custom.entrySet());
         List<Map.Entry<String, Integer>> sorted = new ArrayList<>();
         List<Map.Entry<String, Integer>> tools = new ArrayList<>();
         List<Map.Entry<String, Integer>> blocks = new ArrayList<>();
@@ -107,7 +107,7 @@ public abstract class CustomizedSwings
 
     public static void addItem(Item item)
     {
-        OldSwing.config.custom.put(getItemKey(item), OldSwing.OLD_SPEED);
+        config.custom.put(getItemKey(item), DefaultConfig.OLD_SPEED);
     }
 
     public static Item getItem(Map.Entry<String, Integer> entry)
@@ -131,7 +131,7 @@ public abstract class CustomizedSwings
 
     public static Map.Entry<String, Integer> getEntryFromItem(Item item)
     {
-        List<Map.Entry<String, Integer>> entries = new ArrayList<>(OldSwing.config.custom.entrySet());
+        List<Map.Entry<String, Integer>> entries = new ArrayList<>(config.custom.entrySet());
         for (Map.Entry<String, Integer> entry : entries)
             if (entry.getKey().equals(Registry.ITEM.getKey(item).toString()))
                 return entry;
@@ -147,8 +147,8 @@ public abstract class CustomizedSwings
         Component alpha = new TranslatableComponent("gui.oldswing.customize.range.@Tooltip[0]");
         Component modern = new TranslatableComponent("gui.oldswing.customize.range.@Tooltip[1]");
 
-        String top = ChatFormatting.GREEN + alpha.getString() + ChatFormatting.WHITE + ": " + ChatFormatting.AQUA + OldSwing.OLD_SPEED;
-        String bottom = ChatFormatting.GOLD + modern.getString() + ChatFormatting.WHITE + ": " + ChatFormatting.AQUA + OldSwing.NEW_SPEED;
+        String top = ChatFormatting.GREEN + alpha.getString() + ChatFormatting.WHITE + ": " + ChatFormatting.AQUA + DefaultConfig.OLD_SPEED;
+        String bottom = ChatFormatting.GOLD + modern.getString() + ChatFormatting.WHITE + ": " + ChatFormatting.AQUA + DefaultConfig.NEW_SPEED;
 
         tooltip.add(new TextComponent(top));
         tooltip.add(new TextComponent(bottom));

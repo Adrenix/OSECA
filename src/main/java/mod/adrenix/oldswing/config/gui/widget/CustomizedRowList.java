@@ -4,8 +4,8 @@ import com.google.common.collect.ImmutableList;
 import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import mod.adrenix.oldswing.OldSwing;
 import mod.adrenix.oldswing.config.CustomizedSwings;
+import mod.adrenix.oldswing.config.DefaultConfig;
 import mod.adrenix.oldswing.config.gui.screen.CustomizeScreen;
 import mod.adrenix.oldswing.config.gui.screen.SettingsScreen;
 import net.minecraft.ChatFormatting;
@@ -59,6 +59,16 @@ public class CustomizedRowList extends ContainerObjectSelectionList<CustomizedRo
     protected int getScrollbarPosition()
     {
         return this.width - 4;
+    }
+
+    @Override
+    public boolean mouseClicked(double x, double y, int button)
+    {
+        boolean clicked = super.mouseClicked(x, y, button);
+
+        if (clicked)
+            this.screen.setSuggestionFocus(false);
+        return clicked;
     }
 
     @Override
@@ -171,7 +181,7 @@ public class CustomizedRowList extends ContainerObjectSelectionList<CustomizedRo
             Button reset = Widgets.createReset(screen, entry, slider);
 
             undo.active = false;
-            reset.active = entry.getValue() != OldSwing.OLD_SPEED;
+            reset.active = entry.getValue() != DefaultConfig.OLD_SPEED;
 
             widgets.add(range);
             widgets.add(item);
@@ -226,7 +236,7 @@ public class CustomizedRowList extends ContainerObjectSelectionList<CustomizedRo
                 else if (title != null && title.equals(Widgets.UNDO))
                     widget.setMessage(new TextComponent(Widgets.UNDO).withStyle(widget.active ? ChatFormatting.RED : ChatFormatting.GRAY));
                 else if (title != null && title.equals(new TranslatableComponent("text.cloth-config.reset_value").getString()))
-                    widget.active = !CustomizedRowList.deleted.contains(entry) && this.entry.getValue() != OldSwing.OLD_SPEED;
+                    widget.active = !CustomizedRowList.deleted.contains(entry) && this.entry.getValue() != DefaultConfig.OLD_SPEED;
             }
 
             widget.render(stack, mouseX, mouseY, ticks);
@@ -349,10 +359,10 @@ public class CustomizedRowList extends ContainerObjectSelectionList<CustomizedRo
                     title,
                     (button) ->
                     {
-                        entry.setValue(OldSwing.OLD_SPEED);
-                        slider.setValue(OldSwing.OLD_SPEED);
+                        entry.setValue(DefaultConfig.OLD_SPEED);
+                        slider.setValue(DefaultConfig.OLD_SPEED);
                     },
-                    (button, stack, mouseX, mouseY) -> button.active = entry.getValue() != OldSwing.OLD_SPEED
+                    (button, stack, mouseX, mouseY) -> button.active = entry.getValue() != DefaultConfig.OLD_SPEED
                 );
             }
         }

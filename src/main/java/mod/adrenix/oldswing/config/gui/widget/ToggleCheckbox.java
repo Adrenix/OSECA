@@ -19,5 +19,6 @@ public class ToggleCheckbox extends Checkbox
     {
         super.onPress();
         this.screen.getMinecraft().setScreen(this.screen);
+        this.screen.setSuggestionFocus(false);
     }
 }

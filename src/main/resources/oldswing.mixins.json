@@ -3,10 +3,13 @@
   "package": "mod.adrenix.oldswing.mixin",
   "compatibilityLevel": "JAVA_16",
   "client": [
+    "CameraMixin",
+    "GameRendererMixin",
+    "ItemEntityRendererMixin",
     "ItemInHandRendererMixin",
+    "ItemRendererMixin",
     "LivingEntityMixin",
-    "PlayerMixin",
-    "PoseStackMixin"
+    "PlayerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

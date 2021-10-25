@@ -1,8 +1,8 @@
 package mod.adrenix.oldswing.config.gui.widget;
 
-import mod.adrenix.oldswing.OldSwing;
 import mod.adrenix.oldswing.config.ClientConfig;
 import mod.adrenix.oldswing.config.CustomizedSwings;
+import mod.adrenix.oldswing.config.DefaultConfig;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.components.AbstractSliderButton;
 import net.minecraft.network.chat.TextComponent;
@@ -27,7 +27,7 @@ public class SpeedSlider extends AbstractSliderButton
     @Override
     protected void updateMessage()
     {
-        ChatFormatting color = entry.getValue() <= OldSwing.NEW_SPEED ? ChatFormatting.GOLD : ChatFormatting.GREEN;
+        ChatFormatting color = entry.getValue() <= DefaultConfig.NEW_SPEED ? ChatFormatting.GOLD : ChatFormatting.GREEN;
         String text = CustomizedSwings.getLocalizedItem(this.entry) + ": " + (this.active ? color : ChatFormatting.GRAY) + entry.getValue().toString();
         this.setMessage(new TextComponent(text));
     }

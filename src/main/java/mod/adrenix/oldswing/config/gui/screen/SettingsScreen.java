@@ -13,15 +13,19 @@ import net.minecraft.resources.ResourceLocation;
 
 public class SettingsScreen extends Screen
 {
-    public static final String BACKGROUND_BLOCK = "minecraft:textures/block/deepslate_tiles.png";
-    public static final ResourceLocation BACKGROUND_LOCATION = new ResourceLocation(BACKGROUND_BLOCK);
+    // Widget Constants
     protected static final int BUTTON_HEIGHT = 20;
     protected static final int DONE_BUTTON_TOP_OFFSET = 26;
-    protected static final int BUTTON_LARGE_WIDTH = 204;
-    protected static final int BUTTON_SMALL_WIDTH = 98;
+    protected static final int LARGE_WIDTH = 204;
+    protected static final int SMALL_WIDTH = 98;
+
+    // Setting Fields
+    public static final String BACKGROUND = "minecraft:textures/block/deepslate_tiles.png";
+    public static final ResourceLocation BACKGROUND_LOCATION = new ResourceLocation(BACKGROUND);
     protected final Minecraft minecraft;
     private final Screen parent;
 
+    // Constructors
     public SettingsScreen(Screen parent, TranslatableComponent title)
     {
         super(title);
@@ -34,50 +38,49 @@ public class SettingsScreen extends Screen
         this(parent, new TranslatableComponent("gui.oldswing.settings.title"));
     }
 
+    // Init & Closing
     @Override
     protected void init()
     {
+        // General Settings
         this.addRenderableWidget(new Button(
             this.width / 2 - 102,
             this.height / 4 + 24 - 16,
-            BUTTON_SMALL_WIDTH,
+            SMALL_WIDTH,
             BUTTON_HEIGHT,
             new TranslatableComponent("text.autoconfig.oldswing.title"),
             (button) -> this.minecraft.setScreen(AutoConfig.getConfigScreen(ClientConfig.class, this).get())
         ));
 
+        // Custom Swing Speeds
         this.addRenderableWidget(new Button(
             this.width / 2 + 4,
             this.height / 4 + 24 - 16,
-            BUTTON_SMALL_WIDTH,
+            SMALL_WIDTH,
             BUTTON_HEIGHT,
             new TranslatableComponent("gui.oldswing.settings.customize"),
             (button) -> this.minecraft.setScreen(new CustomizeScreen(this))
         ));
 
+        // Done Button
         this.addRenderableWidget(new Button(
             this.width / 2 - 102,
             this.height / 4 + 48 - 16,
-            BUTTON_LARGE_WIDTH,
+            LARGE_WIDTH,
             BUTTON_HEIGHT,
             new TranslatableComponent("gui.done"),
             (button) -> this.onClose()
         ));
     }
 
-    protected void renderCustomizedBackground(PoseStack stack, boolean isHome)
+    @Override
+    public void onClose()
     {
-        if (this.minecraft.level != null && isHome)
-            this.fillGradient(stack, 0, 0, this.width, this.height, -1072689136, -804253680);
-        else
-            this.renderDirtBackground(0);
+        AutoConfig.getConfigHolder(ClientConfig.class).save();
+        this.minecraft.setScreen(parent);
     }
 
-    protected void renderScreenTitle(PoseStack stack, int height)
-    {
-        drawCenteredString(stack, this.font, this.title.getString(), this.width / 2, height, 0xFFFFFF);
-    }
-
+    // Rendering
     @Override
     public void renderDirtBackground(int i)
     {
@@ -103,10 +106,16 @@ public class SettingsScreen extends Screen
         super.render(stack, mouseX, mouseY, ticks);
     }
 
-    @Override
-    public void onClose()
+    protected void renderCustomizedBackground(PoseStack stack, boolean isHome)
     {
-        AutoConfig.getConfigHolder(ClientConfig.class).save();
-        this.minecraft.setScreen(parent);
+        if (this.minecraft.level != null && isHome)
+            this.fillGradient(stack, 0, 0, this.width, this.height, -1072689136, -804253680);
+        else
+            this.renderDirtBackground(0);
+    }
+
+    protected void renderScreenTitle(PoseStack stack, int height)
+    {
+        drawCenteredString(stack, this.font, this.title.getString(), this.width / 2, height, 0xFFFFFF);
     }
 }
