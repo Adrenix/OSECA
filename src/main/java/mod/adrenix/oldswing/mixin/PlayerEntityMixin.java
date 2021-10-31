@@ -42,8 +42,5 @@ public abstract class PlayerEntityMixin extends LivingEntity implements CameraPi
 
     @Redirect(method = "drop(Lnet/minecraft/item/ItemStack;ZZ)Lnet/minecraft/entity/item/ItemEntity;", at = @At(value = "INVOKE", target = "Lnet/minecraft/entity/player/PlayerEntity;swing(Lnet/minecraft/util/Hand;)V"))
     protected void itemDroppingProxy(PlayerEntity player, Hand hand)
-    {
-        if (MixinInjector.shouldSwingDrop())
-            this.swing(Hand.MAIN_HAND);
-    }
+    {} // Can't have swing called here since that will double the drop. Still need redirect here to prevent animation from inventory.
 }

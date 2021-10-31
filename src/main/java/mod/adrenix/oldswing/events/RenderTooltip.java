@@ -30,10 +30,9 @@ public class RenderTooltip
     public static int titleLinesCount;
     public static List<? extends ITextProperties> textLines;
     public static FontRenderer font;
-    public static RenderTooltipEvent.Pre cache;
 
     @SubscribeEvent
-    public static void overrideWidth(RenderTooltipEvent.Pre event)
+    public static void removeTooltip(RenderTooltipEvent.Pre event)
     {
         if (MixinInjector.oldTooltips())
             return;
@@ -47,18 +46,6 @@ public class RenderTooltip
         maxTextWidth = event.getMaxWidth();
         event.setX(-9999);
         event.setY(-9999);
-        cache = event;
-    }
-
-    @SubscribeEvent
-    public static void overrideColors(RenderTooltipEvent.Color event)
-    {
-        if (MixinInjector.oldTooltips())
-            return;
-
-        event.setBackground(0xc0000000);
-        event.setBorderStart(0x0ff0000);
-        event.setBorderEnd(0x0ff0000);
     }
 
     @SubscribeEvent

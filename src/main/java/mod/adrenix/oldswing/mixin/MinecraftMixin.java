@@ -3,7 +3,6 @@ package mod.adrenix.oldswing.mixin;
 import mod.adrenix.oldswing.MixinInjector;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.util.Hand;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -22,7 +21,7 @@ public abstract class MinecraftMixin
     {
         if (MixinInjector.shouldSwingDrop())
         {
-            if (this.player != null && !this.player.isSpectator() && this.player.drop(Screen.hasControlDown()))
+            if (this.player != null)
                 this.player.swing(Hand.MAIN_HAND);
         }
     }
