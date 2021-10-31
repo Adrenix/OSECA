@@ -54,6 +54,42 @@ public class Animations
                     ))
                 )
             )
+
+            .then(Commands.literal("disableVerticalBobbing")
+                .then(Commands.argument("flag", BoolArgumentType.bool())
+                    .suggests(FLAG_SUGGESTION)
+                    .executes(context -> toggleVerticalBobbing(
+                        context.getSource(), BoolArgumentType.getBool(context, "flag")
+                    ))
+                )
+            )
+
+            .then(Commands.literal("disableSmoothSneaking")
+                .then(Commands.argument("flag", BoolArgumentType.bool())
+                    .suggests(FLAG_SUGGESTION)
+                    .executes(context -> toggleSmoothSneaking(
+                        context.getSource(), BoolArgumentType.getBool(context, "flag")
+                    ))
+                )
+            )
+
+            .then(Commands.literal("disableToolDisintegration")
+                .then(Commands.argument("flag", BoolArgumentType.bool())
+                    .suggests(FLAG_SUGGESTION)
+                    .executes(context -> toggleToolDisintegration(
+                        context.getSource(), BoolArgumentType.getBool(context, "flag")
+                    ))
+                )
+            )
+
+            .then(Commands.literal("disableDropAnimation")
+                .then(Commands.argument("flag", BoolArgumentType.bool())
+                    .suggests(FLAG_SUGGESTION)
+                    .executes(context -> toggleDropAnimation(
+                        context.getSource(), BoolArgumentType.getBool(context, "flag")
+                    ))
+                )
+            )
         ;
     }
 
@@ -99,5 +135,33 @@ public class Animations
         String on = I18n.get("oldswing.cmd.sweep.on");
         String off = I18n.get("oldswing.cmd.sweep.off");
         return toggleAnimation(source, flag, ClientConfig.prevent_sweep, on, off);
+    }
+
+    private static int toggleVerticalBobbing(CommandSource source, boolean flag)
+    {
+        String on = I18n.get("oldswing.cmd.bobbing.on");
+        String off = I18n.get("oldswing.cmd.bobbing.off");
+        return toggleAnimation(source, flag, ClientConfig.prevent_bob_vertical, on, off);
+    }
+
+    private static int toggleSmoothSneaking(CommandSource source, boolean flag)
+    {
+        String on = I18n.get("oldswing.cmd.sneaking.on");
+        String off = I18n.get("oldswing.cmd.sneaking.off");
+        return toggleAnimation(source, flag, ClientConfig.prevent_smooth_sneak, on, off);
+    }
+
+    private static int toggleToolDisintegration(CommandSource source, boolean flag)
+    {
+        String on = I18n.get("oldswing.cmd.disintegrate.on");
+        String off = I18n.get("oldswing.cmd.disintegrate.off");
+        return toggleAnimation(source, flag, ClientConfig.prevent_tool_disintegration, on, off);
+    }
+
+    private static int toggleDropAnimation(CommandSource source, boolean flag)
+    {
+        String on = I18n.get("oldswing.cmd.drop.on");
+        String off = I18n.get("oldswing.cmd.drop.off");
+        return toggleAnimation(source, flag, ClientConfig.prevent_swing_drop, on, off);
     }
 }

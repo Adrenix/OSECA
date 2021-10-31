@@ -1,3 +1,21 @@
+## Version 2.3.0
+Back porting the eye candy update to 1.16.5 along with a few more extra goodies that isn't in 1.17 yet!
+- Old floating 2D items (simulated and currently still a work in progress)
+- Old durability bar colors
+- Old item holding positions
+- Old swinging rotations
+- Old sneaking animation
+- Old vertical bobbing
+- Old tooltip boxes
+- Refined hand swing movement a bit more.
+- Disabled the swinging animation when dropping items.
+- Disabled the tool disintegration animation and breaking sound when a tool's durability runs out.
+- Disabled the light flickering animation. It is recommended to combine this feature with an old lighting resource pack.
+- Improvements to photosensitivity capabilities when swing speeds are set to 0
+- Added haste swing override speed
+- Added mining fatigue override speed
+- Since version 2 utilizes commands, the command system has also been updated to support the new features in this update.
+
 ## Version 2.2.3
 Bug-fix update.
 - Fixed a bug that would prevent the config from being saved if using the Esc key to exit the configuration menu.

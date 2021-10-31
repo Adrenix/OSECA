@@ -3,6 +3,7 @@ package mod.adrenix.oldswing.config.gui;
 import mod.adrenix.oldswing.OldSwing;
 import mod.adrenix.oldswing.config.gui.screen.ConfigScreen;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screen.inventory.InventoryScreen;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraft.client.util.InputMappings;
@@ -28,7 +29,7 @@ public class ConfigKey
     public static void tick(TickEvent.ClientTickEvent event)
     {
         if (event.phase == TickEvent.Phase.START)
-            if (OPEN_GUI.isDown())
+            if (OPEN_GUI.isDown() && !(Minecraft.getInstance().screen instanceof InventoryScreen))
                 Minecraft.getInstance().setScreen(new ConfigScreen(Minecraft.getInstance().screen));
     }
 }

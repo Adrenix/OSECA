@@ -19,6 +19,7 @@ public class CommandRegistry
                     .then(Swings.register())
                     .then(Animations.register())
                     .then(State.register())
+                    .then(Candy.register())
             )
             .then(
                 Commands.literal("get")

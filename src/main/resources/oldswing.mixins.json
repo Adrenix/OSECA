@@ -5,9 +5,15 @@
   "minVersion": "0.7.10",
   "target": "@env(DEFAULT)",
   "client": [
+    "ActiveRenderInfoMixin",
     "FirstPersonRendererMixin",
+    "GameRendererMixin",
+    "ItemEntityRendererMixin",
+    "ItemRendererMixin",
+    "LightTextureMixin",
     "LivingEntityMixin",
-    "MatrixStackMixin",
-    "PlayerEntityMixin"
+    "MinecraftMixin",
+    "PlayerEntityMixin",
+    "ScreenMixin"
   ]
 }

@@ -29,10 +29,10 @@ public class CustomRowList extends AbstractOptionList<CustomRowList.Row>
     public static Config.Entry added;
     private final CustomScreen parentScreen;
 
-    public CustomRowList(CustomScreen parentScreen, int width, int height, int y0, int y1, int itemHeight)
+    public CustomRowList(CustomScreen parentScreen, int width, int height, int startY, int endY, int itemHeight)
     {
         // x0 = 0 & x1 = width
-        super(parentScreen.getMinecraft(), width, height, y0, y1, itemHeight);
+        super(parentScreen.getMinecraft(), width, height, startY, endY, itemHeight);
         this.centerListVertically = false;
         this.parentScreen = parentScreen;
     }
@@ -49,15 +49,18 @@ public class CustomRowList extends AbstractOptionList<CustomRowList.Row>
 
     protected int getScrollbarPosition()
     {
-        return super.getScrollbarPosition() + 36;
+        return this.width - 4;
     }
 
     public static class Row extends AbstractOptionList.Entry<CustomRowList.Row>
     {
         private final List<Widget> children;
+        private boolean onChoppingBlock;
+
         private Row(List<Widget> list)
         {
             this.children = list;
+            this.onChoppingBlock = false;
         }
 
         public static void disableWidgets(List<Widget> widgets)
@@ -68,7 +71,7 @@ public class CustomRowList extends AbstractOptionList<CustomRowList.Row>
                 widget.active = false;
             });
 
-            widgets.get(widgets.size() - 1).active = true;
+            widgets.get(widgets.size() - 2).active = true;
         }
 
         public static void enableWidgets(List<Widget> widgets, Config.Entry entry)
@@ -79,7 +82,7 @@ public class CustomRowList extends AbstractOptionList<CustomRowList.Row>
                 widget.active = true;
             });
 
-            widgets.get(widgets.size() - 1).active = false;
+            widgets.get(widgets.size() - 2).active = false;
         }
 
         private static StringTextComponent getSliderTitle(Config.Entry entry)
@@ -108,6 +111,7 @@ public class CustomRowList extends AbstractOptionList<CustomRowList.Row>
             Widget valueSlider;
             Widget remove;
             Widget undo;
+            Widget reset;
 
             rangeTipButton = new Button(
                 width / 2 - 155,
@@ -172,14 +176,30 @@ public class CustomRowList extends AbstractOptionList<CustomRowList.Row>
                 }
             );
 
+            String resetTitle = I18n.get("oldswing.config.reset");
+            reset = new Button(
+                    width / 2 + 158,
+                    0,
+                    screen.getMinecraft().font.width(resetTitle) + 6,
+                    20,
+                    new StringTextComponent(resetTitle),
+                    (button) -> {
+                        entry.setValue(ConfigHandler.OLD_SPEED);
+                        valueSlider.setMessage(getSliderTitle(entry));
+                        valueSlider.mouseClicked(valueSlider.x + (valueSlider.getWidth() / (double) 2), valueSlider.y, 0);
+                    }
+            );
+
             undo.active = false;
+            reset.active = (int) entry.getValue() != ConfigHandler.OLD_SPEED;
             widgets.add(rangeTipButton);
             widgets.add(imageTipButton);
             widgets.add(valueSlider);
             widgets.add(remove);
             widgets.add(undo);
+            widgets.add(reset);
 
-            return new CustomRowList.Row(ImmutableList.of(rangeTipButton, imageTipButton, valueSlider, remove, undo));
+            return new CustomRowList.Row(ImmutableList.of(rangeTipButton, imageTipButton, valueSlider, remove, undo, reset));
         }
 
         public void render(@Nonnull MatrixStack matrix, int x, int y, int unused2, int unused3, int unused4, int mouseX, int mouseY, boolean unused5, float partialTicks)
@@ -210,7 +230,12 @@ public class CustomRowList extends AbstractOptionList<CustomRowList.Row>
                         if (title != null && title.equals(TextFormatting.stripFormatting(getRemoveButtonTitle(TextFormatting.RESET).getText())))
                             child.setMessage(getRemoveButtonTitle(child.active ? TextFormatting.DARK_RED : TextFormatting.GRAY));
                         else if (title != null && title.equals(TextFormatting.stripFormatting(getUndoButtonTitle(TextFormatting.RESET).getText())))
+                        {
                             child.setMessage(getUndoButtonTitle(child.active ? TextFormatting.RED : TextFormatting.GRAY));
+                            this.onChoppingBlock = child.active;
+                        }
+                        else if (title != null && title.equals(I18n.get("oldswing.config.reset")))
+                            child.active = !this.onChoppingBlock;
                     }
 
                     child.render(matrix, mouseX, mouseY, partialTicks);

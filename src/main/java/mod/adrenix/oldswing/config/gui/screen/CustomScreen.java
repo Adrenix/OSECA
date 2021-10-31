@@ -44,7 +44,6 @@ public class CustomScreen extends ConfigScreen
     private boolean blocksToggleState = true;
     private boolean itemsToggleState = true;
     private boolean resetToggleState = false;
-    private final int checkX = 4;
     private final int checkW = 20;
     private final int checkH = 20;
 
@@ -52,10 +51,11 @@ public class CustomScreen extends ConfigScreen
     {
         super(I18n.get("oldswing.config.custom_swing_speed"), parentScreen);
 
+        int checkX = 4;
         this.toggleTools = new CheckboxButton(checkX, TOP_ROW_Y + 27, checkW, checkH, new StringTextComponent(I18n.get("oldswing.tool")), this.toolsToggleState);
         this.toggleBlocks = new CheckboxButton(checkX, TOP_ROW_Y + 52, checkW, checkH, new StringTextComponent(I18n.get("oldswing.block")), this.blocksToggleState);
         this.toggleItems = new CheckboxButton(checkX, TOP_ROW_Y + 77, checkW, checkH, new StringTextComponent(I18n.get("oldswing.item")), this.itemsToggleState);
-        this.toggleReset = new CheckboxButton(checkX, TOP_ROW_Y - 1, checkW, checkH, new StringTextComponent(I18n.get("oldswing.config.reset")), this.resetToggleState, false);
+        this.toggleReset = new CheckboxButton(checkX, TOP_ROW_Y - 1, checkW, checkH, new StringTextComponent(I18n.get("oldswing.config.reset")), this.resetToggleState);
     }
 
     public boolean suggestionsAreClosed()
@@ -79,7 +79,9 @@ public class CustomScreen extends ConfigScreen
     public CustomRowList getCustomRowList()
     {
         return new CustomRowList(
-                this, this.width, this.height,
+                this,
+                this.width,
+                this.height,
                 OPTIONS_LIST_TOP_HEIGHT + 22,
                 this.height - OPTIONS_LIST_BOTTOM_OFFSET,
                 OPTIONS_LIST_ITEM_HEIGHT
@@ -173,11 +175,13 @@ public class CustomScreen extends ConfigScreen
     public Button getResetButton()
     {
         StringTextComponent topTip = new StringTextComponent(TextFormatting.RED + I18n.get("oldswing.config.clear_custom_list"));
-        StringTextComponent bottomTip = new StringTextComponent(I18n.get("oldswing.config.clear_custom_list_undone", TextFormatting.DARK_RED, TextFormatting.UNDERLINE, TextFormatting.DARK_RED));
-        List<ITextComponent> tip = Lists.newArrayList(topTip, bottomTip);
+        StringTextComponent middleTip = new StringTextComponent(I18n.get("oldswing.config.clear_custom_list_undone", TextFormatting.DARK_RED, TextFormatting.UNDERLINE, TextFormatting.DARK_RED));
+        StringTextComponent bottomTip = new StringTextComponent(I18n.get("oldswing.config.clear_custom_list_note", TextFormatting.UNDERLINE, TextFormatting.RESET));
+
+        List<ITextComponent> tip = Lists.newArrayList(topTip, middleTip, bottomTip);
 
         return new Button(
-                checkX + 23,
+                autoFillButton.x - 21,
                 TOP_ROW_Y - 1,
                 checkW,
                 checkH,

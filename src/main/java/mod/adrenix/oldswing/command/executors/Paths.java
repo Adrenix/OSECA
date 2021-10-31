@@ -8,7 +8,7 @@ import mod.adrenix.oldswing.command.ColorUtil;
 import mod.adrenix.oldswing.config.ClientConfig;
 import mod.adrenix.oldswing.config.ConfigHandler;
 import mod.adrenix.oldswing.config.CustomSwing;
-import mod.adrenix.oldswing.MixinHelper;
+import mod.adrenix.oldswing.MixinInjector;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
 import net.minecraft.client.resources.I18n;
@@ -24,7 +24,7 @@ import java.util.Map;
 
 public class Paths
 {
-    private static final String[] PATH_KEYS = { "animations", "categories", "items", "holding" };
+    private static final String[] PATH_KEYS = { "animations", "candy", "categories", "items", "holding" };
     private static final SuggestionProvider<CommandSource> CONFIG_SUGGESTION = (context, builder) ->
             ISuggestionProvider.suggest(PATH_KEYS, builder);
 
@@ -62,6 +62,20 @@ public class Paths
         }
         else if (path.equals(PATH_KEYS[1]))
         {
+            // Eye candy
+            for (Map.Entry<String, ForgeConfigSpec.ConfigValue<?>> entry : ClientConfig.EYE_CANDY.entrySet())
+            {
+                ForgeConfigSpec.ConfigValue<?> value = entry.getValue();
+
+                final String out = I18n.get("oldswing.cmd.paths.config",
+                        ColorUtil.format(String.valueOf(value.getPath()), TextFormatting.LIGHT_PURPLE), ColorUtil.value(value.get().toString()));
+                source.sendSuccess(ITextComponent.nullToEmpty(out), true);
+            }
+
+            return 1;
+        }
+        else if (path.equals(PATH_KEYS[2]))
+        {
             // Categorical swinging speeds
             for (Map.Entry<String, ForgeConfigSpec.IntValue> entry : ClientConfig.SPEEDS.entrySet())
             {
@@ -75,7 +89,7 @@ public class Paths
 
             return 1;
         }
-        else if (path.equals(PATH_KEYS[2]))
+        else if (path.equals(PATH_KEYS[3]))
         {
             // Individual defined swing speeds
             int counter = 0;
@@ -105,7 +119,7 @@ public class Paths
 
             return 1;
         }
-        else if (path.equals(PATH_KEYS[3]))
+        else if (path.equals(PATH_KEYS[4]))
         {
             // Checks swinging speed of item being held
             ClientPlayerEntity entity = Minecraft.getInstance().player;
@@ -114,7 +128,7 @@ public class Paths
             {
                 Item item = entity.getMainHandItem().getItem();
                 String name = item.getRegistryName() != null ? item.getName(item.getDefaultInstance()).getString() : I18n.get("oldswing.unknown");
-                int speed = MixinHelper.getSwingSpeed(entity);
+                int speed = MixinInjector.getSwingSpeed(entity);
 
                 final String out = I18n.get("oldswing.cmd.paths.holding",
                         ColorUtil.format(name, TextFormatting.LIGHT_PURPLE),

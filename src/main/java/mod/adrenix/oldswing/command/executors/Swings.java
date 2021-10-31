@@ -28,19 +28,27 @@ import java.util.ArrayList;
 public class Swings
 {
     private static final ArrayList<String> VALID_SPEEDS = new ArrayList<>();
+    private static final ArrayList<String> GLOBAL_SPEEDS = new ArrayList<>();
     private static final int MIN = ConfigHandler.MIN;
     private static final int MAX = ConfigHandler.MAX;
+    private static final int GLOBAL = ConfigHandler.GLOBAL;
 
     static
     {
         for (int i = MIN; i <= MAX; i++)
             VALID_SPEEDS.add(Integer.toString(i));
+
+        for (int i = GLOBAL; i <= MAX; i++)
+            GLOBAL_SPEEDS.add(Integer.toString(i));
     }
 
     private static final SuggestionProvider<CommandSource> SPEED_SUGGESTION = (context, builder) ->
             ISuggestionProvider.suggest(VALID_SPEEDS, builder);
 
-    private static final String[] SWING_KEYS = { "all", "items", "swords", "tools", "holding", "blocks", "custom" };
+    private static final SuggestionProvider<CommandSource> GLOBAL_SUGGESTION = (context, builder) ->
+            ISuggestionProvider.suggest(GLOBAL_SPEEDS, builder);
+
+    private static final String[] SWING_KEYS = { "global", "items", "swords", "tools", "holding", "blocks", "fatigue", "haste", "custom" };
 
     private static SuggestionProvider<CommandSource> removeSuggestion()
     {
@@ -67,9 +75,9 @@ public class Swings
         return Commands.literal("swing")
             .then(Commands.literal(SWING_KEYS[0])
                 .then(Commands.argument("speed", IntegerArgumentType.integer())
-                    .suggests(SPEED_SUGGESTION)
+                    .suggests(GLOBAL_SUGGESTION)
                     .executes(context -> changeSwingSpeed(
-                            context.getSource(), IntegerArgumentType.getInteger(context, "speed"), SWING_KEYS[0]
+                            context.getSource(), IntegerArgumentType.getInteger(context, "speed"), SWING_KEYS[0], true
                     ))
                 )
             )
@@ -78,7 +86,7 @@ public class Swings
                 .then(Commands.argument("speed", IntegerArgumentType.integer())
                     .suggests(SPEED_SUGGESTION)
                     .executes(context -> changeSwingSpeed(
-                            context.getSource(), IntegerArgumentType.getInteger(context, "speed"), SWING_KEYS[1]
+                            context.getSource(), IntegerArgumentType.getInteger(context, "speed"), SWING_KEYS[1], false
                     ))
                 )
             )
@@ -87,7 +95,7 @@ public class Swings
                 .then(Commands.argument("speed", IntegerArgumentType.integer())
                     .suggests(SPEED_SUGGESTION)
                     .executes(context -> changeSwingSpeed(
-                            context.getSource(), IntegerArgumentType.getInteger(context, "speed"), SWING_KEYS[2]
+                            context.getSource(), IntegerArgumentType.getInteger(context, "speed"), SWING_KEYS[2], false
                     ))
                 )
             )
@@ -96,7 +104,7 @@ public class Swings
                 .then(Commands.argument("speed", IntegerArgumentType.integer())
                     .suggests(SPEED_SUGGESTION)
                     .executes(context -> changeSwingSpeed(
-                            context.getSource(), IntegerArgumentType.getInteger(context, "speed"), SWING_KEYS[3]
+                            context.getSource(), IntegerArgumentType.getInteger(context, "speed"), SWING_KEYS[3], false
                     ))
                 )
             )
@@ -105,7 +113,7 @@ public class Swings
                 .then(Commands.argument("speed", IntegerArgumentType.integer())
                     .suggests(SPEED_SUGGESTION)
                     .executes(context -> changeSwingSpeed(
-                            context.getSource(), IntegerArgumentType.getInteger(context, "speed"), SWING_KEYS[4]
+                            context.getSource(), IntegerArgumentType.getInteger(context, "speed"), SWING_KEYS[4], false
                     ))
                 )
             )
@@ -114,12 +122,30 @@ public class Swings
                 .then(Commands.argument("speed", IntegerArgumentType.integer())
                     .suggests(SPEED_SUGGESTION)
                     .executes(context -> changeSwingSpeed(
-                            context.getSource(), IntegerArgumentType.getInteger(context, "speed"), SWING_KEYS[5]
+                            context.getSource(), IntegerArgumentType.getInteger(context, "speed"), SWING_KEYS[5], false
                     ))
                 )
             )
 
             .then(Commands.literal(SWING_KEYS[6])
+                .then(Commands.argument("speed", IntegerArgumentType.integer())
+                    .suggests(GLOBAL_SUGGESTION)
+                    .executes(context -> changeSwingSpeed(
+                            context.getSource(), IntegerArgumentType.getInteger(context, "speed"), SWING_KEYS[6], true
+                    ))
+                )
+            )
+
+            .then(Commands.literal(SWING_KEYS[7])
+                .then(Commands.argument("speed", IntegerArgumentType.integer())
+                    .suggests(GLOBAL_SUGGESTION)
+                    .executes(context -> changeSwingSpeed(
+                            context.getSource(), IntegerArgumentType.getInteger(context, "speed"), SWING_KEYS[7], true
+                    ))
+                )
+            )
+
+            .then(Commands.literal(SWING_KEYS[8])
                 .then(Commands.literal("add")
                     .then(Commands.argument("item", ItemArgument.item())
                         .then(Commands.argument("speed", IntegerArgumentType.integer())
@@ -145,9 +171,10 @@ public class Swings
         ;
     }
 
-    private static int rangeError(CommandSource source)
+    private static int rangeError(CommandSource source, boolean isGlobal)
     {
-        source.sendFailure(ITextComponent.nullToEmpty(I18n.get("oldswing.cmd.swings.out_of_range", MIN, MAX)));
+        int min = isGlobal ? GLOBAL : MIN;
+        source.sendFailure(ITextComponent.nullToEmpty(I18n.get("oldswing.cmd.swings.out_of_range", min, MAX)));
         return 0;
     }
 
@@ -160,26 +187,19 @@ public class Swings
         return 0;
     }
 
-    private static int changeSwingSpeed(CommandSource source, int speed, String on)
+    private static int changeSwingSpeed(CommandSource source, int speed, String on, boolean isGlobal)
     {
         if (modStateError(source) == 0)
             return 0;
 
-        if (speed < MIN || speed > MAX)
-            return rangeError(source);
+        int min = isGlobal ? GLOBAL : MIN;
+
+        if (speed < min || speed > MAX)
+            return rangeError(source, isGlobal);
 
         if (on.equals(SWING_KEYS[0]))
-        {
-            // Change all item speeds in config
-
-            ClientConfig.swing_speed.set(speed);
-            ClientConfig.sword_speed.set(speed);
-            ClientConfig.tool_speed.set(speed);
-            ClientConfig.block_speed.set(speed);
-
-            for (Config.Entry entry : ConfigHandler.custom_speeds.entrySet())
-                CustomSwing.add(entry.getKey(), speed);
-        }
+            // Change global swing speed
+            ClientConfig.global_speed.set(speed);
         else if (on.equals(SWING_KEYS[1]))
             // Change swing speeds of items that are not swords or tools
             ClientConfig.swing_speed.set(speed);
@@ -216,6 +236,12 @@ public class Swings
         else if (on.equals(SWING_KEYS[5]))
             // Set swing speed when placing blocks
             ClientConfig.block_speed.set(speed);
+        else if (on.equals(SWING_KEYS[6]))
+            // Set swing speed of fatigue potion
+            ClientConfig.fatigue_speed.set(speed);
+        else if (on.equals(SWING_KEYS[7]))
+            // Set swing speed of haste potion
+            ClientConfig.haste_speed.set(speed);
 
         ConfigHandler.bake();
 
@@ -259,7 +285,7 @@ public class Swings
             return 0;
         }
         else if (speed < MIN || speed > MAX)
-            return rangeError(source);
+            return rangeError(source, false);
 
         CustomSwing.add(resource.toString(), speed);
         ConfigHandler.bake();

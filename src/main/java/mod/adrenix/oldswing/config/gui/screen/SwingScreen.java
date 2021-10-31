@@ -1,14 +1,13 @@
 package mod.adrenix.oldswing.config.gui.screen;
 
-import mod.adrenix.oldswing.config.ClientConfig;
+import com.google.common.collect.Lists;
 import mod.adrenix.oldswing.config.ConfigHandler;
-import mod.adrenix.oldswing.config.gui.widget.BooleanButton;
+import mod.adrenix.oldswing.config.gui.widget.Configuration;
 import mod.adrenix.oldswing.config.gui.widget.ResetOptions;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.client.settings.SliderPercentageOption;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -23,35 +22,51 @@ public class SwingScreen extends ConfigScreen
         super(I18n.get("oldswing.config.cat_swing_speed"), parentScreen);
     }
 
-    public static List<ITextComponent> rangeTip()
+    @Override
+    public boolean keyPressed(int key, int x, int y)
+    {
+        if (key == 256 && this.shouldCloseOnEsc())
+        {
+            this.onClose();
+            return true;
+        }
+        else if (super.keyPressed(key, x, y))
+            return true;
+        else
+            return key == 257 || key == 335;
+    }
+
+    public static List<ITextComponent> rangeTip(boolean isDisabled)
     {
         List<ITextComponent> tip = new ArrayList<>();
 
         String alpha = I18n.get("oldswing.config.range_alpha");
         String modern = I18n.get("oldswing.config.range_modern");
+        String disabled = I18n.get("oldswing.config.disabled");
+        String photosensitive = I18n.get("oldswing.config.photosensitive");
 
         tip.add(new StringTextComponent(TextFormatting.GREEN + alpha + TextFormatting.RESET + ": " + TextFormatting.AQUA + ConfigHandler.OLD_SPEED));
         tip.add(new StringTextComponent(TextFormatting.GOLD + modern + TextFormatting.RESET + ": " + TextFormatting.AQUA + ConfigHandler.NEW_SPEED));
+        tip.add(new StringTextComponent(TextFormatting.YELLOW + photosensitive + TextFormatting.RESET + ": " + TextFormatting.AQUA + ConfigHandler.DISABLED));
+
+        if (isDisabled)
+            tip.add(new StringTextComponent(TextFormatting.RED + disabled + TextFormatting.RESET + ": " + TextFormatting.AQUA + ConfigHandler.GLOBAL));
 
         return tip;
     }
 
-    private Button addRangeTip(int row)
+    public static List<ITextComponent> rangeTip()
     {
-        return new Button(
-                this.width / 2 - 176,
-                getRowSeparation(row),
-                20,
-                20,
-                new StringTextComponent("#"),
-                (unused) -> {},
-                (button, matrixStack, mouseX, mouseY) -> this.renderComponentTooltip(matrixStack, SwingScreen.rangeTip(), mouseX, mouseY)
-        );
+        return rangeTip(false);
     }
 
     public static String getRangeColor(int speed)
     {
-        if (speed <= ConfigHandler.NEW_SPEED)
+        if (speed == ConfigHandler.DISABLED)
+            return TextFormatting.YELLOW.toString() + speed;
+        else if (speed == ConfigHandler.GLOBAL)
+            return TextFormatting.RED.toString() + speed;
+        else if (speed <= ConfigHandler.NEW_SPEED)
             return TextFormatting.GOLD.toString() + speed;
         return TextFormatting.GREEN.toString() + speed;
     }
@@ -67,99 +82,100 @@ public class SwingScreen extends ConfigScreen
         String swordDesc = I18n.get("oldswing.config.sword_swing_description");
         String toolTitle = I18n.get("oldswing.config.tool_swing_speed");
         String toolDesc = I18n.get("oldswing.config.tool_swing_description");
+
+        String fatigueTitle = I18n.get("oldswing.config.fatigue");
+        String fatigueDesc1 = I18n.get("oldswing.config.fatigue_description_1");
+        String fatigueDesc2 = I18n.get("oldswing.config.fatigue_description_2", TextFormatting.RED, TextFormatting.RESET);
+
+        String hasteTitle = I18n.get("oldswing.config.haste");
+        String hasteDesc1 = I18n.get("oldswing.config.haste_description_1");
+        String hasteDesc2 = I18n.get("oldswing.config.haste_description_2", TextFormatting.RED, TextFormatting.RESET);
+
         String globalTitle = I18n.get("oldswing.config.global_swing_speed");
-        String globalDesc = I18n.get("oldswing.config.global_swing_description_1");
-        String globalPhoto = I18n.get("oldswing.config.global_swing_description_2");
+        String globalDesc1 = I18n.get("oldswing.config.global_swing_description_1");
+        String globalDesc2 = I18n.get("oldswing.config.global_swing_description_2", TextFormatting.YELLOW, TextFormatting.RESET, TextFormatting.RED, TextFormatting.RESET);
+        String globalDesc3 = I18n.get("oldswing.config.global_swing_description_3", TextFormatting.RED, TextFormatting.RESET);
 
-        this.optionsRowList = this.getRowList();
-
-        this.addButton(this.addRangeTip(1));
-        this.addButton(this.addTooltip(itemDesc, 1));
-        this.optionsRowList.addBig(new SliderPercentageOption(
+        Configuration.Slider items = new Configuration.Slider(
                 itemTitle,
-                ConfigHandler.MIN,
-                ConfigHandler.MAX,
-                1.0F,
-                unused -> (double) ConfigHandler.getSwingSpeed(),
-                (unused, value) -> ConfigHandler.setSwingSpeed(value.intValue()),
-                (gs, option) -> new StringTextComponent(itemTitle + ": " + getRangeColor((int) option.get(gs)))
-        ));
+                false,
+                (settings) -> (double) ConfigHandler.getSwingSpeed(),
+                (settings, value) -> ConfigHandler.setSwingSpeed(value.intValue())
+        );
 
-        this.addButton(this.addRangeTip(2));
-        this.addButton(this.addTooltip(blockDesc, 2));
-        this.optionsRowList.addBig(new SliderPercentageOption(
+        Configuration.Slider blocks = new Configuration.Slider(
                 blockTitle,
-                ConfigHandler.MIN,
-                ConfigHandler.MAX,
-                1.0F,
-                unused -> (double) ConfigHandler.getBlockSpeed(),
-                (unused, value) -> ConfigHandler.setBlockSpeed(value.intValue()),
-                (gs, option) -> new StringTextComponent(blockTitle + ": " + getRangeColor((int) option.get(gs)))
-        ));
+                false,
+                (settings) -> (double) ConfigHandler.getBlockSpeed(),
+                (settings, value) -> ConfigHandler.setBlockSpeed(value.intValue())
+        );
 
-        this.addButton(this.addRangeTip(3));
-        this.addButton(this.addTooltip(swordDesc, 3));
-        this.optionsRowList.addBig(new SliderPercentageOption(
+        Configuration.Slider swords = new Configuration.Slider(
                 swordTitle,
-                ConfigHandler.MIN,
-                ConfigHandler.MAX,
-                1.0F,
-                unused -> (double) ConfigHandler.getSwordSpeed(),
-                (unused, value) -> ConfigHandler.setSwordSpeed(value.intValue()),
-                (gs, option) -> new StringTextComponent(swordTitle + ": " + getRangeColor((int) option.get(gs)))
-        ));
+                false,
+                (settings) -> (double) ConfigHandler.getSwordSpeed(),
+                (settings, value) -> ConfigHandler.setSwordSpeed(value.intValue())
+        );
 
-        this.addButton(this.addRangeTip(4));
-        this.addButton(this.addTooltip(toolDesc, 4));
-        this.optionsRowList.addBig(new SliderPercentageOption(
+        Configuration.Slider tools = new Configuration.Slider(
                 toolTitle,
-                ConfigHandler.MIN,
-                ConfigHandler.MAX,
-                1.0F,
-                unused -> (double) ConfigHandler.getToolSpeed(),
-                (unused, value) -> ConfigHandler.setToolSpeed(value.intValue()),
-                (gs, option) -> new StringTextComponent(toolTitle + ": " + getRangeColor((int) option.get(gs)))
-        ));
+                false,
+                (settings) -> (double) ConfigHandler.getToolSpeed(),
+                (settings, value) -> ConfigHandler.setToolSpeed(value.intValue())
+        );
 
-        this.addButton(this.addRangeTip(5));
-        this.addButton(this.addLinedTooltip(5, globalDesc, TextFormatting.YELLOW + globalPhoto));
-        this.optionsRowList.addBig(new SliderPercentageOption(
+        Configuration.Slider fatigue = new Configuration.Slider(
+                fatigueTitle,
+                true,
+                (settings) -> (double) ConfigHandler.getFatigueSpeed(),
+                (settings, value) -> ConfigHandler.setFatigueSpeed(value.intValue())
+        );
+
+        Configuration.Slider haste = new Configuration.Slider(
+                hasteTitle,
+                true,
+                (settings) -> (double) ConfigHandler.getHasteSpeed(),
+                (settings, value) -> ConfigHandler.setHasteSpeed(value.intValue())
+        );
+
+        Configuration.Slider global = new Configuration.Slider(
                 globalTitle,
-                ConfigHandler.MIN,
-                ConfigHandler.MAX,
-                1.0F,
-                unused -> (double) ConfigHandler.getGlobalSpeed(),
-                (unused, value) -> ConfigHandler.setGlobalSpeed(value.intValue()),
-                (gs, option) -> new StringTextComponent(globalTitle + ": " + getRangeColor((int) option.get(gs)))
-        ));
+                true,
+                (settings) -> (double) ConfigHandler.getGlobalSpeed(),
+                (settings, value) -> ConfigHandler.setGlobalSpeed(value.intValue())
+        );
 
-        this.optionsRowList.addBig(new BooleanButton(
-                I18n.get("oldswing.config.global_speed"),
-                unused -> ConfigHandler.global_speed_enabled,
-                (unused, value) ->
-                {
-                    ConfigHandler.sendSliderSetters();
-                    ConfigHandler.toggle(ClientConfig.global_speed_enabled, value);
-                }
-        ));
+        items.setTooltip(itemDesc);
+        blocks.setTooltip(blockDesc);
+        swords.setTooltip(swordDesc);
+        tools.setTooltip(toolDesc);
+        fatigue.setTooltip(fatigueDesc1, fatigueDesc2);
+        haste.setTooltip(hasteDesc1, hasteDesc2);
+        global.setTooltip(globalDesc1, globalDesc2, globalDesc3);
 
-
-        this.optionsRowList.addSmall(ResetOptions.add(this::reset, this::undo));
-        this.children.add(this.optionsRowList);
+        this.configRowList = this.getRowList(Lists.newArrayList(items, blocks, swords, tools, fatigue, haste, global));
+        this.configRowList.addSmall(ResetOptions.add(this::reset, this::undo));
+        this.children.add(this.configRowList);
         this.addButton(this.getDoneButton());
     }
 
-    private void reset(Button unused)
+    private void reset(Button button)
     {
-        ConfigHandler.sendSliderSetters();
         ConfigHandler.storeCategoricalSwingSpeeds();
         ConfigHandler.resetCategoricalSwingSpeeds();
         Minecraft.getInstance().setScreen(Minecraft.getInstance().screen);
     }
 
-    private void undo(Button unused)
+    private void undo(Button button)
     {
         ConfigHandler.undoCategoricalSwingReset();
         Minecraft.getInstance().setScreen(Minecraft.getInstance().screen);
+    }
+
+    @Override
+    public void onClose()
+    {
+        ConfigHandler.sendSliderSetters();
+        super.onClose();
     }
 }
