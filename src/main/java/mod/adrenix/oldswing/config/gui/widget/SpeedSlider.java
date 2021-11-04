@@ -24,14 +24,16 @@ public class SpeedSlider extends AbstractSliderButton
         this.setValue(entry.getValue());
     }
 
-    @Override protected void updateMessage()
+    @Override
+    protected void updateMessage()
     {
         ChatFormatting color = entry.getValue() <= DefaultConfig.NEW_SPEED ? ChatFormatting.GOLD : ChatFormatting.GREEN;
         String text = CustomizedSwings.getLocalizedItem(this.entry) + ": " + (this.active ? color : ChatFormatting.GRAY) + entry.getValue().toString();
         this.setMessage(new TextComponent(text));
     }
 
-    @Override protected void applyValue()
+    @Override
+    protected void applyValue()
     {
         this.entry.setValue((int) (MIN + Math.abs(MAX - MIN) * this.value));
     }

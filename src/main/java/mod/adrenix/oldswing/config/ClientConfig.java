@@ -6,12 +6,11 @@ import me.shedaniel.autoconfig.annotation.Config;
 import me.shedaniel.autoconfig.annotation.ConfigEntry;
 import me.shedaniel.cloth.clothconfig.shadowed.blue.endless.jankson.Comment;
 import mod.adrenix.oldswing.OldSwing;
-import mod.adrenix.oldswing.config.gui.screen.SettingsScreen;
 
 import java.util.Map;
 
 @Config(name = OldSwing.MOD_ID)
-@Config.Gui.Background(SettingsScreen.BACKGROUND)
+@Config.Gui.Background(Config.Gui.Background.TRANSPARENT)
 public class ClientConfig implements ConfigData
 {
     @ConfigEntry.Gui.Excluded public static final int MIN = 0;
@@ -25,18 +24,23 @@ public class ClientConfig implements ConfigData
     public EyeCandy eyeCandy = new EyeCandy();
     public static class EyeCandy
     {
-        @ConfigEntry.Gui.PrefixText
-        @ConfigEntry.Gui.NoTooltip
+        @ConfigEntry.Gui.Tooltip
+        @Comment("Set this to true to bring back the old tooltip boxes from Minecraft Beta 1.7.")
+        public boolean oldTooltipBoxes = DefaultConfig.EyeCandy.OLD_TOOLTIP_BOXES;
+
+        @ConfigEntry.Gui.Tooltip
+        @Comment("Set this to true to bring back to disable light flickering from Minecraft Beta 1.7.")
+        public boolean oldLightFlicker = DefaultConfig.EyeCandy.OLD_LIGHT_FLICKER;
+
+        @ConfigEntry.Gui.Tooltip
         @Comment("Set this to true to bring back the old durability colors for items in the hotbar.")
         public boolean oldDamageColors = DefaultConfig.EyeCandy.OLD_DAMAGE_COLORS;
 
-        @ConfigEntry.Gui.PrefixText
-        @ConfigEntry.Gui.NoTooltip
+        @ConfigEntry.Gui.Tooltip
         @Comment("Set this to true to bring back the old item holding and swinging position.")
         public boolean oldItemHolding = DefaultConfig.EyeCandy.OLD_ITEM_HOLDING;
 
-        @ConfigEntry.Gui.PrefixText
-        @ConfigEntry.Gui.NoTooltip
+        @ConfigEntry.Gui.Tooltip
         @Comment("Set this to true to simulate the old 2D floating items. (WIP)")
         public boolean old2DItems = DefaultConfig.EyeCandy.OLD_2D_ITEMS;
     }
@@ -45,35 +49,37 @@ public class ClientConfig implements ConfigData
     public Animations animations = new Animations();
     public static class Animations
     {
-        @ConfigEntry.Gui.PrefixText
-        @ConfigEntry.Gui.NoTooltip
+        @ConfigEntry.Gui.Tooltip
         @Comment("Set this to false to prevent the cooldown animation that plays after every swing or change in slot.")
         public boolean shouldCooldown = DefaultConfig.Animations.SHOULD_COOLDOWN;
 
-        @ConfigEntry.Gui.PrefixText
-        @ConfigEntry.Gui.NoTooltip
+        @ConfigEntry.Gui.Tooltip
         @Comment("Set this to false to prevent the reequip animation that plays after breaking a block.")
         public boolean shouldReequip = DefaultConfig.Animations.SHOULD_REEQUIP;
 
-        @ConfigEntry.Gui.PrefixText
-        @ConfigEntry.Gui.NoTooltip
+        @ConfigEntry.Gui.Tooltip
         @Comment("Set this to false to prevent sweep particles from showing when attacking an entity.")
         public boolean shouldSweep = DefaultConfig.Animations.SHOULD_SWEEP;
 
-        @ConfigEntry.Gui.PrefixText
-        @ConfigEntry.Gui.NoTooltip
+        @ConfigEntry.Gui.Tooltip
         @Comment("Set this to false to prevent the subtle arm sway animation that plays when looking in different directions.")
         public boolean shouldArmSway = DefaultConfig.Animations.SHOULD_ARM_SWAY;
 
-        @ConfigEntry.Gui.PrefixText
-        @ConfigEntry.Gui.NoTooltip
+        @ConfigEntry.Gui.Tooltip
         @Comment("Set this to true to allow a subtle animation to be applied to the arm and viewing distance when jumping or falling.")
         public boolean shouldBobVertical = DefaultConfig.Animations.SHOULD_BOB_VERTICAL;
 
-        @ConfigEntry.Gui.PrefixText
-        @ConfigEntry.Gui.NoTooltip
+        @ConfigEntry.Gui.Tooltip
         @Comment("Set this to false to prevent the smooth transition animation that plays when sneaking.")
         public boolean shouldSneakSmooth = DefaultConfig.Animations.SHOULD_SNEAK_SMOOTH;
+
+        @ConfigEntry.Gui.Tooltip
+        @Comment("Set this to false to prevent the smooth transition animation that plays when sneaking.")
+        public boolean shouldSwingDrop = DefaultConfig.Animations.SHOULD_SWING_DROP;
+
+        @ConfigEntry.Gui.Tooltip
+        @Comment("Set this to false to prevent the smooth transition animation that plays when sneaking.")
+        public boolean shouldToolDisintegrate = DefaultConfig.Animations.SHOULD_TOOL_DISINTEGRATE;
     }
 
     @ConfigEntry.Gui.Excluded

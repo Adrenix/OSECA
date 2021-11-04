@@ -54,8 +54,8 @@ public abstract class ItemInHandRendererMixin
         ItemStack itemStackOff = player.getOffhandItem();
 
         float scale = MixinInjector.getCooldownAnimationFloat(player, 1.0F);
-        boolean reequipMain = MixinInjector.shouldCauseReequipAnimation(this.mainHandItem, itemStackMain);
-        boolean reequipOff = MixinInjector.shouldCauseReequipAnimation(this.offHandItem, itemStackOff);
+        boolean reequipMain = MixinInjector.shouldCauseReequipAnimation(this.mainHandItem, itemStackMain, player.getInventory().selected);
+        boolean reequipOff = MixinInjector.shouldCauseReequipAnimation(this.offHandItem, itemStackOff, -1);
 
         if (!reequipMain && this.mainHandItem != itemStackMain)
             this.mainHandItem = itemStackMain;
@@ -91,10 +91,15 @@ public abstract class ItemInHandRendererMixin
     {
         if (MixinInjector.oldItemHolding())
         {
+            boolean isMain = hand == InteractionHand.MAIN_HAND;
+            HumanoidArm arm = isMain ? player.getMainArm() : player.getMainArm().getOpposite();
+            boolean isRight = arm == HumanoidArm.RIGHT;
+
             float dz = Mth.sin(swingProgress * (float) Math.PI);
             float dx = Mth.sin(Mth.sqrt(swingProgress) * (float) Math.PI);
+            int flip = isRight ? 1 : -1;
 
-            stack.translate(-dx * 0.4F, Mth.sin(Mth.sqrt(swingProgress) * (float) Math.PI * 2.0F) * 0.2F, -dz * 0.2F);
+            stack.translate(flip * (-dx * 0.4F), Mth.sin(Mth.sqrt(swingProgress) * (float) Math.PI * 2.0F) * 0.2F, -dz * 0.2F);
             stack.translate(0.05F, 0.0045F, 0.035F);
 
             stack.mulPose(Vector3f.XP.rotationDegrees(-0.5F));

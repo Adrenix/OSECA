@@ -7,6 +7,7 @@ import mod.adrenix.oldswing.OldSwing;
 import mod.adrenix.oldswing.config.gui.screen.SettingsScreen;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.screens.inventory.InventoryScreen;
 import net.minecraft.world.InteractionResult;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.event.TickEvent;
@@ -67,7 +68,7 @@ public class ConfigRegistry
     public static void tick(TickEvent.ClientTickEvent event)
     {
         if (event.phase == TickEvent.Phase.START)
-            if (OPEN_CONFIG_GUI.isDown())
+            if (OPEN_CONFIG_GUI.isDown() && !(Minecraft.getInstance().screen instanceof InventoryScreen))
                 Minecraft.getInstance().setScreen(new SettingsScreen(Minecraft.getInstance().screen));
     }
 }

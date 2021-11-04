@@ -7,6 +7,8 @@ public abstract class DefaultConfig
 
     public static class EyeCandy
     {
+        public static final boolean OLD_TOOLTIP_BOXES = true;
+        public static final boolean OLD_LIGHT_FLICKER = true;
         public static final boolean OLD_DAMAGE_COLORS = true;
         public static final boolean OLD_ITEM_HOLDING = true;
         public static final boolean OLD_2D_ITEMS = true;
@@ -18,8 +20,10 @@ public abstract class DefaultConfig
         public static final boolean SHOULD_REEQUIP = false;
         public static final boolean SHOULD_SWEEP = false;
         public static final boolean SHOULD_ARM_SWAY = false;
-        public static final boolean SHOULD_SNEAK_SMOOTH = false;
         public static final boolean SHOULD_BOB_VERTICAL = true;
+        public static final boolean SHOULD_SNEAK_SMOOTH = false;
+        public static final boolean SHOULD_SWING_DROP = false;
+        public static final boolean SHOULD_TOOL_DISINTEGRATE = false;
     }
 
     public static class Swings

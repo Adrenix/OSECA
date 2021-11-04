@@ -7,10 +7,11 @@ import mod.adrenix.oldswing.config.DefaultConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.world.item.*;
+import net.minecraftforge.client.ForgeHooksClient;
 
 import java.util.Map;
 
-public class MixinInjector
+public abstract class MixinInjector
 {
     private static final ClientConfig.EyeCandy EYE_CANDY = ConfigRegistry.cache.eyeCandy;
     private static final ClientConfig.Animations ANIMATIONS = ConfigRegistry.cache.animations;
@@ -26,11 +27,16 @@ public class MixinInjector
 
     /* Swing Speed Injection Helpers */
 
+    public static boolean isSpeedGlobal()
+    {
+        return SWINGS.global != DefaultConfig.Swings.GLOBAL;
+    }
+
     public static int getSpeedFromItem(Item item)
     {
         Map.Entry<String, Integer> entry = CustomizedSwings.getEntryFromItem(item);
 
-        if (SWINGS.global != DefaultConfig.Swings.GLOBAL)
+        if (isSpeedGlobal())
             return SWINGS.global;
         else if (entry != null)
             return entry.getValue();
@@ -45,7 +51,7 @@ public class MixinInjector
 
     public static int getSwingSpeed(AbstractClientPlayer player)
     {
-        if (CONFIG.isModEnabled)
+        if (isModEnabled())
             return getSpeedFromItem(player.getMainHandItem().getItem());
         return DefaultConfig.NEW_SPEED;
     }
@@ -57,84 +63,113 @@ public class MixinInjector
 
     public static int getHasteSpeed()
     {
-        return SWINGS.haste;
-    }
-
-    public static boolean isOverridingHaste()
-    {
-        return CONFIG.isModEnabled && SWINGS.haste != DefaultConfig.Swings.GLOBAL;
+        return isSpeedGlobal() ? SWINGS.global : SWINGS.haste;
     }
 
     public static int getFatigueSpeed()
     {
-        return SWINGS.miningFatigue;
+        return isSpeedGlobal() ? SWINGS.global : SWINGS.miningFatigue;
+    }
+
+    public static boolean isOverridingHaste()
+    {
+        return isModEnabled() && SWINGS.haste != DefaultConfig.Swings.GLOBAL;
     }
 
     public static boolean isOverridingFatigue()
     {
-        return CONFIG.isModEnabled && SWINGS.miningFatigue != DefaultConfig.Swings.GLOBAL;
+        return isModEnabled() && SWINGS.miningFatigue != DefaultConfig.Swings.GLOBAL;
     }
 
     /* Eye Candy Injection Helpers */
 
     public static boolean oldDamageColors()
     {
-        return CONFIG.isModEnabled && EYE_CANDY.oldDamageColors;
+        return isModEnabled() && EYE_CANDY.oldDamageColors;
     }
 
     public static boolean oldFloatingItems()
     {
-        return CONFIG.isModEnabled && EYE_CANDY.old2DItems;
+        return isModEnabled() && EYE_CANDY.old2DItems;
     }
 
     public static boolean oldItemHolding()
     {
-        return CONFIG.isModEnabled && EYE_CANDY.oldItemHolding;
+        return isModEnabled() && EYE_CANDY.oldItemHolding;
+    }
+
+    public static boolean oldTooltips()
+    {
+        return !isModEnabled() || !EYE_CANDY.oldTooltipBoxes;
+    }
+
+    public static boolean oldLightFlicker()
+    {
+        return isModEnabled() && EYE_CANDY.oldLightFlicker;
     }
 
     /* Animation Injection Helpers */
 
     public static float getCooldownAnimationFloat(AbstractClientPlayer player, float adjustTicks)
     {
-        return !ANIMATIONS.shouldCooldown && CONFIG.isModEnabled ? 1.0F : player.getAttackStrengthScale(adjustTicks);
+        return !ANIMATIONS.shouldCooldown && isModEnabled() ? 1.0F : player.getAttackStrengthScale(adjustTicks);
     }
 
     public static boolean shouldArmSway()
     {
-        return !CONFIG.isModEnabled || ANIMATIONS.shouldArmSway;
+        return !isModEnabled() || ANIMATIONS.shouldArmSway;
     }
 
     public static boolean shouldSweepAttack()
     {
-        return !CONFIG.isModEnabled || ANIMATIONS.shouldSweep;
+        return !isModEnabled() || ANIMATIONS.shouldSweep;
     }
 
     public static boolean shouldSneakSmooth()
     {
-        return !CONFIG.isModEnabled || ANIMATIONS.shouldSneakSmooth;
+        return !isModEnabled() || ANIMATIONS.shouldSneakSmooth;
     }
 
     public static boolean shouldBobVertical()
     {
-        return CONFIG.isModEnabled && ANIMATIONS.shouldBobVertical;
+        return isModEnabled() && ANIMATIONS.shouldBobVertical;
     }
 
-    private static boolean doReequipAnimation(ItemStack from, ItemStack to)
+    public static boolean shouldSwingDrop()
+    {
+        return !isModEnabled() || ANIMATIONS.shouldSwingDrop;
+    }
+
+    public static boolean shouldToolsDisintegrate()
+    {
+        return !isModEnabled() || ANIMATIONS.shouldToolDisintegrate;
+    }
+
+    private static int slotMainHand = 0;
+    private static boolean doReequipAnimation(ItemStack from, ItemStack to, int slot)
     {
         boolean fromInvalid = from.isEmpty();
         boolean toInvalid = to.isEmpty();
+        boolean changed = false;
+
+        if (slot != -1)
+        {
+            changed = slot != slotMainHand;
+            slotMainHand = slot;
+        }
 
         if (fromInvalid && toInvalid) return false;
         if (fromInvalid || toInvalid) return true;
-
-        return !from.equals(to);
+        if (changed)
+            return true;
+        return !from.sameItemStackIgnoreDurability(to);
     }
 
-    public static boolean shouldCauseReequipAnimation(ItemStack from, ItemStack to)
+    public static boolean shouldCauseReequipAnimation(ItemStack from, ItemStack to, int slot)
     {
-        boolean doReequip = doReequipAnimation(from, to);
-        if (!CONFIG.isModEnabled || ANIMATIONS.shouldReequip)
-            return doReequip;
+        boolean doReequip = doReequipAnimation(from, to, slot);
+        if (!isModEnabled() || ANIMATIONS.shouldReequip)
+            return ForgeHooksClient.shouldCauseReequipAnimation(from, to, slot);
 
         AbstractClientPlayer player = Minecraft.getInstance().player;
         if (player != null && player.swinging)
