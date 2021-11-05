@@ -18,9 +18,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(GameRenderer.class)
 public abstract class GameRendererMixin
 {
-    @Shadow
-    @Final
-    private Minecraft minecraft;
+    @Shadow @Final private Minecraft minecraft;
 
     @Inject(method = "bobView", at = @At(value = "HEAD"), cancellable = true)
     protected void onBobView(PoseStack stack, float partialTicks, CallbackInfo callback)
@@ -28,6 +26,7 @@ public abstract class GameRendererMixin
         if (MixinInjector.shouldBobVertical() && this.minecraft.getCameraEntity() instanceof Player player)
         {
             CameraPitch injector = (CameraPitch) player;
+
             float f = player.walkDist - player.walkDistO;
             float f1 = -(player.walkDist + f * partialTicks);
             float f2 = Mth.lerp(partialTicks, player.oBob, player.bob);

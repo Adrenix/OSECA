@@ -54,8 +54,8 @@ public abstract class ItemInHandRendererMixin
         ItemStack itemStackOff = player.getOffhandItem();
 
         float scale = MixinInjector.getCooldownAnimationFloat(player, 1.0F);
-        boolean reequipMain = MixinInjector.shouldCauseReequipAnimation(this.mainHandItem, itemStackMain);
-        boolean reequipOff = MixinInjector.shouldCauseReequipAnimation(this.offHandItem, itemStackOff);
+        boolean reequipMain = MixinInjector.shouldCauseReequipAnimation(this.mainHandItem, itemStackMain, player.getInventory().selected);
+        boolean reequipOff = MixinInjector.shouldCauseReequipAnimation(this.offHandItem, itemStackOff, -1);
 
         if (!reequipMain && this.mainHandItem != itemStackMain)
             this.mainHandItem = itemStackMain;

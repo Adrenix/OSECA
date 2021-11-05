@@ -18,9 +18,7 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 @Mixin(ItemEntityRenderer.class)
 public abstract class ItemEntityRendererMixin
 {
-    @Shadow
-    @Final
-    private ItemRenderer itemRenderer;
+    @Shadow @Final private ItemRenderer itemRenderer;
 
     @Redirect(
         method = "render(Lnet/minecraft/world/entity/item/ItemEntity;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V",

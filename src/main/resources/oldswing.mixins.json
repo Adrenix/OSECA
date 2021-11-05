@@ -8,8 +8,11 @@
     "ItemEntityRendererMixin",
     "ItemInHandRendererMixin",
     "ItemRendererMixin",
+    "LightTextureMixin",
     "LivingEntityMixin",
-    "PlayerMixin"
+    "MinecraftMixin",
+    "PlayerMixin",
+    "ScreenMixin"
   ],
   "injectors": {
     "defaultRequire": 1

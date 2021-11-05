@@ -2,6 +2,7 @@ package mod.adrenix.oldswing.mixin;
 
 import mod.adrenix.oldswing.interfaces.CameraPitch;
 import mod.adrenix.oldswing.MixinInjector;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -10,6 +11,7 @@ import net.minecraft.world.level.Level;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Player.class)
@@ -36,5 +38,12 @@ public abstract class PlayerMixin extends LivingEntity implements CameraPitch
             f = 0.0F;
 
         this.setCameraPitch(this.getCameraPitch() + (f - this.getCameraPitch()) * 0.8F);
+    }
+
+    @Redirect(method = "drop(Lnet/minecraft/world/item/ItemStack;ZZ)Lnet/minecraft/world/entity/item/ItemEntity;", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/player/Player;swing(Lnet/minecraft/world/InteractionHand;)V"))
+    protected void itemDroppingProxy(Player player, InteractionHand hand)
+    {
+        if (MixinInjector.shouldSwingDrop())
+            player.swing(InteractionHand.MAIN_HAND);
     }
 }

@@ -1,6 +1,16 @@
 # Fabric
 Starting with Minecraft 1.17, this mod will support Fabric. The Forge branch will continue once a 1.17 build is ready.
 
+## Version 3.1.1
+This is a minor update that fixes an issue and adds a few new features that didn't make it in the initial release of the eye candy update.
+- Added old tooltip boxes.
+- Disabled the swinging animation when dropping items.
+- Disabled the tool disintegration animation and breaking sound when a tool's durability runs out.
+- Disabled the light flickering animation. It is recommended to combine this feature with an old lighting resource pack.
+- Refined the hand swing movement a bit more.
+- Updated the config menu.
+- Fixed a bug where pressing the O key while in an inventory would open the mod's config menu.
+
 ## Version 3.1.0
 The eye candy update!
 - Old floating 2D items (simulated and currently still a work in progress)
