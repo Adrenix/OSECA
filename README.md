@@ -28,8 +28,12 @@ Every change this mod makes to the game is configurable.
 - The swinging animation has been slowed down.
 - The swinging animation speed can be changed by item category, by individual item, or by potion effects that impact swing speeds.
 - The sweep particles when using a sword has been disabled.
+- Disabled light flickering from all light emitting sources. It is recommended to combine this feature with an old lighting resource pack.
+- Disabled the tool disintegration animation and break sound when a tool's durability ruins out.
+- Disabled the swinging animation when dropping items.
 - The old durability bar (damage bar) colors has been brought back.
 - The old sneaking animation has been brought back.
+- The old tooltip boxes have been brought back.
 - The old item holding positions and swinging rotations have been brought back.
 - The old floating 2D items have been brought back. *Item entities are simulated to be 2D to maintain mod compatibility. **This feature is still in development!
 
