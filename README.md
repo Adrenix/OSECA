@@ -64,7 +64,7 @@ These commands come equipped with auto-completion.
 
 ## Demo Video
 Watch the following video to see what this mod changes. https://www.youtube.com/watch?v=IlqIMxxKFnw
-[![YouTube Thumbnail](https://cdn.discordapp.com/attachments/800426030996389929/812830411969265684/yt_thumbdesign.png)](https://www.youtube.com/watch?v=IlqIMxxKFnw "Old Swing Mod Ver. 2.2 (Demo)")
+[![YouTube Thumbnail](https://media.discordapp.net/attachments/800426030996389929/906719975023210546/thumbdesign.png)](https://www.youtube.com/watch?v=n6R7OZEfsFM "OSECA Mod Ver. 3.1")
 
 ## Compatibility
 If you come across a compatibility issue, please let me know! It is best to create an issue if you come across one. You might also experience animation issues when using modded items that utilize the re-equip animation. If this is the case, you can turn off the oldswing reequip animation in the config or through the /oldswing command.
