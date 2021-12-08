@@ -74,8 +74,8 @@ If you come across a compatibility issue, please let me know! It is best to crea
 While this discord server isn't dedicated to the mod itself, this is definitely a place where you can come by to share ideas, report issues, and/or just hangout to see what's new.
 https://discordapp.com/invite/jWdfVh3
 
-### Can I include Old Swing in my pack?
-Sure!
+### Can I include this mod in my pack?
+If your mod pack is distributed on Curse Forge, then yes! :)
 
 ### Is this mod server safe?
 Yes. This mod only changes visual animations and is client-side only.
