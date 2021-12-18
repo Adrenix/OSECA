@@ -1,0 +1,20 @@
+{
+  "minVersion": "0.8",
+  "package": "mod.adrenix.oseca.mixin",
+  "compatibilityLevel": "JAVA_17",
+  "client": [
+    "AbstractWidgetMixin",
+    "BlockMixin",
+    "CameraMixin",
+    "GameRendererMixin",
+    "ItemEntityMixin",
+    "ItemEntityRendererMixin",
+    "ItemInHandRendererMixin",
+    "ItemRendererMixin",
+    "LightTextureMixin",
+    "LivingEntityMixin",
+    "MinecraftMixin",
+    "PlayerMixin",
+    "ScreenMixin"
+  ]
+}

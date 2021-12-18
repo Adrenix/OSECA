@@ -1,0 +1,43 @@
+modLoader = "javafml"
+loaderVersion = "[38,)"
+issueTrackerURL = "https://github.com/Adrenix/OldSwing/issues"
+license = "https://github.com/Adrenix/OldSwing/blob/master/LICENSE"
+
+[[mods]]
+modId = "oseca"
+version = "${version}"
+displayName = "Old Swing, Eye Candy, & Animations"
+authors = "Adrenix"
+description = '''
+Brings back old swinging, eye candy, and animations throughout various old Minecraft versions. All changes can be toggled and swing speeds are heavily customizable. While this mod is intended for nostalgic enthusiasts, it may also be useful for those who are photosensitive.
+'''
+displayURL = "https://www.curseforge.com/minecraft/mc-mods/old-swing"
+logoFile = "logo.png"
+
+[[dependencies.oseca]]
+modId = "forge"
+mandatory = true
+versionRange = "[38,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.oseca]]
+modId = "minecraft"
+mandatory = true
+versionRange = "[1.18,)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.oseca]]
+modId="cloth_config"
+mandatory=true
+versionRange="[6.0.45,)"
+ordering="NONE"
+side="CLIENT"
+
+#[[dependencies.oseca]]
+#modId = "architectury"
+#mandatory = true
+#versionRange = "[3.1.44,)"
+#ordering = "AFTER"
+#side = "BOTH"

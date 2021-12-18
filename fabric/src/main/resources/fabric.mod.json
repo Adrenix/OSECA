@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "id": "oseca",
+  "version": "${version}",
+  "name": "Old Swing, Eye Candy, & Animations",
+  "description": "Brings back old swinging, eye candy, and animations throughout various old Minecraft versions. All changes can be toggled and swing speeds are heavily customizable. While this mod is intended for nostalgic enthusiasts, it may also be useful for those who are photosensitive.",
+  "authors": [
+    "Adrenix"
+  ],
+
+  "contact": {
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/old-swing",
+    "sources": "https://github.com/Adrenix/OldSwing",
+    "issues": "https://github.com/Adrenix/OldSwing/issues"
+  },
+  "license": "See Source License",
+  "icon": "assets/oseca/logo.png",
+  "environment": "*",
+  "entrypoints": {
+    "modmenu": [
+      "mod.adrenix.oseca.fabric.config.gui.ModMenuIntegration"
+    ],
+    "client": [
+      "mod.adrenix.oseca.fabric.OsecaClientFabric"
+    ],
+    "server": [
+      "mod.adrenix.oseca.fabric.OsecaServerFabric"
+    ]
+  },
+  "mixins": [
+    "mixin.oseca-common.json",
+    "mixin.oseca-fabric.json"
+  ],
+  "depends": {
+    "fabric": "*",
+    "minecraft": ">=1.18"
+  },
+  "custom": {
+    "modmenu": {
+      "links": {
+        "modmenu.discord": "https://discord.gg/jWdfVh3"
+      }
+    }
+  }
+}
