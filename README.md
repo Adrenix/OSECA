@@ -1,4 +1,5 @@
 # Development Branches
+- [1.18 Universal](https://github.com/Adrenix/OldSwing/tree/1.18)
 - [1.17 Fabric](https://github.com/Adrenix/OldSwing/tree/Fabric-1.17)
 - [1.17 Forge](https://github.com/Adrenix/OldSwing/tree/Forge-1.17)
 - [1.16 Forge](https://github.com/Adrenix/OldSwing/tree/1.16.5)
