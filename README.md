@@ -8,7 +8,7 @@
 #### Changelogs
 To see the changes made across all versions, please see the [changelog](https://github.com/Adrenix/OldSwing/blob/master/changelog.md) file.
 
-# OldSwing Mod
+# OSECA (Old Sound, Eye Candy, & Animations) Mod 
 [
 ![CurseForge Downloads](http://cf.way2muchnoise.eu/old-swing.svg)
 ![CurseForge Versions](http://cf.way2muchnoise.eu/versions/old-swing.svg)
@@ -17,31 +17,48 @@ To see the changes made across all versions, please see the [changelog](https://
 ![Discord](https://img.shields.io/discord/452988045252100107?label=Discord)
 ](https://discordapp.com/invite/jWdfVh3)
 
-This mod brings back the old swinging animations, some old eye candy, and some old animations throughout various previous versions of Minecraft. All changes can be toggled and swing speeds are heavily customizable. This mod is intended for nostalgic enthusiasts and those who are photosensitive. You can customize the swing speeds of swords, tools, items, and everything in-between!
+This mod brings back old sounds, eye candy, and animations throughout various old Minecraft versions. All changes can be toggled and swing speeds are heavily customizable. While this mod is intended for nostalgic enthusiasts, it may also be useful for those who are photosensitive.
 
 ## What Changes?
 Every change this mod makes to the game is configurable.
 
-- The arm sway animation has been disabled.
-- The vertical arm bobbing has been brought back.
-- The cooldown animation that plays after every swing or change in slot has been disabled.
-- The reequip animation no longer plays when an item damage value changes.
+### Sounds
+- Disables all attacking sounds.
+ 
+### Eye Candy
+- Added current Minecraft version in the top left of the HUD similar to how it was Minecraft Beta/Alpha.
+- Added back the old button hovering graphics.
+- Added back the old tooltips.
+- Added back the old item durability bar colors.
+- Redid the item holding animations similar to how it was back in Minecraft Beta/Alpha.
+- Disabled light flickering from light emitting sources. (It is recommended to combine this feature with an old lighting resource pack.)
+- Disabled item merging that occurs when dropping items on the ground, drops from mobs, and drops from blocks.
+- Brought back the old 2D floating items.
+ 
+
+### Animations
+- Disabled the cooldown modifier animation for items that have a cooldown.
+- Disabled the reequip animation when an item gets damaged while swinging.
+- Disabled the sweeping particles that appear when attacking entities.
+- Disabled the arm sway animation that occurs when looking around.
+- Disabled smooth sneaking.
+- Disabled the item dropping animations.
+- Disabled the tool breaking animation and sounds.
+- Disabled the collision bobbing animation that occurs when trying to move while colliding with a block.
+- Added back vertical bobbing.
+- Added back the old reequipping logic.
+ 
+
+### Swings
 - The swinging animation has been slowed down.
 - The swinging animation speed can be changed by item category, by individual item, or by potion effects that impact swing speeds.
-- The sweep particles when using a sword has been disabled.
-- Disabled light flickering from all light emitting sources. It is recommended to combine this feature with an old lighting resource pack.
-- Disabled the tool disintegration animation and break sound when a tool's durability ruins out.
-- Disabled the swinging animation when dropping items.
-- The old durability bar (damage bar) colors has been brought back.
-- The old sneaking animation has been brought back.
-- The old tooltip boxes have been brought back.
-- The old item holding positions and swinging rotations have been brought back.
-- The old floating 2D items have been brought back. *Item entities are simulated to be 2D to maintain mod compatibility. **This feature is still in development!
+- Swinging animations can be disabled entirely if the swing speed is set to 0.
+ 
 
 More old school eye candy animations and visuals are also in-development.
 
-### Note
-None of these animation modifications impacts block breaking speed or combat. Moreover, these changes are only visible to the client. Meaning only you can see the changes in animation and is server safe.
+#### Important
+None of the changes the mod makes to the game will impact block breaking speed or combat. Moreover, these changes are only visible to the client. Meaning only you can see the changes in animation and is server safe.
 
 ## Photosensitivity
 If you are photosensitive, then this mod may be helpful. All swing speeds are configurable, which means you can disable the swing speed animation entirely if that is what you need. Additional changes will also be made by the mod when it detects photosensitivity mode is enabled. More information on how to enable this mode is discussed in the configuration section below.
@@ -54,18 +71,6 @@ Everything that this mod changes is configurable. That means if you prefer sword
 You can open the configuration menu by pressing the O (for Old swing) key in-game. The configuration menu can also be accessed through Forge's mod menu. If you are using Fabric, Old Swing does provide support for the mod menu API.
 
 If you are photosensitive, open the configuration menu and click on the General Settings button. Click on the plus (+) icon to expand the Swings settings section. At the bottom of this section, change the Global Swing Speed slider to 0. This will disable the swinging animation entirely for everything. The mod will also make additional changes to other animations to help better your experience.
-
-In versions before 3.0.0, you can modify configuration options in-game with the /oldswing command or by using the configuration menu. Additionally, you can edit these configuration options within the config file. After you save the file, the new changes will automatically be applied in-game without a restart. The auto-reload feature is not be available in version 3.0.0 or later since the config reloads automatically if you use the in-game configuration menu.
-
-## Commands (1.12-1.16)
-These commands come equipped with auto-completion.
-- `/oldswing set` Used to change a config value.
-- `/oldswing get` Used to get current values saved in the config.
-- `/oldswing config` (1.16 only) Used to open the configuration menu.
-
-## Demo Video
-Watch the following video to see what this mod changes. https://www.youtube.com/watch?v=IlqIMxxKFnw
-[![YouTube Thumbnail](https://media.discordapp.net/attachments/800426030996389929/906719975023210546/thumbdesign.png)](https://www.youtube.com/watch?v=n6R7OZEfsFM "OSECA Mod Ver. 3.1")
 
 ## Compatibility
 If you come across a compatibility issue, please let me know! It is best to create an issue if you come across one. You might also experience animation issues when using modded items that utilize the re-equip animation. If this is the case, you can turn off the oldswing reequip animation in the config or through the /oldswing command.
@@ -80,9 +85,6 @@ If your mod pack is distributed on Curse Forge, then yes! :)
 
 ### Is this mod server safe?
 Yes. This mod only changes visual animations and is client-side only.
-
-### Will there be a Fabric port to 1.16?
-To be determined.
 
 ### I ran into an issue running this mod.
 Please submit an [issue](https://github.com/Adrenix/OldSwing/issues).
