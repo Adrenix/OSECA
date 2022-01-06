@@ -1,0 +1,24 @@
+{
+  "blank": {
+    "category": "neutral",
+    "subtitle": "blank",
+    "sounds": [{
+      "name": "oseca:blank",
+      "stream": true
+    }]
+  },
+  "entity.player.hurt": {
+    "category": "entity",
+    "subtitle": "entity.player.hurt",
+    "sounds": [{
+      "name": "oseca:damage/hit1",
+      "stream": true
+    }, {
+      "name": "oseca:damage/hit2",
+      "stream": true
+    }, {
+      "name": "oseca:damage/hit3",
+      "stream": true
+    }]
+  }
+}

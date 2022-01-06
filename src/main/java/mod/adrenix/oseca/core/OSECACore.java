@@ -1,4 +1,4 @@
-package mod.adrenix.oldswing.core;
+package mod.adrenix.oseca.core;
 
 import net.minecraftforge.fml.relauncher.CoreModManager;
 import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
@@ -11,9 +11,9 @@ import java.net.URL;
 import java.security.CodeSource;
 import java.util.Map;
 
-public class OldSwingCore implements IFMLLoadingPlugin
+public class OSECACore implements IFMLLoadingPlugin
 {
-    public OldSwingCore()
+    public OSECACore()
     {
         MixinBootstrap.init();
         CodeSource source = this.getClass().getProtectionDomain().getCodeSource();
@@ -31,31 +31,9 @@ public class OldSwingCore implements IFMLLoadingPlugin
         }
     }
 
-    @Override
-    public String[] getASMTransformerClass()
-    {
-        return new String[0];
-    }
-
-    @Override
-    public String getModContainerClass()
-    {
-        return null;
-    }
-
-    @Nullable
-    @Override
-    public String getSetupClass()
-    {
-        return null;
-    }
-
-    @Override
-    public void injectData(Map<String, Object> data) {}
-
-    @Override
-    public String getAccessTransformerClass()
-    {
-        return null;
-    }
+    @Nullable @Override public String getSetupClass() { return null; }
+    @Override public String[] getASMTransformerClass() { return new String[0]; }
+    @Override public String getModContainerClass() { return null; }
+    @Override public String getAccessTransformerClass() { return null; }
+    @Override public void injectData(Map<String, Object> data) {}
 }

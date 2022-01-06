@@ -1,4 +1,4 @@
-# OldSwing
-This Minecraft mod brings back the old swinging animations before Minecraft Beta 1.8.
-
-https://www.curseforge.com/minecraft/mc-mods/old-swing
+# OSECA Forge 1.12.x Branch
+Codebase for OSECA Forge 1.12.x.
+- [Home Branch](https://github.com/Adrenix/OSECA)
+- [CurseForge Page](https://www.curseforge.com/minecraft/mc-mods/old-swing)

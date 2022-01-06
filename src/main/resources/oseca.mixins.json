@@ -1,0 +1,25 @@
+{
+  "compatibilityLevel": "JAVA_8",
+  "package": "mod.adrenix.oseca.mixin",
+  "refmap": "oseca.refmap.json",
+  "minVersion": "0.7.10",
+  "target": "@env(DEFAULT)",
+  "client": [
+    "EntityItemMixin",
+    "EntityLivingBaseMixin",
+    "EntityMixin",
+    "EntityPlayerMixin",
+    "EntityRendererMixin",
+    "ExplosionMixin",
+    "IMixinEntity",
+    "IMixinGuiMainMenu",
+    "IMixinItemStack",
+    "ItemRendererMixin",
+    "ModelZombieMixin",
+    "ModelZombieVillagerMixin",
+    "RenderEntityItemMixin",
+    "RenderGlobalMixin",
+    "RenderItemMixin",
+    "WorldProviderMixin"
+  ]
+}
