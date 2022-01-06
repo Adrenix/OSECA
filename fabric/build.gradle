@@ -60,6 +60,7 @@ remapJar {
 }
 
 jar {
+    archivesBaseName = "${rootProject.archives_base_name}-Fabric-${rootProject.minecraft_version}"
     classifier "dev"
 }
 

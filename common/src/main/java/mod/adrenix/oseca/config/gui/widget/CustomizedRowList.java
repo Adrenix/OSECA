@@ -124,13 +124,17 @@ public class CustomizedRowList extends ContainerObjectSelectionList<CustomizedRo
         tesselator.end();
 
         int maxScroll = this.getMaxScroll();
-        if (maxScroll > 0) {
+        if (maxScroll > 0)
+        {
             RenderSystem.disableTexture();
             RenderSystem.setShader(GameRenderer::getPositionColorShader);
+
             int heightOffset = (int) ((float) ((this.y1 - this.y0) * (this.y1 - this.y0)) / (float) this.getMaxPosition());
             heightOffset = Mth.clamp(heightOffset, 32, (this.y1 - this.y0 - 8));
             int scrollOffset = (int) this.getScrollAmount() * (this.y1 - this.y0 - heightOffset) / maxScroll + this.y0;
-            if (scrollOffset < this.y0) {
+
+            if (scrollOffset < this.y0)
+            {
                 scrollOffset = this.y0;
             }
 

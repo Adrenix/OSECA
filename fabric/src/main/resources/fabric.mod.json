@@ -10,8 +10,8 @@
 
   "contact": {
     "homepage": "https://www.curseforge.com/minecraft/mc-mods/old-swing",
-    "sources": "https://github.com/Adrenix/OldSwing",
-    "issues": "https://github.com/Adrenix/OldSwing/issues"
+    "sources": "https://github.com/Adrenix/OSECA",
+    "issues": "https://github.com/Adrenix/OSECA/issues"
   },
   "license": "See Source License",
   "icon": "assets/oseca/logo.png",

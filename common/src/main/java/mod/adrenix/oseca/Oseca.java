@@ -9,7 +9,8 @@ public class Oseca
     public static final String MOD_ID = "oseca";
     public static final Logger LOGGER = LogManager.getLogger();
     
-    public static void init() {
+    public static void init()
+    {
         // Initialize configuration
         CommonRegistry.initializeConfiguration();
 

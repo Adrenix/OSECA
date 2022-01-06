@@ -146,6 +146,9 @@ public abstract class ItemInHandRendererMixin
         if (isUnequipped)
             this.mainHandItem = injector.getLastItem();
 
+        if (slot == injector.getLastSlot() && !injector.getReequip())
+            this.mainHandItem = player.getMainHandItem();
+
         if (MixinInjector.Animation.shouldCooldown())
         {
             float scale = player.getAttackStrengthScale(1.0F);

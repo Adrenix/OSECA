@@ -1,3 +1,9 @@
+## 1.18 (Universal) - Version 4.0.1
+This is a small patch that fixes reported bugs.
+- Added Deutsch (Deutschland) translation. (Contributor wishes to remain anonymous.)
+- Adjusted the mod's home GUI to accommodate for larger translated words.
+- Fixed a bug that would prevent items from updating their animation states in the player's main hand.
+
 ## 1.18 (Universal) - Version 4.0.0
 This is the first release build for Minecraft 1.18.
 - Updated mod to Minecraft 1.18 universally for Forge and Fabric using [Architectury](https://github.com/architectury).

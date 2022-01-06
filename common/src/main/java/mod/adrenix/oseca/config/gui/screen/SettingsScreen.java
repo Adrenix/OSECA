@@ -42,34 +42,60 @@ public class SettingsScreen extends Screen
     @Override
     protected void init()
     {
+        // Adjust Widget Positions
+        TranslatableComponent title = new TranslatableComponent("text.autoconfig.oseca.title");
+        TranslatableComponent customize = new TranslatableComponent("gui.oseca.settings.customize");
+        int titleWidth = this.minecraft.font.width(title);
+        int customizeWidth = this.minecraft.font.width(customize);
+
+        int standardX = this.width / 2 - 102;
+        int standardY = this.height / 4 + 24 - 16;
+        int finishedY = this.height / 4 + 48 - 16;
+        int customizeX = this.width / 2 + 4;
+        int customizeY = standardY;
+
+        if (titleWidth > SMALL_WIDTH || customizeWidth > SMALL_WIDTH)
+        {
+            customizeX = standardX;
+            customizeY = finishedY;
+            finishedY = this.height / 4 + 72 - 16;
+            titleWidth = LARGE_WIDTH;
+            customizeWidth = LARGE_WIDTH;
+        }
+        else
+        {
+            titleWidth = SMALL_WIDTH;
+            customizeWidth = SMALL_WIDTH;
+        }
+
         // General Settings
         this.addRenderableWidget(new Button(
-                this.width / 2 - 102,
-                this.height / 4 + 24 - 16,
-                SMALL_WIDTH,
-                BUTTON_HEIGHT,
-                new TranslatableComponent("text.autoconfig.oseca.title"),
-                (button) -> this.minecraft.setScreen(AutoConfig.getConfigScreen(ClientConfig.class, this).get())
+            standardX,
+            standardY,
+            titleWidth,
+            BUTTON_HEIGHT,
+            title,
+            (button) -> this.minecraft.setScreen(AutoConfig.getConfigScreen(ClientConfig.class, this).get())
         ));
 
         // Custom Swing Speeds
         this.addRenderableWidget(new Button(
-                this.width / 2 + 4,
-                this.height / 4 + 24 - 16,
-                SMALL_WIDTH,
-                BUTTON_HEIGHT,
-                new TranslatableComponent("gui.oseca.settings.customize"),
-                (button) -> this.minecraft.setScreen(new CustomizeScreen(this))
+            customizeX,
+            customizeY,
+            customizeWidth,
+            BUTTON_HEIGHT,
+            customize,
+            (button) -> this.minecraft.setScreen(new CustomizeScreen(this))
         ));
 
         // Done Button
         this.addRenderableWidget(new Button(
-                this.width / 2 - 102,
-                this.height / 4 + 48 - 16,
-                LARGE_WIDTH,
-                BUTTON_HEIGHT,
-                new TranslatableComponent("gui.done"),
-                (button) -> this.onClose()
+            standardX,
+            finishedY,
+            LARGE_WIDTH,
+            BUTTON_HEIGHT,
+            new TranslatableComponent("gui.done"),
+            (button) -> this.onClose()
         ));
     }
 

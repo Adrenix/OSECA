@@ -1,7 +1,7 @@
 modLoader = "javafml"
 loaderVersion = "[38,)"
-issueTrackerURL = "https://github.com/Adrenix/OldSwing/issues"
-license = "https://github.com/Adrenix/OldSwing/blob/master/LICENSE"
+issueTrackerURL = "https://github.com/Adrenix/OSECA/issues"
+license = "https://github.com/Adrenix/OSECA/blob/master/LICENSE"
 
 [[mods]]
 modId = "oseca"

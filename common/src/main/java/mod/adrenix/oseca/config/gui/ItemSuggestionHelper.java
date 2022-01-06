@@ -179,7 +179,7 @@ public class ItemSuggestionHelper
         catch (CommandSyntaxException ignored) {}
 
         this.pendingSuggestions = parser.fillSuggestions(builder, TagCollection.empty());
-        this.pendingSuggestions.thenRun(() ->{
+        this.pendingSuggestions.thenRun(() -> {
             if (this.pendingSuggestions.isDone())
                 this.updateItemInfo();
         });

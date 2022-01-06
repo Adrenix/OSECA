@@ -59,6 +59,7 @@ remapJar {
 }
 
 jar {
+    archivesBaseName = "${rootProject.archives_base_name}-Forge-${rootProject.minecraft_version}"
     classifier "dev"
 }
 

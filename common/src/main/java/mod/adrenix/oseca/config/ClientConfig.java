@@ -62,7 +62,7 @@ public class ClientConfig implements ConfigData
         public boolean oldItemMerging = DefaultConfig.EyeCandy.OLD_ITEM_MERGING;
 
         @ConfigEntry.Gui.Tooltip
-        @Comment("Set this to true to simulate the old 2D floating items. (WIP)")
+        @Comment("Set this to true to simulate the old 2D floating items.")
         public boolean old2DItems = DefaultConfig.EyeCandy.OLD_2D_ITEMS;
     }
 
